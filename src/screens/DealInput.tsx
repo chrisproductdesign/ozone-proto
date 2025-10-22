@@ -16,7 +16,7 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
   const { currentDeal, updateDeal, saveDraft, dealName } = useDeal();
   const { showToast } = useToast();
   const [showSaved, setShowSaved] = useState(false);
-  const saveTimerRef = useRef<NodeJS.Timeout>();
+  const saveTimerRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   // Use context data as form data
   const formData = currentDeal;

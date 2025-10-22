@@ -1,7 +1,10 @@
 import React from 'react';
 import { LoginCard } from '@/components/login/LoginCard';
+import { type NavigationProps } from '@playground/App';
 
-export const LoginScreen: React.FC = () => {
+interface LoginScreenProps extends NavigationProps {}
+
+export const LoginScreen: React.FC<LoginScreenProps> = () => {
   const handleLogin = (email: string, password: string) => {
     console.log('Login attempt:', { email, password });
     // TODO: Implement actual authentication logic

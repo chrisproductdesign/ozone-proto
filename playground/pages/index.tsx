@@ -15,24 +15,24 @@ import { DealInput } from './DealInput';
 export type PlaygroundPage = {
   id: string;
   title: string;
-  render: (navProps?: NavigationProps) => ReactNode;
+  render: (navProps: NavigationProps) => ReactNode;
 };
 
 export const playgroundPages: PlaygroundPage[] = [
   {
     id: 'login',
     title: 'Login',
-    render: (navProps) => <Login {...navProps} />,
+    render: (navProps) => <Login navigateTo={navProps.navigateTo} currentPage={navProps.currentPage} />,
   },
   {
     id: 'dealinput',
     title: 'Deal Input',
-    render: (navProps) => <DealInput {...navProps} />,
+    render: (navProps) => <DealInput navigateTo={navProps.navigateTo} currentPage={navProps.currentPage} />,
   },
   {
     id: 'dashboard',
     title: 'Dashboard',
-    render: (navProps) => <Dashboard {...navProps} />,
+    render: (navProps) => <Dashboard navigateTo={navProps.navigateTo} currentPage={navProps.currentPage} />,
   },
   {
     id: 'component',
