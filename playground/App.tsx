@@ -23,8 +23,7 @@ const PlaygroundApp = () => {
               className={`playground-tab${isActive ? ' is-active' : ''}`}
               onClick={() => setActiveId(page.id)}
             >
-              <span className="playground-tab-title">{page.title}</span>
-              <span className="playground-tab-summary">{page.summary}</span>
+              {page.title}
             </button>
           );
         })}

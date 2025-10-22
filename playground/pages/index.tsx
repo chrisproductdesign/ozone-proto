@@ -1,34 +1,53 @@
 import { type ReactNode } from 'react';
 
-import { FintechDashboard } from './FintechDashboard';
-import { FundingCalculator } from './FundingCalculator';
-import { ComponentShowcase } from './ComponentShowcase';
+import { Typography } from './Typography';
+import { Colors } from './Colors';
+import { Forms } from './Forms';
+import { Layout } from './Layout';
+import { Data } from './Data';
+import { Feedback } from './Feedback';
+import { Navigation } from './Navigation';
 
 export type PlaygroundPage = {
   id: string;
   title: string;
-  summary: string;
   render: () => ReactNode;
 };
 
-// Core fintech flow screens
 export const playgroundPages: PlaygroundPage[] = [
   {
-    id: 'dashboard',
-    title: 'Dashboard',
-    summary: 'Business banking dashboard with metrics and transactions',
-    render: () => <FintechDashboard />,
+    id: 'typography',
+    title: 'Typography',
+    render: () => <Typography />,
   },
   {
-    id: 'funding',
-    title: 'Funding Application',
-    summary: 'Multi-step funding application flow',
-    render: () => <FundingCalculator />,
+    id: 'colors',
+    title: 'Colors',
+    render: () => <Colors />,
   },
   {
-    id: 'components',
-    title: 'Component Lab',
-    summary: 'Test and iterate on individual components',
-    render: () => <ComponentShowcase />,
+    id: 'forms',
+    title: 'Forms',
+    render: () => <Forms />,
+  },
+  {
+    id: 'layout',
+    title: 'Layout',
+    render: () => <Layout />,
+  },
+  {
+    id: 'data',
+    title: 'Data',
+    render: () => <Data />,
+  },
+  {
+    id: 'feedback',
+    title: 'Feedback',
+    render: () => <Feedback />,
+  },
+  {
+    id: 'navigation',
+    title: 'Navigation',
+    render: () => <Navigation />,
   },
 ];
