@@ -15,14 +15,6 @@ export const Forms = () => {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Tailwind + Base UI Integration Test</h1>
-        <p className="mt-2 text-gray-600">
-          Testing the new foundation with Tailwind CSS and Base UI component wrappers.
-        </p>
-      </div>
-
       {/* Button Examples */}
       <section className="space-y-4">
         <h2 className="text-xl font-semibold text-gray-800">Button Components</h2>

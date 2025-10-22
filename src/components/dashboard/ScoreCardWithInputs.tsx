@@ -79,14 +79,14 @@ export const ScoreCardWithInputs: React.FC<ScoreCardWithInputsProps> = ({
 
   return (
     <div className={classNames(
-      'bg-white rounded-2xl p-8',
+      'bg-white rounded-2xl p-5',
       'flex flex-col',
       className
     )}>
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h3 className="text-sm font-medium text-gray-500 tracking-wide uppercase mb-2">
+          <h3 className="text-xs font-medium text-gray-500 tracking-wide uppercase mb-2">
             {title}
           </h3>
           <div className="text-7xl font-bold mb-2" style={{ color: '#4A3F42' }}>
@@ -118,22 +118,22 @@ export const ScoreCardWithInputs: React.FC<ScoreCardWithInputsProps> = ({
           const riskLevel = getRiskLevel(numericValue);
 
           return (
-            <div key={input.id} className="flex items-center gap-3">
+            <div key={input.id} className="flex items-center gap-2">
               {/* Input Field */}
-              <div className="w-32">
+              <div className="w-16">
                 <input
                   type="text"
                   value={input.value}
                   onChange={(e) => handleInputChange(input.id, e.target.value)}
                   placeholder={input.placeholder || 'Input value'}
-                  className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-gray-400 text-gray-700"
+                  className="w-full px-2 py-1 text-xs border border-gray-200 rounded-lg focus:outline-none focus:border-gray-400 text-gray-700"
                   aria-label={input.label}
                 />
               </div>
 
               {/* Progress Bar */}
               <div className="flex-1 relative">
-                <div className="h-6 bg-gray-100 rounded-sm overflow-hidden">
+                <div className="h-5 bg-gray-100 rounded-sm overflow-hidden">
                   <div
                     className="h-full transition-all duration-300 rounded-sm"
                     style={{
@@ -145,8 +145,8 @@ export const ScoreCardWithInputs: React.FC<ScoreCardWithInputsProps> = ({
               </div>
 
               {/* Risk Label */}
-              <div className="w-32 text-right">
-                <span className="text-sm font-medium text-gray-700">
+              <div className="w-28 text-right">
+                <span className="text-xs font-medium text-gray-700">
                   {riskLevel.label}
                 </span>
               </div>

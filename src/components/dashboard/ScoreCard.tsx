@@ -30,12 +30,12 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({
 
   return (
     <div className={classNames(
-      'bg-white rounded-2xl p-8',
+      'bg-white rounded-2xl p-5',
       'flex flex-col',
       className
     )}>
       <div className="flex items-start justify-between mb-6">
-        <h3 className="text-sm font-medium text-gray-500 tracking-wide uppercase">
+        <h3 className="text-xs font-medium text-gray-500 tracking-wide uppercase">
           {title}
         </h3>
         {status && (

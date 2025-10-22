@@ -25,48 +25,18 @@ export const playgroundPages: PlaygroundPage[] = [
     render: (navProps) => <Login {...navProps} />,
   },
   {
-    id: 'dashboard',
-    title: 'Dashboard',
-    render: (navProps) => <Dashboard {...navProps} />,
-  },
-  {
     id: 'dealinput',
     title: 'Deal Input',
     render: (navProps) => <DealInput {...navProps} />,
   },
   {
-    id: 'typography',
-    title: 'Typography',
-    render: () => <Typography />,
+    id: 'dashboard',
+    title: 'Dashboard',
+    render: (navProps) => <Dashboard {...navProps} />,
   },
   {
-    id: 'colors',
-    title: 'Colors',
-    render: () => <Colors />,
-  },
-  {
-    id: 'forms',
-    title: 'Forms',
+    id: 'component',
+    title: 'Component',
     render: () => <Forms />,
-  },
-  {
-    id: 'layout',
-    title: 'Layout',
-    render: () => <Layout />,
-  },
-  {
-    id: 'data',
-    title: 'Data',
-    render: () => <Data />,
-  },
-  {
-    id: 'feedback',
-    title: 'Feedback',
-    render: () => <Feedback />,
-  },
-  {
-    id: 'navigation',
-    title: 'Navigation',
-    render: () => <Navigation />,
   },
 ];

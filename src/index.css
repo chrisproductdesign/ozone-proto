@@ -32,21 +32,21 @@
   }
 
   .playground-tabs {
-    @apply flex gap-2 border-b border-gray-200 pb-0 overflow-x-auto;
+    @apply flex gap-1 border-b border-gray-100 pb-0 overflow-x-auto;
   }
 
   .playground-tab {
-    @apply px-6 py-3 bg-transparent border-0 border-b-2 border-transparent
-           text-gray-500 cursor-pointer font-medium whitespace-nowrap
+    @apply px-3 py-1.5 bg-transparent border-0
+           text-gray-400 cursor-pointer text-xs font-normal whitespace-nowrap
            transition-all duration-150 ease-out;
   }
 
   .playground-tab:hover {
-    @apply text-gray-900;
+    @apply text-gray-600;
   }
 
   .playground-tab.is-active {
-    @apply text-gray-900 border-gray-900;
+    @apply text-gray-900 font-medium;
   }
 
   .playground-content {

@@ -21,7 +21,7 @@ export interface DealData {
 // Default/empty deal data for new deals
 export const defaultDealData: DealData = {
   businessName: '',
-  state: '',
+  state: 'CO',
   industry: '',
   naicsCode: '',
   timeInBusiness: '',

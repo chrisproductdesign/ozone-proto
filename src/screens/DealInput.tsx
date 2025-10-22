@@ -22,7 +22,23 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
   const formData = currentDeal;
 
   const handleInputChange = (field: string, value: string) => {
-    updateDeal({ [field]: value });
+    // Special handling for FICO score
+    if (field === 'fico') {
+      // Only allow numeric input
+      const numericValue = value.replace(/\D/g, '');
+
+      // Limit to max of 3 digits (for 850 max)
+      const limitedValue = numericValue.slice(0, 3);
+
+      // Don't allow values over 850
+      if (parseInt(limitedValue) > 850) {
+        return;
+      }
+
+      updateDeal({ [field]: limitedValue });
+    } else {
+      updateDeal({ [field]: value });
+    }
   };
 
   // Auto-save with debounce
@@ -59,6 +75,21 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
   const isFormValid = () => {
     const requiredFields = ['businessName', 'state', 'fico', 'monthlyRevenue', 'grossFundedAmount', 'term'];
     return requiredFields.every(field => currentDeal[field as keyof typeof currentDeal]);
+  };
+
+  // Get list of missing required fields for feedback
+  const getMissingFields = () => {
+    const requiredFields = [
+      { field: 'businessName', label: 'Legal Name and DBA' },
+      { field: 'state', label: 'State' },
+      { field: 'fico', label: 'FICO' },
+      { field: 'monthlyRevenue', label: 'Average Monthly Revenue' },
+      { field: 'grossFundedAmount', label: 'Gross Funded Amount' },
+      { field: 'term', label: 'Term' }
+    ];
+    return requiredFields
+      .filter(({ field }) => !currentDeal[field as keyof typeof currentDeal])
+      .map(({ label }) => label);
   };
 
   const handleContinue = () => {
@@ -151,18 +182,30 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
               </button>
             </div>
           </div>
+
+          {/* Missing fields feedback */}
+          {!isFormValid() && (
+            <div className="max-w-[1000px] mx-auto mt-2">
+              <p className="text-xs text-amber-600" role="alert" aria-live="polite">
+                <svg className="inline-block w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                {getMissingFields().join(', ')}
+              </p>
+            </div>
+          )}
         </div>
       </header>
 
       {/* Main Content */}
       <main className="px-6 py-8">
-        <div className="max-w-[1000px] mx-auto space-y-6">
+        <div className="max-w-[1000px] mx-auto space-y-5">
 
           {/* Business Information Section */}
           <FormSection title="Business information">
-            <div className="grid grid-cols-12 gap-4">
-              <div className="col-span-12 lg:col-span-8">
-                <FormField label="Legal Name and DBA" required>
+            <div className="grid grid-cols-12 gap-5">
+              <div className="col-span-12 md:col-span-9">
+                <FormField label="Legal Name and DBA" required completed={!!formData.businessName}>
                   <TextInput
                     value={formData.businessName}
                     onChange={(e) => handleInputChange('businessName', e.target.value)}
@@ -170,8 +213,8 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
                   />
                 </FormField>
               </div>
-              <div className="col-span-12 lg:col-span-4">
-                <FormField label="State" required>
+              <div className="col-span-12 md:col-span-3">
+                <FormField label="State" required completed={!!formData.state}>
                   <SelectInput
                     value={formData.state}
                     onChange={(e) => handleInputChange('state', e.target.value)}
@@ -207,7 +250,7 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
                 </FormField>
               </div>
               <div className="col-span-12 md:col-span-3">
-                <FormField label="FICO" required>
+                <FormField label="FICO" required completed={!!formData.fico && parseInt(formData.fico) >= 300 && parseInt(formData.fico) <= 850}>
                   <TextInput
                     type="text"
                     inputMode="numeric"
@@ -216,7 +259,13 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
                     onChange={(e) => handleInputChange('fico', e.target.value)}
                     placeholder="300-850"
                     aria-label="FICO credit score"
+                    aria-invalid={formData.fico !== '' && (parseInt(formData.fico) < 300 || parseInt(formData.fico) > 850)}
+                    aria-describedby={formData.fico && (parseInt(formData.fico) < 300 || parseInt(formData.fico) > 850) ? "fico-error" : undefined}
+                    error={formData.fico !== '' && (parseInt(formData.fico) < 300 || parseInt(formData.fico) > 850)}
                   />
+                  {formData.fico && (parseInt(formData.fico) < 300 || parseInt(formData.fico) > 850) && (
+                    <p id="fico-error" className="mt-1 text-xs text-red-600" role="alert">Score must be between 300 and 850</p>
+                  )}
                 </FormField>
               </div>
             </div>
@@ -224,9 +273,9 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
 
           {/* Financials Section */}
           <FormSection title="Financials">
-            <div className="grid grid-cols-12 gap-4">
+            <div className="grid grid-cols-12 gap-5">
               <div className="col-span-12 md:col-span-4">
-                <FormField label="Average Monthly Revenue" required>
+                <FormField label="Average Monthly Revenue" required completed={!!formData.monthlyRevenue}>
                   <CurrencyInput
                     value={formData.monthlyRevenue}
                     onChange={(e) => handleInputChange('monthlyRevenue', e.target.value)}
@@ -256,19 +305,19 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
           </FormSection>
 
           {/* Pricing and Terms Row */}
-          <div className="grid grid-cols-12 gap-6">
+          <div className="grid grid-cols-12 gap-5">
             {/* Pricing and Performance */}
             <div className="col-span-12 lg:col-span-6">
               <FormSection title="Pricing and Performance">
-                <div className="space-y-4">
-                  <FormField label="Gross Funded Amount" required>
+                <div className="space-y-5">
+                  <FormField label="Gross Funded Amount" required completed={!!formData.grossFundedAmount}>
                     <CurrencyInput
                       value={formData.grossFundedAmount}
                       onChange={(e) => handleInputChange('grossFundedAmount', e.target.value)}
                       placeholder="0.00"
                     />
                   </FormField>
-                  <FormField label="Term (Days)" required>
+                  <FormField label="Term (Days)" required completed={!!formData.term}>
                     <NumberInput
                       value={formData.term}
                       onChange={(e) => handleInputChange('term', e.target.value)}
@@ -285,7 +334,7 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
             {/* Terms */}
             <div className="col-span-12 lg:col-span-6">
               <FormSection title="Terms">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-5">
                   <FormField label="Payment Frequency">
                     <SelectInput
                       value={formData.paymentFrequency}
@@ -340,7 +389,7 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
 
               {/* Additional commission field */}
               <div className="mt-6 pt-6 border-t border-purple-100">
-                <div className="grid grid-cols-12 gap-4">
+                <div className="grid grid-cols-12 gap-5">
                   <div className="col-span-12 md:col-span-4">
                     <FormField label="ISO Commission">
                       <NumberInput

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { classNames } from '@/lib/classNames';
+import { BaseUISlider } from '@/components/form/BaseUISlider';
 
 interface MetricCardProps {
   icon?: React.ReactNode;
@@ -28,17 +29,14 @@ export const MetricCard: React.FC<MetricCardProps> = ({
 }) => {
   const [sliderValue, setSliderValue] = useState(currentValue);
 
-  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = Number(e.target.value);
+  const handleSliderChange = (newValue: number) => {
     setSliderValue(newValue);
     onChange?.(newValue);
   };
 
-  const percentage = ((sliderValue - min) / (max - min)) * 100;
-
   return (
     <div className={classNames(
-      'bg-white rounded-2xl p-8',
+      'bg-white rounded-2xl p-5',
       'flex flex-col',
       className
     )}>
@@ -48,7 +46,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
             {icon}
           </span>
         )}
-        <h3 className="text-sm font-medium text-gray-700 tracking-wide uppercase">
+        <h3 className="text-xs font-medium text-gray-700 tracking-wide uppercase">
           {label}
         </h3>
       </div>
@@ -65,34 +63,12 @@ export const MetricCard: React.FC<MetricCardProps> = ({
         </div>
 
         {showSlider && (
-          <div className="relative">
-            <div className="relative h-2 bg-gray-200 rounded-full overflow-hidden">
-              <div
-                className="absolute left-0 top-0 h-full rounded-full transition-all duration-200"
-                style={{
-                  width: `${percentage}%`,
-                  backgroundColor: '#5A4A5C'
-                }}
-              />
-            </div>
-            <input
-              type="range"
-              min={min}
-              max={max}
-              value={sliderValue}
-              onChange={handleSliderChange}
-              className="absolute inset-0 w-full h-2 opacity-0 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
-              aria-label={`${label} slider`}
-              aria-valuemin={min}
-              aria-valuemax={max}
-              aria-valuenow={sliderValue}
-              aria-valuetext={unit === '$' ? `${unit}${sliderValue.toLocaleString()}` : `${sliderValue}${unit}`}
-            />
-            <div
-              className="absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-gray-600 rounded-full shadow-sm transition-all duration-200"
-              style={{ left: `calc(${percentage}% - 8px)` }}
-            />
-          </div>
+          <BaseUISlider
+            value={sliderValue}
+            min={min}
+            max={max}
+            onChange={handleSliderChange}
+          />
         )}
       </div>
     </div>

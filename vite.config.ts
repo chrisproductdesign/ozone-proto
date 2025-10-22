@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import path from 'node:path';
 
 export default defineConfig({
+  base: '/ogion-proto-0.5/',
   plugins: [
     tailwindcss(),
     react(),
