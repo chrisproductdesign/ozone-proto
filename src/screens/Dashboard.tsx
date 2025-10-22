@@ -28,10 +28,10 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#F5F2ED' }}>
+    <div className="min-h-full" style={{ backgroundColor: '#F5F2ED' }}>
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 w-full">
-        <div className="px-6 py-4">
+      <header className="border-b border-gray-200 w-full sticky top-0 z-10" style={{ backgroundColor: '#F5F2ED' }}>
+        <div className="px-6 py-8">
           <div className="max-w-[1000px] mx-auto flex items-center justify-between">
             {/* Deal Name */}
             <h1 className="text-lg font-medium text-gray-900">
@@ -122,7 +122,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
       </header>
 
       {/* Main Content */}
-      <main className="w-full px-6 py-6">
+      <main className="w-full px-6 pt-10 pb-6">
         <div className="max-w-[1000px] mx-auto">
           {layout === 'A' ? (
           /* Layout A - Updated Layout */
@@ -202,7 +202,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
 
             {/* Graph Placeholder */}
             <div className="col-span-12">
-              <div className="bg-white rounded-2xl p-5 h-96 flex items-center justify-center">
+              <div className="bg-white rounded-2xl p-5 h-96 flex items-center justify-center shadow-sm">
                 <p className="text-2xl text-gray-400">Scatterplot Graph Goes Here</p>
               </div>
             </div>
@@ -268,7 +268,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
 
             {/* Bottom Row - Graph */}
             <div className="col-span-12">
-              <div className="bg-white rounded-2xl p-5 h-96 flex items-center justify-center">
+              <div className="bg-white rounded-2xl p-5 h-96 flex items-center justify-center shadow-sm">
                 <p className="text-2xl text-gray-400">Scatterplot Graph Goes Here</p>
               </div>
             </div>

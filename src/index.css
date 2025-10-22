@@ -28,11 +28,11 @@
   }
 
   .playground {
-    @apply flex-1 flex flex-col p-6 gap-4;
+    @apply flex flex-col h-screen;
   }
 
   .playground-tabs {
-    @apply flex gap-1 border-b border-gray-100 pb-0 overflow-x-auto;
+    @apply flex gap-1 border-b border-gray-100 pb-0 overflow-x-auto sticky top-0 z-20 bg-white;
   }
 
   .playground-tab {
@@ -50,7 +50,7 @@
   }
 
   .playground-content {
-    @apply flex-1 p-8 bg-white overflow-y-auto;
+    @apply flex-1 overflow-auto;
   }
 }
 

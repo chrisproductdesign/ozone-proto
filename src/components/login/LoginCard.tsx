@@ -28,15 +28,15 @@ export const LoginCard: React.FC<LoginCardProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl px-6 sm:px-12 py-8 sm:py-10 shadow-lg w-full max-w-md">
+    <div className="bg-white rounded-3xl shadow-sm w-full max-w-lg flex flex-col justify-center" style={{ height: '600px', padding: '80px 60px' }}>
       {/* Brand */}
-      <div className="text-center mb-12">
-        <h2 className="text-gray-500 text-sm font-normal tracking-wide">Ogion</h2>
+      <div className="text-center" style={{ marginBottom: '50px' }}>
+        <h2 className="text-gray-400 text-lg font-light" style={{ letterSpacing: '0.5px' }}>Ogion</h2>
       </div>
 
       {/* Welcome Message */}
-      <div className="text-center mb-10">
-        <h1 className="text-gray-900 text-2xl font-normal">
+      <div className="text-center" style={{ marginBottom: '50px' }}>
+        <h1 className="text-gray-900 font-light" style={{ fontSize: '38px', lineHeight: '1.3' }}>
           Welcome back
           <br />
           Jasmine
@@ -44,9 +44,9 @@ export const LoginCard: React.FC<LoginCardProps> = ({
       </div>
 
       {/* Login Form */}
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit}>
         {/* Email Input */}
-        <div>
+        <div style={{ marginBottom: '16px' }}>
           <input
             type="email"
             value={email}
@@ -54,18 +54,23 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             placeholder="Enter your email"
             aria-label="Email address"
             className={classNames(
-              'w-full px-4 py-3.5 rounded-lg border text-gray-900',
-              'placeholder:text-gray-400 text-sm',
+              'w-full rounded-xl border text-gray-900',
+              'placeholder:text-gray-400',
               'transition-all duration-200',
               'focus:outline-none focus:border-gray-400',
-              email ? 'border-gray-300 bg-gray-50' : 'border-gray-200 bg-white'
+              email ? 'border-gray-300' : 'border-gray-200'
             )}
+            style={{
+              padding: '18px 20px',
+              fontSize: '16px',
+              backgroundColor: email ? '#FAFAFA' : 'white'
+            }}
             required
           />
         </div>
 
         {/* Password Input */}
-        <div>
+        <div style={{ marginBottom: '50px' }}>
           <input
             type="password"
             value={password}
@@ -73,44 +78,52 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             placeholder="Password"
             aria-label="Password"
             className={classNames(
-              'w-full px-4 py-3.5 rounded-lg border text-gray-900',
-              'placeholder:text-gray-400 text-sm',
+              'w-full rounded-xl border text-gray-900',
+              'placeholder:text-gray-400',
               'transition-all duration-200',
               'focus:outline-none focus:border-gray-400',
-              password ? 'border-gray-300 bg-gray-50' : 'border-gray-200 bg-white'
+              password ? 'border-gray-300' : 'border-gray-200'
             )}
+            style={{
+              padding: '18px 20px',
+              fontSize: '16px',
+              backgroundColor: password ? '#FAFAFA' : 'white'
+            }}
             required
           />
         </div>
 
-        {/* Spacing before button */}
-        <div className="pt-4">
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={isLoading || (!email && !password)}
-            aria-label="Sign in to your account"
-            className={classNames(
-              'w-full py-3.5 rounded-lg font-medium text-sm tracking-wider',
-              'transition-all duration-200 uppercase',
-              'disabled:opacity-50 disabled:cursor-not-allowed',
-              isActive && email && password
-                ? 'bg-[#4A4543] text-white hover:bg-[#3A3533] shadow-sm'
-                : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
-            )}
-          >
-            {isLoading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </div>
+        {/* Submit Button */}
+        <button
+          type="submit"
+          disabled={isLoading || !email || !password}
+          aria-label="Sign in to your account"
+          className={classNames(
+            'w-full rounded-full font-medium tracking-wide',
+            'transition-all duration-200 uppercase',
+            'disabled:opacity-50 disabled:cursor-not-allowed',
+            email && password
+              ? 'text-white hover:opacity-90'
+              : 'text-gray-400'
+          )}
+          style={{
+            padding: '16px',
+            fontSize: '15px',
+            letterSpacing: '0.5px',
+            backgroundColor: email && password ? '#6B5B73' : '#F0F0F0'
+          }}
+        >
+          {isLoading ? 'Signing in...' : 'Sign In'}
+        </button>
       </form>
 
       {/* Sign Up Link */}
-      <div className="text-center mt-8">
-        <span className="text-gray-500 text-sm">
+      <div className="text-center" style={{ marginTop: '40px' }}>
+        <span className="text-gray-400" style={{ fontSize: '15px' }}>
           Don't have an account?{' '}
           <a
             href="#"
-            className="text-gray-900 font-medium hover:text-purple-900 transition-colors"
+            className="text-gray-900 font-semibold hover:text-gray-700 transition-colors"
           >
             Sign up
           </a>

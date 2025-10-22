@@ -4,14 +4,18 @@ import { type NavigationProps } from '@playground/App';
 
 interface LoginScreenProps extends NavigationProps {}
 
-export const LoginScreen: React.FC<LoginScreenProps> = () => {
+export const LoginScreen: React.FC<LoginScreenProps> = ({ navigateTo }) => {
   const handleLogin = (email: string, password: string) => {
     console.log('Login attempt:', { email, password });
-    // TODO: Implement actual authentication logic
+    // Simple validation - in a real app this would call an API
+    if (email && password) {
+      // Navigate to Deal Input screen on successful login
+      navigateTo('dealinput');
+    }
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden" style={{ backgroundColor: '#F5F2ED' }}>
+    <div className="min-h-full relative overflow-hidden" style={{ backgroundColor: '#F5F2ED' }}>
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Left decorative element */}
