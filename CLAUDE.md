@@ -39,9 +39,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Tech Stack
 - **React 19.2** with TypeScript for type-safe development
 - **Base UI Components** (`@base-ui-components/react`) as the unstyled component foundation
-- **Custom Design System** with tokens for systematic styling changes
+- **Tailwind CSS v4** for utility-first styling (✅ integrated)
+- **Custom Design System** with tokens mapped to Tailwind
 - **Vite** for fast development and building
-- **Tailwind CSS** for styling (planned integration)
 
 ## Development Commands
 
@@ -71,22 +71,32 @@ npm run test:e2e    # Run Playwright E2E tests
 The app uses a **minimal tab-based playground** for component development and iteration:
 - `src/main.tsx` → `src/App.tsx` (directly renders PlaygroundApp) → `playground/App.tsx` → `playground/pages/index.tsx`
 
-**Current State (Session: 2025-10-21):**
-- Removed all previous display pages to start fresh
-- Created minimal tab structure with empty content areas
-- No titles, branding, or descriptive text - pure functional interface
-- Full-screen layout optimized for component development
+**Current State (Session: 2025-10-22):**
 
-**Playground Tabs (All Empty - Ready for Component Iteration):**
+✅ **Phase 1 Complete: Technical Foundation**
+- Tailwind CSS v4 integrated with Vite
+- All design tokens mapped to Tailwind configuration
+- CSS architecture updated to use Tailwind utilities
+- Component wrapper pattern established with examples:
+  - `ButtonBaseUIWrapper.tsx` - Tailwind + Base UI button pattern
+  - `InputBaseUIWrapper.tsx` - Form input wrapper with variants
+- Forms playground tab demonstrates working integration
+- Development workflow documented in `TAILWIND_WORKFLOW.md`
+
+**Phase 2 Ready: Design Implementation**
+- Design specs workflow: Local images in `design-specs/` folder
+- Component wrappers ready to evolve with actual designs
+- UX review completed with improvement roadmap
+- Ready to implement screens: Login, Dashboard, Funding Application, Approval Status
+
+**Playground Tabs:**
 1. **Typography** (`Typography.tsx`) - For text styles and hierarchy
 2. **Colors** (`Colors.tsx`) - For color system and palettes
-3. **Forms** (`Forms.tsx`) - For input components and validation
+3. **Forms** (`Forms.tsx`) - ✅ Component integration test complete
 4. **Layout** (`Layout.tsx`) - For spacing and container components
 5. **Data** (`Data.tsx`) - For tables, lists, and data display
 6. **Feedback** (`Feedback.tsx`) - For alerts, toasts, and status indicators
 7. **Navigation** (`Navigation.tsx`) - For navigation patterns and menus
-
-**Important:** All component files in `src/components/` were preserved (button, card, input, select, etc.) as the foundation for future Base UI component iteration.
 
 **Flow Documentation:** See `FLOW_STRUCTURE.md` for planned user journey and screen requirements (to be implemented)
 
@@ -221,38 +231,86 @@ npx playwright test tests/e2e/dashboard.spec.ts
 - **Documentation**: `docs/llms.txt` - Base UI component documentation for reference
 - **Base UI Docs**: https://base-ui.com for latest updates
 
-## Next Steps (Session Continuation)
+## Design Implementation Workflow
 
-When returning to this project, the following technical enhancements are ready to implement:
+### How to Provide Design Specs
 
-1. **Tailwind CSS Integration** - Set up utility-first CSS framework
-2. **Base UI Component Wrappers** - Create styled wrappers for Base UI primitives
-3. **Component Documentation** - Add JSDoc and examples to components
-4. **Design Token Mapping** - Connect tokens to Tailwind configuration
+**Recommended Approach: Local Images**
+1. Add design images to `design-specs/` folder in the repo
+2. Organize by type:
+   - `design-specs/components/` - Individual component designs
+   - `design-specs/screens/` - Full screen layouts
+   - `design-specs/flows/` - User journey flows
+3. Tell Claude the file path: `"Implement design-specs/screens/login.png"`
+4. Claude reads the image, implements using Tailwind + Base UI foundation
+5. Claude takes Playwright screenshot for your review
+6. Iterate on the implementation
 
-The playground tabs are empty and ready for component development based on design specifications.
+**Design Maturity Levels Supported:**
+- 90-100% polish: Direct implementation
+- 70-90% polish: Implementation with clarifying questions
+- 50-70% polish: Implementation with UX suggestions when asked
+
+### Implementation Process
+
+1. **Design Review**: Claude analyzes your design image
+2. **Implementation Plan**: Confirms understanding and approach
+3. **Code**: Builds using established component patterns
+4. **Visual Test**: Playwright screenshot for your review
+5. **Iterate**: Refinements based on your feedback
+6. **Document**: Updates component docs and patterns
+
+See `TAILWIND_WORKFLOW.md` for complete technical workflow details.
+
+## Next Steps (Ready to Implement)
+
+**Phase 2: Screen Implementation**
+When you provide design specs, Claude will implement:
+
+1. **Login Screen** - Authentication with trust signals
+2. **Dashboard** - Overview with metrics and actions
+3. **Funding Application** - Multi-step form with validation
+4. **Approval Status** - Application tracking and updates
+
+**Component Evolution:**
+- Refine ButtonBaseUIWrapper with actual brand colors
+- Enhance InputBaseUIWrapper with fintech validation patterns
+- Create additional wrappers as needed (Card, Table, Modal, etc.)
+- Build fintech-specific components (MetricCard, StatusBadge, etc.)
+
+**UX Quick Wins (from review):**
+- Add trust signals and security badges
+- Improve error message visibility
+- Fix spacing consistency
+- Add focus states for accessibility
+- Enhance required field indicators
 
 ## Technical Recommendations & Future Enhancements
 
-### Tailwind CSS Integration (Planned)
-**Benefits:**
-- Rapid prototyping with utility classes
-- Consistency with design tokens
-- Easy responsive design
-- Smaller bundle sizes with purging
+### Tailwind CSS Integration ✅ Complete
 
-**Integration Plan:**
-1. Install Tailwind and configure with PostCSS
-2. Map design tokens to Tailwind config (colors, spacing, etc.)
-3. Gradually migrate from CSS modules to Tailwind utilities
-4. Keep Base UI components as foundation, style with Tailwind
-5. Maintain design system tokens as single source of truth
+**Completed:**
+- Tailwind CSS v4 with Vite plugin installed
+- All design tokens mapped to Tailwind configuration
+- CSS architecture updated with `@layer` directives
+- Component wrapper pattern established and documented
+- Working examples: ButtonBaseUIWrapper, InputBaseUIWrapper
 
-**Approach:**
-- Use `@apply` directives in CSS modules for gradual migration
-- Keep BEM naming for complex components
-- Use Tailwind utilities for layout and spacing
-- Custom Tailwind plugin for fintech-specific utilities
+**Usage Pattern:**
+```tsx
+// Components use Tailwind utilities directly
+className={classNames(
+  'inline-flex items-center justify-center',
+  'px-4 py-2.5 rounded-lg font-medium',
+  'bg-purple-700 hover:bg-purple-800',
+  'transition-all duration-150 ease-out'
+)}
+```
+
+**Configuration:**
+- Config: `tailwind.config.js`
+- Tokens: `src/design-system/tokens/`
+- Workflow: `TAILWIND_WORKFLOW.md`
 
 ### Base UI Foundation Strategy
 **Why Base UI:**
@@ -309,6 +367,68 @@ export const Input = ({ ...props }) => {
 ## Repository
 
 GitHub: https://github.com/chrisproductdesign/ogion-proto-0.5
+
+## MCP Server Configuration (Model Context Protocol)
+
+### ⚠️ IMPORTANT: Proper Configuration Approach
+
+**Context**: MCP servers enable Claude to access external tools and services (filesystem, databases, APIs, etc.)
+
+### Configuration Location
+MCP servers must be configured in the Claude Desktop application config:
+```
+/Users/chris/Library/Application Support/Claude/claude_desktop_config.json
+```
+
+**DO NOT** modify any Git repositories (especially not `/Users/chris/Documents/GitHub/claude-code`) for MCP configuration. This is an official Anthropic repository and should remain unchanged.
+
+### Current Available MCP Servers
+- **mui-mcp**: Material-UI documentation access (currently active)
+- **filesystem**: Access to specified directories
+- **UnityMCP**: Unity development server (installed at `~/.config/UnityMCP/`)
+- Additional servers can be installed via npm
+
+### Proper Setup Process
+1. **Edit the config file** directly:
+   ```bash
+   open -e "/Users/chris/Library/Application Support/Claude/claude_desktop_config.json"
+   ```
+
+2. **Add server configurations** in JSON format:
+   ```json
+   {
+     "mcpServers": {
+       "filesystem": {
+         "command": "npx",
+         "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path1", "/path2"]
+       },
+       "servername": {
+         "command": "command-to-run",
+         "args": ["arguments"],
+         "env": { "ENV_VAR": "value" }
+       }
+     }
+   }
+   ```
+
+3. **Restart Claude Desktop** for changes to take effect
+
+### Reference Documentation
+- **Setup Guide**: `MCP_SERVER_SETUP.md` - Complete configuration instructions
+- **Fix Script**: `fix_mcp_setup.sh` - Automated setup helper
+- **Available Servers**: Check npm for `@modelcontextprotocol/server-*` packages
+
+### Common Issues & Solutions
+- **GitHub Desktop shows "branched"**: Usually just `.DS_Store` files - add to `.gitignore`
+- **MCP not working**: Check config JSON syntax and restart Claude Desktop
+- **Permission errors**: Ensure paths in filesystem server are accessible
+
+### Best Practices
+1. Always configure MCP servers in the official Claude config location
+2. Never modify third-party repositories for local configuration
+3. Keep sensitive data (API tokens) in environment variables
+4. Test servers individually before adding multiple
+5. Backup config before making changes
 
 ## ⚠️ Common Mistakes to Avoid
 

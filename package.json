@@ -35,8 +35,11 @@
   "private": true,
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-beta.4",
+    "@tailwindcss/vite": "^4.1.15",
+    "autoprefixer": "^10.4.21",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.15"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",

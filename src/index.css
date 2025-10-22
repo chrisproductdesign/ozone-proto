@@ -1,74 +1,84 @@
-:root {
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    system-ui,
-    sans-serif;
-  color: #0f172a;
-  background-color: #ffffff;
-  line-height: 1.5;
+/* Tailwind CSS v4 imports */
+@import "tailwindcss";
+
+/* CSS Custom Properties from Design Tokens */
+@layer base {
+  :root {
+    font-family: theme(fontFamily.sans);
+    color: theme(colors.gray.900);
+    background-color: theme(colors.white);
+    line-height: 1.5;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+/* Application-specific styles */
+@layer components {
+  body {
+    @apply m-0 h-screen flex flex-col;
+  }
+
+  #root {
+    @apply flex-1 flex flex-col;
+  }
+
+  .playground {
+    @apply flex-1 flex flex-col p-6 gap-4;
+  }
+
+  .playground-tabs {
+    @apply flex gap-2 border-b border-gray-200 pb-0 overflow-x-auto;
+  }
+
+  .playground-tab {
+    @apply px-6 py-3 bg-transparent border-0 border-b-2 border-transparent
+           text-gray-500 cursor-pointer font-medium whitespace-nowrap
+           transition-all duration-150 ease-out;
+  }
+
+  .playground-tab:hover {
+    @apply text-gray-900;
+  }
+
+  .playground-tab.is-active {
+    @apply text-gray-900 border-gray-900;
+  }
+
+  .playground-content {
+    @apply flex-1 p-8 bg-white overflow-y-auto;
+  }
 }
 
-body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+/* Utility extensions for fintech-specific patterns */
+@layer utilities {
+  /* Custom utility classes for fintech components */
+  .fintech-card {
+    @apply bg-white rounded-xl shadow-md border border-gray-100 p-4;
+  }
 
-#root {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
+  .fintech-input {
+    @apply w-full px-3.5 py-2.5 rounded-lg border border-gray-200
+           text-gray-900 placeholder-gray-400
+           focus:outline-none focus:ring-2 focus:ring-purple-700 focus:border-transparent
+           transition-all duration-150;
+  }
 
-.playground {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem;
-  gap: 1rem;
-}
+  .fintech-button-primary {
+    @apply px-3.5 py-2.5 bg-purple-700 text-white font-medium
+           rounded-lg hover:bg-purple-800 active:bg-purple-900
+           transition-all duration-150;
+  }
 
-.playground-tabs {
-  display: flex;
-  gap: 0.5rem;
-  border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 0;
-  overflow-x: auto;
-}
+  .fintech-metric {
+    @apply text-3xl font-bold text-gray-900;
+  }
 
-.playground-tab {
-  padding: 0.75rem 1.5rem;
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid transparent;
-  color: #64748b;
-  cursor: pointer;
-  font-weight: 500;
-  white-space: nowrap;
-  transition: all 0.15s ease;
-}
-
-.playground-tab:hover {
-  color: #0f172a;
-}
-
-.playground-tab.is-active {
-  color: #0f172a;
-  border-bottom-color: #0f172a;
-}
-
-.playground-content {
-  flex: 1;
-  padding: 2rem;
-  background-color: #ffffff;
-  overflow-y: auto;
+  .fintech-label {
+    @apply text-sm font-medium text-gray-700;
+  }
 }
