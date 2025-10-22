@@ -64,6 +64,28 @@ npm run coverage    # Generate test coverage report
 npm run test:e2e    # Run Playwright E2E tests
 ```
 
+## Git Workflow
+
+**See `GIT_WORKFLOW.md` for complete version control strategy**
+
+### Quick Reference
+- **Commit frequently**: After each component, design iteration, or successful test
+- **Push at session end**: Never leave work only on local machine
+- **Direct to main**: For component development and iterations during prototype phase
+- **Feature branches**: Only for experimental or breaking changes
+- **Design specs**: Track in `design-specs/` folder, organized by components/screens/flows
+
+### Commit Message Format
+```
+type: Brief description
+
+- Detail what changed
+- Include design decisions
+- Reference design specs if applicable
+```
+
+Types: `feat`, `fix`, `refactor`, `style`, `docs`, `test`, `chore`
+
 ## Architecture
 
 ### Application Structure
@@ -83,20 +105,33 @@ The app uses a **minimal tab-based playground** for component development and it
 - Forms playground tab demonstrates working integration
 - Development workflow documented in `TAILWIND_WORKFLOW.md`
 
-**Phase 2 Ready: Design Implementation**
-- Design specs workflow: Local images in `design-specs/` folder
-- Component wrappers ready to evolve with actual designs
-- UX review completed with improvement roadmap
-- Ready to implement screens: Login, Dashboard, Funding Application, Approval Status
+🚀 **Phase 2 In Progress: Design Implementation**
+- ✅ **Login Screen**: Implemented with Ogion branding
+  - LoginCard component with interactive states
+  - Proper brown button color (#4A4543)
+  - Subtle focus states (no purple rings)
+  - Responsive design for mobile/desktop
+  - ARIA labels for accessibility
+  - Cream background (#F5F2ED) with SVG decorations
+- 📁 Design specs workflow: Local images in `design-specs/` folder
+- 🔍 Playwright testing for visual verification
+- 🎨 UX design reviewer agent for continuous feedback
+- 📝 Git workflow established in `GIT_WORKFLOW.md`
+
+**Next Screens to Implement:**
+- Dashboard (with metrics and funding status)
+- Funding Application (multi-step form)
+- Approval Status (progress tracking)
 
 **Playground Tabs:**
-1. **Typography** (`Typography.tsx`) - For text styles and hierarchy
-2. **Colors** (`Colors.tsx`) - For color system and palettes
-3. **Forms** (`Forms.tsx`) - ✅ Component integration test complete
-4. **Layout** (`Layout.tsx`) - For spacing and container components
-5. **Data** (`Data.tsx`) - For tables, lists, and data display
-6. **Feedback** (`Feedback.tsx`) - For alerts, toasts, and status indicators
-7. **Navigation** (`Navigation.tsx`) - For navigation patterns and menus
+1. **Login** (`Login.tsx`) - ✅ Complete Ogion login screen implementation
+2. **Typography** (`Typography.tsx`) - For text styles and hierarchy
+3. **Colors** (`Colors.tsx`) - For color system and palettes
+4. **Forms** (`Forms.tsx`) - ✅ Component integration test complete
+5. **Layout** (`Layout.tsx`) - For spacing and container components
+6. **Data** (`Data.tsx`) - For tables, lists, and data display
+7. **Feedback** (`Feedback.tsx`) - For alerts, toasts, and status indicators
+8. **Navigation** (`Navigation.tsx`) - For navigation patterns and menus
 
 **Flow Documentation:** See `FLOW_STRUCTURE.md` for planned user journey and screen requirements (to be implemented)
 
