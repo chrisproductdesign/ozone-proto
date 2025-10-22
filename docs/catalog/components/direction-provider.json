@@ -1,0 +1,21 @@
+{
+  "$schema": "../schema.json",
+  "id": "direction-provider",
+  "title": "Direction Provider",
+  "category": "utilities",
+  "baseDocUrl": "https://base-ui.com/react/utils/direction-provider.md",
+  "description": "TODO: add concise component summary.",
+  "status": {
+    "implementation": "not-started",
+    "docs": "not-started",
+    "tests": "not-started"
+  },
+  "variants": [],
+  "props": [],
+  "a11y": [],
+  "interactions": [],
+  "dependencies": [],
+  "recipes": [],
+  "agentNotes": "",
+  "lastSynced": "2025-10-20"
+}

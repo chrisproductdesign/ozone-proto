@@ -1,0 +1,21 @@
+{
+  "$schema": "../schema.json",
+  "id": "menubar",
+  "title": "Menubar",
+  "category": "navigation-layout",
+  "baseDocUrl": "https://base-ui.com/react/components/menubar.md",
+  "description": "TODO: add concise component summary.",
+  "status": {
+    "implementation": "not-started",
+    "docs": "not-started",
+    "tests": "not-started"
+  },
+  "variants": [],
+  "props": [],
+  "a11y": [],
+  "interactions": [],
+  "dependencies": [],
+  "recipes": [],
+  "agentNotes": "",
+  "lastSynced": "2025-10-20"
+}

@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://base-ui.local/schema/catalog.json",
+  "title": "Base UI Component Catalog Entry",
+  "description": "Machine-readable descriptor for a Base UI wrapper component, its variants, and agent notes.",
+  "type": "object",
+  "required": ["id", "title", "category", "description", "baseDocUrl", "status"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Optional JSON Schema reference for tooling."
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Kebab-case identifier (e.g., accordion, navigation-menu)."
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable component name."
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "navigation-layout",
+        "inputs-forms",
+        "status-data",
+        "overlays-feedback",
+        "utilities"
+      ],
+      "description": "Implementation wave grouping."
+    },
+    "baseDocUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "Source Base UI documentation URL."
+    },
+    "description": {
+      "type": "string",
+      "description": "Short purpose statement tailored to the wrapper implementation."
+    },
+    "status": {
+      "type": "object",
+      "required": ["implementation", "docs", "tests"],
+      "properties": {
+        "implementation": {
+          "type": "string",
+          "enum": ["not-started", "in-progress", "ready-for-review", "complete"],
+          "description": "State of the React wrapper."
+        },
+        "docs": {
+          "type": "string",
+          "enum": ["not-started", "in-progress", "ready-for-review", "complete"],
+          "description": "State of the MDX/markdown documentation for the component."
+        },
+        "tests": {
+          "type": "string",
+          "enum": ["not-started", "in-progress", "ready-for-review", "complete"],
+          "description": "State of the automated test coverage."
+        }
+      },
+      "additionalProperties": false
+    },
+    "variants": {
+      "type": "array",
+      "description": "Supported variants and their critical props.",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "summary"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Variant identifier (e.g., size-sm, orientation-vertical)."
+          },
+          "title": {
+            "type": "string",
+            "description": "Human-readable label."
+          },
+          "summary": {
+            "type": "string",
+            "description": "What this variant demonstrates."
+          },
+          "props": {
+            "type": "array",
+            "description": "Key prop overrides for the variant.",
+            "items": {
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "value": {
+                  "description": "Literal value or description of the prop override."
+                },
+                "notes": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "props": {
+      "type": "array",
+      "description": "Important props exposed by the wrapper.",
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "description"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean",
+            "default": false
+          },
+          "default": {
+            "description": "Default value or behavior."
+          },
+          "description": {
+            "type": "string"
+          },
+          "accessibility": {
+            "type": "string",
+            "description": "Accessibility considerations for this prop."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "a11y": {
+      "type": "array",
+      "description": "Accessibility requirements and patterns the wrapper must satisfy.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "interactions": {
+      "type": "array",
+      "description": "Critical user interactions to validate (keyboard, pointer, mobile).",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "Other components or hooks required for this component to function.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "recipes": {
+      "type": "array",
+      "description": "Common integration scenarios that should link to docs/recipes entries.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "agentNotes": {
+      "type": "string",
+      "description": "Instructions for LLMs/agents when choosing or composing this component."
+    },
+    "lastSynced": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the entry was last synchronized with upstream Base UI docs."
+    }
+  },
+  "additionalProperties": false
+}

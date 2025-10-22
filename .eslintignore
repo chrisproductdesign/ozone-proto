@@ -1,0 +1,7 @@
+dist
+node_modules
+coverage
+playwright-report
+*.config.js
+*.config.cjs
+*.config.mjs

@@ -1,0 +1,46 @@
+{
+  "$schema": "../schema.json",
+  "id": "component-name",
+  "title": "Component Title",
+  "category": "navigation-layout",
+  "baseDocUrl": "https://base-ui.com/react/components/example.md",
+  "description": "One-sentence summary of what this wrapper delivers for product teams and agents.",
+  "status": {
+    "implementation": "not-started",
+    "docs": "not-started",
+    "tests": "not-started"
+  },
+  "variants": [
+    {
+      "id": "default",
+      "title": "Default",
+      "summary": "Baseline configuration used by most experiences.",
+      "props": [
+        {
+          "name": "propName",
+          "value": "example",
+          "notes": "When set, toggles X behavior."
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "name": "propName",
+      "type": "string",
+      "required": false,
+      "default": "unset",
+      "description": "Explain what the prop controls and any Base UI mapping.",
+      "accessibility": "Document aria usage or keyboard impact."
+    }
+  ],
+  "a11y": [
+    "Screen reader users should hear <description>.",
+    "Ensure focus remains trapped while the component is open."
+  ],
+  "interactions": ["Space/Enter toggles the active item.", "Esc collapses the panel."],
+  "dependencies": ["hooks/useControllableState"],
+  "recipes": ["docs/recipes/dashboard-filter.md"],
+  "agentNotes": "Use this component when you need collapsible sections with keyboard-first navigation.",
+  "lastSynced": "2024-12-10"
+}

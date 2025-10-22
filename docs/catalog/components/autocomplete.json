@@ -1,0 +1,167 @@
+{
+  "$schema": "../schema.json",
+  "id": "autocomplete",
+  "title": "Autocomplete",
+  "category": "inputs-forms",
+  "baseDocUrl": "https://base-ui.com/react/components/autocomplete.md",
+  "description": "Typeahead input that surfaces filtered suggestions and lets users commit a value or freeform text.",
+  "status": {
+    "implementation": "not-started",
+    "docs": "not-started",
+    "tests": "not-started"
+  },
+  "variants": [
+    {
+      "id": "inline-combobox",
+      "title": "Inline Combobox",
+      "summary": "Default single-select combobox that renders an input with a tethered suggestion list.",
+      "props": [
+        {
+          "name": "freeform",
+          "value": "false",
+          "notes": "Restricts submitted value to one of the provided options."
+        }
+      ]
+    },
+    {
+      "id": "freeform-creatable",
+      "title": "Creatable Input",
+      "summary": "Allows users to submit text not found in the option list (tags, quick add).",
+      "props": [
+        {
+          "name": "freeform",
+          "value": "true",
+          "notes": "Bypasses option validation while still showing suggestions."
+        },
+        {
+          "name": "onSubmit",
+          "value": "(value) => createItem(value)",
+          "notes": "Handles new item creation when Enter is pressed."
+        }
+      ]
+    },
+    {
+      "id": "async-loading",
+      "title": "Async Suggestions",
+      "summary": "Fetches results after debounced input changes and displays loading state.",
+      "props": [
+        {
+          "name": "onInputValueChange",
+          "value": "debounce(fetchOptions)",
+          "notes": "Requests new options from a remote source."
+        },
+        {
+          "name": "loading",
+          "value": "true",
+          "notes": "Shows progress feedback in the suggestion list."
+        }
+      ]
+    },
+    {
+      "id": "multi-select",
+      "title": "Multi Select",
+      "summary": "Pill-based input that supports selecting multiple suggestions.",
+      "props": [
+        {
+          "name": "multiple",
+          "value": "true",
+          "notes": "Switches to listbox with checkbox semantics and exposes array state."
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "name": "options",
+      "type": "Array<{ value: string; label: string; disabled?: boolean; description?: string; }>",
+      "required": true,
+      "description": "Dataset that populates the suggestion list and item metadata.",
+      "accessibility": "Ensure labels remain unique to avoid duplicate announcements."
+    },
+    {
+      "name": "value",
+      "type": "string | string[]",
+      "description": "Controlled selection(s) returned when an option is chosen.",
+      "accessibility": "Mirror selected state visually and via aria-selected for assistive tech."
+    },
+    {
+      "name": "defaultValue",
+      "type": "string | string[]",
+      "description": "Initial selection for uncontrolled usage.",
+      "accessibility": "Avoid defaulting multiple values unless chips remain keyboard focusable."
+    },
+    {
+      "name": "inputValue",
+      "type": "string",
+      "description": "Controlled text value displayed in the input.",
+      "accessibility": "Synchronize with aria-activedescendant updates to keep narration aligned."
+    },
+    {
+      "name": "defaultInputValue",
+      "type": "string",
+      "description": "Initial text value when uncontrolled.",
+      "accessibility": "Provide placeholder or hint text if default is empty so screen readers understand expected input."
+    },
+    {
+      "name": "onInputValueChange",
+      "type": "(value: string) => void",
+      "description": "Fires on each keystroke to update state, fetch data, or filter options.",
+      "accessibility": "Throttle network calls to keep suggestion updates responsive."
+    },
+    {
+      "name": "onValueChange",
+      "type": "(value: string | string[]) => void",
+      "description": "Invoked when the user commits a selection.",
+      "accessibility": "Announce confirmation to live regions if selection triggers workflow changes."
+    },
+    {
+      "name": "filterFn",
+      "type": "(option, inputValue) => boolean",
+      "description": "Custom filtering logic for client-side search.",
+      "accessibility": "Return deterministic results so keyboard navigation order stays predictable."
+    },
+    {
+      "name": "highlightedValue",
+      "type": "string | null",
+      "description": "Controlled highlighted option, synced with aria-activedescendant.",
+      "accessibility": "Keep highlight on visible items; avoid pointing to filtered-out options."
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "description": "Displays a loading indicator inside the list while results are fetched.",
+      "accessibility": "Announce busy state via aria-busy or live region updates."
+    },
+    {
+      "name": "multiple",
+      "type": "boolean",
+      "default": "false",
+      "description": "Enables multi-selection behavior with chips/pills.",
+      "accessibility": "Switches underlying pattern to listbox with role=\"option\" and aria-selected management."
+    }
+  ],
+  "a11y": [
+    "Root input exposes role=\"combobox\" with aria-controls pointing to the listbox element.",
+    "Highlighted option updates aria-activedescendant for screen reader guidance.",
+    "Set aria-expanded on the input when the suggestion list is open.",
+    "When multiple is true, render selected values as accessible chips with remove buttons.",
+    "Ensure Cancel/Escape closes the list and restores focus to the input."
+  ],
+  "interactions": [
+    "Typing updates the input value and refines suggestions.",
+    "ArrowDown/ArrowUp cycle through available options while the list is open.",
+    "Enter commits the highlighted option or submits freeform text when allowed.",
+    "Escape closes the listbox and clears highlight without altering the value.",
+    "Clicking outside collapses the list but keeps the input value intact."
+  ],
+  "dependencies": [
+    "@base-ui-components/react/listbox",
+    "@base-ui-components/react/popover",
+    "hooks/useControllableState",
+    "hooks/useDebouncedCallback",
+    "hooks/useFilteredOptions"
+  ],
+  "recipes": ["docs/recipes/product-search.md", "docs/recipes/tag-input.md"],
+  "agentNotes": "Use Autocomplete whenever users need rapid lookup against a manageable dataset (products, teams, tags). Favor freeform \"creatable\" mode for tags or when backend accepts arbitrary values. Coordinate Tailwind tokens for chip styles, loading indicators, and dropdown positioning. Validate keyboard and screen reader flows for both single and multi select. For large datasets, pair with virtualization and debounced async calls to keep input responsive.",
+  "lastSynced": "2024-12-11"
+}

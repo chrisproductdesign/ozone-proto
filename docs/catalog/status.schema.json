@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://base-ui.local/schema/catalog-status.json",
+  "title": "Base UI Catalog Status",
+  "type": "object",
+  "required": ["lastUpdated", "components"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Optional JSON Schema reference for tooling."
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date"
+    },
+    "waves": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "components"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "navigation-layout",
+              "inputs-forms",
+              "status-data",
+              "overlays-feedback",
+              "utilities"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "components": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "category", "implementation", "docs", "tests"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "navigation-layout",
+              "inputs-forms",
+              "status-data",
+              "overlays-feedback",
+              "utilities"
+            ]
+          },
+          "implementation": {
+            "type": "string",
+            "enum": ["not-started", "in-progress", "ready-for-review", "complete"]
+          },
+          "docs": {
+            "type": "string",
+            "enum": ["not-started", "in-progress", "ready-for-review", "complete"]
+          },
+          "tests": {
+            "type": "string",
+            "enum": ["not-started", "in-progress", "ready-for-review", "complete"]
+          },
+          "notes": {
+            "type": "string",
+            "description": "Optional status note or blocker summary."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

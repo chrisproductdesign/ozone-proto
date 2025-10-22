@@ -1,0 +1,218 @@
+.ui-button {
+  --button-height-sm: 2rem;
+  --button-height-md: 2.5rem;
+  --button-height-lg: 3rem;
+  --button-padding-x-sm: 0.75rem;
+  --button-padding-x-md: 1.25rem;
+  --button-padding-x-lg: 1.75rem;
+  --button-font-size-sm: 0.875rem;
+  --button-font-size-md: 1rem;
+  --button-font-size-lg: 1.125rem;
+  --button-radius: 0.5rem;
+  --button-gap: 0.5rem;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--button-gap);
+  height: var(--button-height-md);
+  padding: 0 var(--button-padding-x-md);
+  font-size: var(--button-font-size-md);
+  font-weight: 500;
+  line-height: 1;
+  border: none;
+  border-radius: var(--button-radius);
+  cursor: pointer;
+  transition: all 150ms ease;
+  white-space: nowrap;
+  user-select: none;
+  outline: none;
+}
+
+/* Size Variants */
+.ui-button--sm {
+  height: var(--button-height-sm);
+  padding: 0 var(--button-padding-x-sm);
+  font-size: var(--button-font-size-sm);
+  --button-gap: 0.375rem;
+}
+
+.ui-button--lg {
+  height: var(--button-height-lg);
+  padding: 0 var(--button-padding-x-lg);
+  font-size: var(--button-font-size-lg);
+  --button-gap: 0.625rem;
+}
+
+/* Primary Variant */
+.ui-button--primary {
+  background: #1e293b;
+  color: white;
+}
+
+.ui-button--primary:hover:not(:disabled) {
+  background: #0f172a;
+}
+
+.ui-button--primary:active:not(:disabled) {
+  background: #020617;
+}
+
+.ui-button--primary:focus-visible {
+  box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.2);
+}
+
+/* Secondary Variant */
+.ui-button--secondary {
+  background: white;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+}
+
+.ui-button--secondary:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.ui-button--secondary:active:not(:disabled) {
+  background: #f1f5f9;
+}
+
+.ui-button--secondary:focus-visible {
+  box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.2);
+}
+
+/* Ghost Variant */
+.ui-button--ghost {
+  background: transparent;
+  color: #1e293b;
+}
+
+.ui-button--ghost:hover:not(:disabled) {
+  background: rgba(15, 23, 42, 0.05);
+}
+
+.ui-button--ghost:active:not(:disabled) {
+  background: rgba(15, 23, 42, 0.1);
+}
+
+.ui-button--ghost:focus-visible {
+  box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.2);
+}
+
+/* Danger Variant */
+.ui-button--danger {
+  background: #dc2626;
+  color: white;
+}
+
+.ui-button--danger:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+.ui-button--danger:active:not(:disabled) {
+  background: #991b1b;
+}
+
+.ui-button--danger:focus-visible {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+}
+
+/* States */
+.ui-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ui-button--full-width {
+  width: 100%;
+}
+
+/* Loading State */
+.ui-button--loading {
+  color: transparent;
+  pointer-events: none;
+}
+
+.ui-button__loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-button__loader-icon {
+  width: 1.25em;
+  height: 1.25em;
+  animation: rotate 1s linear infinite;
+}
+
+.ui-button__loader-circle {
+  stroke: currentColor;
+  stroke-dasharray: 62.8;
+  stroke-dashoffset: 47.1;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+.ui-button--primary .ui-button__loader-circle,
+.ui-button--danger .ui-button__loader-circle {
+  stroke: white;
+}
+
+.ui-button--secondary .ui-button__loader-circle,
+.ui-button--ghost .ui-button__loader-circle {
+  stroke: #1e293b;
+}
+
+/* Icons */
+.ui-button__icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ui-button__icon svg {
+  width: 1em;
+  height: 1em;
+}
+
+.ui-button__content {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Animations */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 47.1;
+  }
+  50% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -47.1;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .ui-button {
+    transition: none;
+  }
+
+  .ui-button__loader-icon,
+  .ui-button__loader-circle {
+    animation: none;
+  }
+}

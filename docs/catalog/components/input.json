@@ -1,0 +1,209 @@
+{
+  "$schema": "../schema.json",
+  "id": "input",
+  "title": "Input",
+  "category": "inputs-forms",
+  "baseDocUrl": "https://base-ui.com/react/components/input.md",
+  "description": "Base UI input wrapper exposing density, appearance, and decorator tokens for multi-surface forms.",
+  "status": {
+    "implementation": "in-progress",
+    "docs": "in-progress",
+    "tests": "in-progress"
+  },
+  "variants": [
+    {
+      "id": "outline-default",
+      "title": "Outline (default)",
+      "summary": "Baseline field with an outlined contour and roomy padding for primary forms.",
+      "props": [
+        {
+          "name": "appearance",
+          "value": "outline",
+          "notes": "Applies the default bordered treatment with contrast-focused focus ring."
+        },
+        {
+          "name": "fullWidth",
+          "value": "true",
+          "notes": "Expands to fill responsive grid columns or dialog widths."
+        }
+      ]
+    },
+    {
+      "id": "compact-density",
+      "title": "Compact density",
+      "summary": "Small footprint input for toolbars or table filters.",
+      "props": [
+        {
+          "name": "size",
+          "value": "sm",
+          "notes": "Shrinks padding, font-size, and decorator gap for tight UI clusters."
+        },
+        {
+          "name": "startDecorator",
+          "value": "<span>PR</span>",
+          "notes": "Prefix monogram example; keep concise to avoid layout shift."
+        }
+      ]
+    },
+    {
+      "id": "soft-success",
+      "title": "Soft success with action",
+      "summary": "Surface-level confirmation styling paired with a quick action button.",
+      "props": [
+        {
+          "name": "appearance",
+          "value": "soft",
+          "notes": "Light tint background with softened border for positive feedback."
+        },
+        {
+          "name": "status",
+          "value": "success",
+          "notes": "Adjusts border/background tokens to green spectrum."
+        },
+        {
+          "name": "endDecorator",
+          "value": "<button>Clear</button>",
+          "notes": "Action buttons remain keyboard accessible; ensure type='button'."
+        }
+      ]
+    },
+    {
+      "id": "plain-inline-error",
+      "title": "Plain inline error",
+      "summary": "Underline-only treatment flagged for validation errors.",
+      "props": [
+        {
+          "name": "appearance",
+          "value": "plain",
+          "notes": "Removes borders while keeping typography and underline focus states."
+        },
+        {
+          "name": "status",
+          "value": "danger",
+          "notes": "Adds crimson underline and background wash for invalid feedback."
+        },
+        {
+          "name": "aria-invalid",
+          "value": "true",
+          "notes": "Ensures assistive tech announcements align with visual error state."
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "md",
+      "description": "Controls padding, font-size, and decorator gap via density tokens.",
+      "accessibility": "Compact size should retain at least 32px touch targets on mobile."
+    },
+    {
+      "name": "appearance",
+      "type": "'outline' | 'soft' | 'plain'",
+      "default": "outline",
+      "description": "Surface and border treatment applied to the input wrapper.",
+      "accessibility": "Ensure chosen appearance preserves a 3:1 contrast ratio against backgrounds."
+    },
+    {
+      "name": "status",
+      "type": "'default' | 'success' | 'warning' | 'danger'",
+      "default": "default",
+      "description": "Applies semantic color tokens for validation or status feedback.",
+      "accessibility": "Pair color with copy or icons so non-perceivable users understand the state."
+    },
+    {
+      "name": "fullWidth",
+      "type": "boolean",
+      "default": "false",
+      "description": "Forces the wrapper to stretch to its container width.",
+      "accessibility": "Use full-width for responsive layouts so the focus outline is never clipped."
+    },
+    {
+      "name": "startDecorator",
+      "type": "ReactNode",
+      "description": "Element rendered before the input (prefix text, icons, chips).",
+      "accessibility": "Decorators should be presentational unless they expose an interactive element."
+    },
+    {
+      "name": "endDecorator",
+      "type": "ReactNode",
+      "description": "Element rendered after the input (suffix actions, unit labels).",
+      "accessibility": "Interactive decorators must remain keyboard reachable and announce intent."
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Custom class applied to the root wrapper for theming overrides.",
+      "accessibility": "Avoid removing focus-visible styles when overriding."
+    },
+    {
+      "name": "inputClassName",
+      "type": "string",
+      "description": "Class passed to the native <input> element.",
+      "accessibility": "Preserve legible font-size and placeholder contrast when styling directly."
+    },
+    {
+      "name": "onValueChange",
+      "type": "(value: string, details: BaseUIChangeEventDetails) => void",
+      "description": "Base UI controlled change callback emitted with the latest value.",
+      "accessibility": "Use to sync live validation messages without delaying announcements."
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "description": "Controlled value for the input element.",
+      "accessibility": "Keep value state in sync with associated Field messages."
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "description": "Initial value when uncontrolled.",
+      "accessibility": "Provide sensible defaults when auto-focusing so users are not surprised."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Disables the input control and decorator interactions.",
+      "accessibility": "Disabled fields are removed from tab order by the native element."
+    },
+    {
+      "name": "readOnly",
+      "type": "boolean",
+      "description": "Marks the input as read-only while keeping it focusable.",
+      "accessibility": "Convey read-only state in accompanying text; the component dims background automatically."
+    },
+    {
+      "name": "type",
+      "type": "React.InputHTMLAttributes<HTMLInputElement>['type']",
+      "description": "Native input type attribute for specialized keyboards and validation.",
+      "accessibility": "Using email, tel, or number helps virtual keyboards present optimized layouts."
+    },
+    {
+      "name": "aria-invalid",
+      "type": "boolean | 'true' | 'false'",
+      "description": "Signals validation errors and flips the wrapper to danger tokens automatically.",
+      "accessibility": "When set, pair with Field.Error or live region messaging so errors are announced."
+    }
+  ],
+  "a11y": [
+    "All aria-* props funnel to the native <input>; aria-invalid automatically maps to a danger surface.",
+    "Wrap with Field for labels, descriptions, and error messaging so screen readers announce context.",
+    "Interactive decorators should follow tab order expectations; supply keyboard handlers for custom buttons.",
+    "Ensure placeholder text is supplemental—use labels (Field.Label) for persistent identification."
+  ],
+  "interactions": [
+    "Focus-visible activates an outline and box-shadow for accessible focus indication.",
+    "onValueChange emits debounced-free string updates for inline validation and autosave flows.",
+    "Hovering or focusing decorators styled as buttons should respond with pointer-friendly states."
+  ],
+  "dependencies": [
+    "@base-ui-components/react/input",
+    "src/components/input/Input.tsx",
+    "src/components/input/Input.css",
+    "src/utils/classNames"
+  ],
+  "recipes": [],
+  "agentNotes": "Pair the Input wrapper with Field.Label and Field.Error to deliver semantic labeling. Size and appearance tokens map cleanly to Tailwind once density scales land—document those in `variants.ts` for automation. For forms requiring adornments, pass React nodes to decorators instead of nesting additional wrappers. Prefer onValueChange over onChange so Base UI can manage event detail semantics.",
+  "lastSynced": "2025-01-16"
+}

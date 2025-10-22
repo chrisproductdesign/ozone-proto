@@ -1,0 +1,152 @@
+.ui-input {
+  --input-radius: 0.625rem;
+  --input-border-color: rgba(15, 23, 42, 0.14);
+  --input-background: rgba(255, 255, 255, 0.9);
+  --input-text: #0f172a;
+  --input-placeholder: rgba(15, 23, 42, 0.45);
+  --input-border-width: 1px;
+  --input-padding-x: 0.875rem;
+  --input-padding-y: 0.625rem;
+  --input-gap: 0.5rem;
+  --input-font-size: 1rem;
+  --input-line-height: 1.4;
+  --input-adornment-color: rgba(15, 23, 42, 0.6);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  gap: var(--input-gap);
+  border-radius: var(--input-radius);
+  border: var(--input-border-width) solid var(--input-border-color);
+  background: var(--input-background);
+  color: var(--input-text);
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    background-color 120ms ease,
+    color 120ms ease;
+}
+
+.ui-input[data-fullwidth='true'] {
+  width: 100%;
+}
+
+.ui-input[data-disabled='true'] {
+  --input-background: rgba(241, 245, 249, 0.7);
+  --input-text: rgba(71, 85, 105, 0.66);
+  --input-placeholder: rgba(71, 85, 105, 0.5);
+  --input-border-color: rgba(148, 163, 184, 0.45);
+  cursor: not-allowed;
+}
+
+.ui-input[data-readonly='true'] {
+  --input-background: rgba(248, 250, 252, 0.92);
+}
+
+.ui-input:focus-within {
+  --input-border-color: rgba(59, 130, 246, 0.8);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.14);
+}
+
+.ui-input[data-appearance='soft'] {
+  --input-background: rgba(59, 130, 246, 0.1);
+  --input-border-color: rgba(59, 130, 246, 0.2);
+}
+
+.ui-input[data-appearance='plain'] {
+  --input-border-width: 0;
+  --input-background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.ui-input[data-status='success'] {
+  --input-border-color: rgba(34, 197, 94, 0.55);
+  --input-background: rgba(16, 185, 129, 0.12);
+}
+
+.ui-input[data-status='warning'] {
+  --input-border-color: rgba(234, 179, 8, 0.6);
+  --input-background: rgba(253, 224, 71, 0.12);
+}
+
+.ui-input[data-status='danger'] {
+  --input-border-color: rgba(239, 68, 68, 0.65);
+  --input-background: rgba(254, 226, 226, 0.24);
+}
+
+.ui-input__control {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font-size: var(--input-font-size);
+  line-height: var(--input-line-height);
+  padding: var(--input-padding-y) var(--input-padding-x);
+  min-width: 0;
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+.ui-input__control::placeholder {
+  color: var(--input-placeholder);
+}
+
+.ui-input[data-appearance='plain'] .ui-input__control {
+  padding-inline: 0;
+  padding-block: 0.5rem;
+  border-bottom: 1px solid var(--input-border-color, rgba(148, 163, 184, 0.45));
+  border-radius: 0;
+}
+
+.ui-input__decorator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--input-adornment-color);
+  padding-inline: 0.25rem;
+}
+
+.ui-input__decorator > button {
+  border: 0;
+  background: rgba(15, 23, 42, 0.06);
+  color: inherit;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.ui-input__decorator > button:hover,
+.ui-input__decorator > button:focus-visible {
+  background: rgba(59, 130, 246, 0.18);
+  outline: none;
+}
+
+.ui-input[data-size='sm'] {
+  --input-padding-y: 0.375rem;
+  --input-padding-x: 0.625rem;
+  --input-gap: 0.375rem;
+  --input-font-size: 0.875rem;
+  --input-line-height: 1.35;
+}
+
+.ui-input[data-size='lg'] {
+  --input-padding-y: 0.875rem;
+  --input-padding-x: 1rem;
+  --input-gap: 0.625rem;
+  --input-font-size: 1.0625rem;
+  --input-line-height: 1.45;
+}
+
+@media (prefers-contrast: more) {
+  .ui-input {
+    --input-border-color: rgba(15, 23, 42, 0.8);
+  }
+
+  .ui-input:focus-within {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  }
+}

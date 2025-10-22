@@ -1,0 +1,147 @@
+/* Root */
+.ui-tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ui-tabs--vertical {
+  flex-direction: row;
+}
+
+/* List */
+.ui-tabs__list {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+  position: relative;
+}
+
+.ui-tabs--vertical .ui-tabs__list {
+  flex-direction: column;
+  border-bottom: none;
+  border-right: 1px solid #e2e8f0;
+  align-items: stretch;
+  min-width: 200px;
+}
+
+/* Trigger */
+.ui-tabs__trigger {
+  position: relative;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 200ms ease;
+  white-space: nowrap;
+  outline: none;
+}
+
+.ui-tabs__trigger:hover {
+  color: #1e293b;
+  background: rgba(15, 23, 42, 0.03);
+}
+
+.ui-tabs__trigger:focus-visible {
+  background: rgba(59, 130, 246, 0.05);
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: -2px;
+  border-radius: 0.25rem;
+}
+
+.ui-tabs__trigger--active {
+  color: #1e293b;
+  border-bottom-color: #1e293b;
+}
+
+.ui-tabs__trigger:disabled {
+  color: #cbd5e1;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Vertical orientation trigger adjustments */
+.ui-tabs--vertical .ui-tabs__trigger {
+  text-align: left;
+  border-bottom: none;
+  border-left: 2px solid transparent;
+  width: 100%;
+}
+
+.ui-tabs--vertical .ui-tabs__trigger--active {
+  border-left-color: #1e293b;
+  background: rgba(15, 23, 42, 0.03);
+}
+
+/* Content */
+.ui-tabs__content {
+  padding: 1.5rem 0;
+  animation: tabsFadeIn 200ms ease;
+}
+
+.ui-tabs__content--hidden {
+  display: none;
+}
+
+.ui-tabs--vertical .ui-tabs__content {
+  flex: 1;
+  padding: 0 1.5rem;
+}
+
+/* Animation */
+@keyframes tabsFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .ui-tabs__trigger,
+  .ui-tabs__content {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .ui-tabs__list {
+    border-color: #334155;
+  }
+
+  .ui-tabs--vertical .ui-tabs__list {
+    border-color: #334155;
+  }
+
+  .ui-tabs__trigger {
+    color: #94a3b8;
+  }
+
+  .ui-tabs__trigger:hover {
+    color: #f1f5f9;
+    background: rgba(241, 245, 249, 0.03);
+  }
+
+  .ui-tabs__trigger--active {
+    color: #f1f5f9;
+    border-color: #f1f5f9;
+  }
+
+  .ui-tabs--vertical .ui-tabs__trigger--active {
+    background: rgba(241, 245, 249, 0.03);
+  }
+
+  .ui-tabs__trigger:disabled {
+    color: #475569;
+  }
+}

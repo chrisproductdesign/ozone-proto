@@ -1,0 +1,124 @@
+{
+  "$schema": "../schema.json",
+  "id": "accordion",
+  "title": "Accordion",
+  "category": "navigation-layout",
+  "baseDocUrl": "https://base-ui.com/react/components/accordion.md",
+  "description": "Composable disclosure list that stacks related content in collapsible regions while following Base UI’s accessible primitives.",
+  "status": {
+    "implementation": "not-started",
+    "docs": "not-started",
+    "tests": "not-started"
+  },
+  "variants": [
+    {
+      "id": "single-default",
+      "title": "Single Expand",
+      "summary": "Only one panel open; roving focus keeps triggers keyboard reachable.",
+      "props": [
+        {
+          "name": "type",
+          "value": "single",
+          "notes": "Collapses the previously opened item whenever a new value is set."
+        },
+        {
+          "name": "collapsible",
+          "value": "true",
+          "notes": "Allows closing the active panel so all items can remain collapsed."
+        }
+      ]
+    },
+    {
+      "id": "multiple",
+      "title": "Multiple Expand",
+      "summary": "Checkbox-like toggling that leaves several panels open simultaneously.",
+      "props": [
+        {
+          "name": "type",
+          "value": "multiple",
+          "notes": "Wrapper exposes array value helpers for controlled and uncontrolled usage."
+        },
+        {
+          "name": "defaultValue",
+          "value": "[\"shipping\", \"billing\"]",
+          "notes": "Illustrates bootstrapping with more than one expanded panel."
+        }
+      ]
+    },
+    {
+      "id": "density-compact",
+      "title": "Compact Density",
+      "summary": "Reduced spacing + typography for sidebars, drawers, or mobile accordions.",
+      "props": [
+        {
+          "name": "density",
+          "value": "compact",
+          "notes": "Maps to density tokens in `src/themes/density.ts` for Tailwind bridge work."
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "name": "itemLabels",
+      "type": "Array<{ value: string; trigger: ReactNode; content: ReactNode; disabled?: boolean; }>",
+      "required": true,
+      "description": "Ordered list of accordion sections rendered by the wrapper.",
+      "accessibility": "Keep trigger labels unique and descriptive so announcements convey panel purpose."
+    },
+    {
+      "name": "type",
+      "type": "'single' | 'multiple'",
+      "default": "single",
+      "description": "Controls whether one or many items may be expanded at a time.",
+      "accessibility": "Single mode mimics radio-group semantics; multiple mode mirrors checkbox semantics."
+    },
+    {
+      "name": "value",
+      "type": "string | string[]",
+      "description": "Controlled value(s) that determine which panels are expanded.",
+      "accessibility": "Keep value state in sync with visual indicators so screen reader users hear accurate status."
+    },
+    {
+      "name": "defaultValue",
+      "type": "string | string[]",
+      "description": "Uncontrolled initial selection when the wrapper manages open items internally.",
+      "accessibility": "Set defaults that leave the first focusable trigger visible for keyboard users."
+    },
+    {
+      "name": "collapsible",
+      "type": "boolean",
+      "default": "false",
+      "description": "Whether the active item in single mode can be collapsed.",
+      "accessibility": "Document the behavior so assistive technology users know if closing the last panel is possible."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": "false",
+      "description": "Disables all triggers and prevents toggling.",
+      "accessibility": "Disabled triggers should be removed from tab order unless design requires them to remain focusable."
+    }
+  ],
+  "a11y": [
+    "Triggers render as <button> elements with aria-controls linking to their panels.",
+    "Heading slots keep the document outline intact (default h3 but overrideable).",
+    "Panels expose role='region' and aria-labelledby attributes for clear announcements."
+  ],
+  "interactions": [
+    "ArrowDown moves focus to the next enabled trigger.",
+    "ArrowUp moves focus to the previous enabled trigger.",
+    "Home/End jump to the first/last trigger.",
+    "Space/Enter toggle the focused item open or closed.",
+    "Esc collapses the active panel when single-mode is set to collapsible."
+  ],
+  "dependencies": [
+    "hooks/useAccordionState",
+    "hooks/useRovingFocus",
+    "hooks/useControllableState",
+    "themes/density"
+  ],
+  "recipes": ["docs/recipes/account-settings.md"],
+  "agentNotes": "Reach for this when presenting vertically stacked FAQs, settings, onboarding steps, or mobile navigation clusters. Pair with search/filter inputs for long lists. When Tailwind styles land, map density/variant tokens to utility classes and document responsive behavior. Warn agents when async content is loaded so they delay focus handoff until panels render.",
+  "lastSynced": "2024-12-11"
+}

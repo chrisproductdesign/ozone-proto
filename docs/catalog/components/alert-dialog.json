@@ -1,0 +1,117 @@
+{
+  "$schema": "../schema.json",
+  "id": "alert-dialog",
+  "title": "Alert Dialog",
+  "category": "overlays-feedback",
+  "baseDocUrl": "https://base-ui.com/react/components/alert-dialog.md",
+  "description": "Modal confirmation dialog that blocks the UI until the user acknowledges a high-impact decision.",
+  "status": {
+    "implementation": "not-started",
+    "docs": "not-started",
+    "tests": "not-started"
+  },
+  "variants": [
+    {
+      "id": "basic-confirm",
+      "title": "Confirm Action",
+      "summary": "Default destructive confirmation with cancel and continue actions.",
+      "props": [
+        {
+          "name": "intent",
+          "value": "'destructive'",
+          "notes": "Sets tone tokens so Tailwind recipes can emphasize the danger state."
+        }
+      ]
+    },
+    {
+      "id": "form-guard",
+      "title": "Unsaved Changes Guard",
+      "summary": "Intercept closing another dialog or page navigation when there is unsaved data.",
+      "props": [
+        {
+          "name": "onOpenChange",
+          "value": "(open) => open || confirmDiscard()",
+          "notes": "Shows how to gate dismissal behind extra logic before closing."
+        }
+      ]
+    },
+    {
+      "id": "async-acknowledge",
+      "title": "Async Confirmation",
+      "summary": "Disable continue button until a background action resolves.",
+      "props": [
+        {
+          "name": "actionProps.disabled",
+          "value": "loading",
+          "notes": "Prevents double submission while promise resolves."
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "name": "open",
+      "type": "boolean",
+      "description": "Controlled open state passed to the Root component.",
+      "accessibility": "Keep open state in sync with focus management so screen readers do not lose context."
+    },
+    {
+      "name": "defaultOpen",
+      "type": "boolean",
+      "description": "Initial open state for uncontrolled usage.",
+      "accessibility": "Avoid defaulting to open on first render to prevent trapping focus unexpectedly."
+    },
+    {
+      "name": "onOpenChange",
+      "type": "(open: boolean) => void",
+      "description": "Called when the dialog requests to open or close.",
+      "accessibility": "Close handlers must resolve quickly; long-running logic should show loading feedback inside the dialog."
+    },
+    {
+      "name": "leastDestructiveRef",
+      "type": "React.RefObject<HTMLElement>",
+      "description": "Element that receives initial focus (usually the safe/cancel action).",
+      "accessibility": "Ensures keyboard users land on the least destructive choice by default."
+    },
+    {
+      "name": "Trigger",
+      "type": "ReactNode",
+      "required": true,
+      "description": "Control that opens the alert dialog.",
+      "accessibility": "Label the trigger clearly to signal the critical action it initiates."
+    },
+    {
+      "name": "Title",
+      "type": "ReactNode",
+      "required": true,
+      "description": "Short heading describing the decision required.",
+      "accessibility": "Acts as the dialog’s accessible name via aria-labelledby."
+    },
+    {
+      "name": "Description",
+      "type": "ReactNode",
+      "description": "Supplemental explanation of consequences.",
+      "accessibility": "Referenced by aria-describedby so keep copy concise and actionable."
+    }
+  ],
+  "a11y": [
+    "Focus is trapped within the dialog until dismissed, with least destructive action focused first.",
+    "Backdrop prevents background content from being interacted with or announced.",
+    "Title and Description map to aria-labelledby/aria-describedby for screen reader context.",
+    "Dismissal should be wired to Escape only when a safe action is available; otherwise require explicit acknowledgement."
+  ],
+  "interactions": [
+    "Trigger click opens the dialog and moves focus to the cancel button.",
+    "Escape closes the dialog when `allowEscapeKey` (from Dialog) is enabled.",
+    "Tab/Shift+Tab cycle through available actions without leaving the popup.",
+    "Confirm button invokes provided handler and closes on success."
+  ],
+  "dependencies": [
+    "@base-ui-components/react/dialog",
+    "hooks/useControllableState",
+    "hooks/usePreventScroll"
+  ],
+  "recipes": ["docs/recipes/discard-draft-confirmation.md"],
+  "agentNotes": "Use Alert Dialog for irreversible or high-impact actions (deletes, data loss). Pair with standard Dialog when confirming closure inside larger flows. Tailwind adapters should map danger states to red emphasis and ensure the cancel button remains the initial focus target. Avoid stacking multiple alert dialogs; reset state between confirmations.",
+  "lastSynced": "2024-12-11"
+}

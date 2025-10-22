@@ -1,0 +1,136 @@
+{
+  "$schema": "../schema.json",
+  "id": "avatar",
+  "title": "Avatar",
+  "category": "status-data",
+  "baseDocUrl": "https://base-ui.com/react/components/avatar.md",
+  "description": "Profile image primitive with image, initials fallback, and graceful loading states for people or entity badges.",
+  "status": {
+    "implementation": "not-started",
+    "docs": "not-started",
+    "tests": "not-started"
+  },
+  "variants": [
+    {
+      "id": "image-with-fallback",
+      "title": "Image + Initials",
+      "summary": "Displays the user photo and falls back to initials when the image fails.",
+      "props": [
+        {
+          "name": "Image.src",
+          "value": "\"https://.../avatar.jpg\"",
+          "notes": "Primary photo source; failure triggers fallback."
+        },
+        {
+          "name": "Fallback.children",
+          "value": "\"LT\"",
+          "notes": "Initials or icon shown while loading or on error."
+        }
+      ]
+    },
+    {
+      "id": "icon-fallback",
+      "title": "Icon Fallback",
+      "summary": "Renders a user or organization icon when no image is provided.",
+      "props": [
+        {
+          "name": "Image.src",
+          "value": "undefined",
+          "notes": "Omit the image to force fallback rendering."
+        },
+        {
+          "name": "Fallback.render",
+          "value": "() => <UserIcon />",
+          "notes": "Supplies custom SVG or icon component."
+        }
+      ]
+    },
+    {
+      "id": "status-badge",
+      "title": "Status Badge",
+      "summary": "Adds an online/offline indicator via overlay slot or wrapper.",
+      "props": [
+        {
+          "name": "Root.className",
+          "value": "cn('relative', statusClass)",
+          "notes": "Utility classes position badge elements."
+        }
+      ]
+    },
+    {
+      "id": "group-stack",
+      "title": "Avatar Group",
+      "summary": "Stacks multiple avatars with overlapping layout for teams.",
+      "props": [
+        {
+          "name": "Root.style",
+          "value": "{ marginInlineStart: index === 0 ? 0 : '-12px' }",
+          "notes": "Example styling to create a stack effect."
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "name": "Root.className",
+      "type": "string | (ownerState) => string",
+      "description": "Styling hook for the outer <span> element.",
+      "accessibility": "Ensure focus ring styles remain visible when avatars are keyboard focusable."
+    },
+    {
+      "name": "Image.src",
+      "type": "string",
+      "description": "URL of the profile image.",
+      "accessibility": "Provide a meaningful alt text describing the person or entity."
+    },
+    {
+      "name": "Image.alt",
+      "type": "string",
+      "description": "Alternate text surfaced to screen readers.",
+      "accessibility": "Use person’s name or purpose; leave empty only for purely decorative avatars."
+    },
+    {
+      "name": "Image.onLoadingStatusChange",
+      "type": "(status: 'idle' | 'loading' | 'loaded' | 'error') => void",
+      "description": "Callback fired when the image loading state changes.",
+      "accessibility": "Hook into this to set aria-busy or show skeletons while loading."
+    },
+    {
+      "name": "Fallback.delay",
+      "type": "number",
+      "description": "Milliseconds to wait before showing the fallback.",
+      "accessibility": "Use a short delay (~200ms) to avoid flicker while keeping failures discoverable."
+    },
+    {
+      "name": "Fallback.className",
+      "type": "string | (ownerState) => string",
+      "description": "Styles fallback content (initials, icon).",
+      "accessibility": "Maintain contrast ratios for initials/background combinations."
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg'",
+      "description": "Convenience token controlling dimensions via Tailwind or theme utilities.",
+      "accessibility": "Ensure hit area stays at least 40px when avatars act as buttons."
+    }
+  ],
+  "a11y": [
+    "Avatar.Image announces alt text; fallback content should convey the same identity.",
+    "Provide role=\"img\" and aria-label when rendering custom fallback icons.",
+    "Keep avatars focusable only when interactive (links, buttons); otherwise remove from tab order.",
+    "In groups, expose aria-labels that include the member name list or counts."
+  ],
+  "interactions": [
+    "Image loads asynchronously; on error the fallback content is rendered.",
+    "Click/keyboard activation is handled by wrapping Root in link or button semantics when required.",
+    "Hover/focus states typically reveal badges or tooltips for additional context."
+  ],
+  "dependencies": [
+    "@base-ui-components/react/avatar",
+    "hooks/useImageLoadingStatus",
+    "themes/avatar"
+  ],
+  "recipes": ["docs/recipes/user-card.md", "docs/recipes/avatar-group.md"],
+  "agentNotes": "Use Avatar for people, teams, or brand glyphs. Always provide alt text and fallback content so the component degrades gracefully. Pair with Tooltip for names on hover, and coordinate Tailwind classes for consistent sizing (e.g., `h-10 w-10`, `rounded-full`). For groups, manage stacking order via negative margins and consider summarizing counts for screen readers.",
+  "lastSynced": "2024-12-11"
+}

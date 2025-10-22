@@ -1,0 +1,158 @@
+:root {
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  color: #0f172a;
+  background-color: #f8fafc;
+  line-height: 1.5;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  margin-bottom: 0.75rem;
+}
+
+.hero p {
+  margin: 0 auto;
+  max-width: 42rem;
+  color: #334155;
+}
+
+.section {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1.75rem;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+}
+
+.section header {
+  margin-bottom: 1rem;
+}
+
+.section h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.section p {
+  margin: 0.5rem 0 0;
+  color: #475569;
+}
+
+ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  display: grid;
+  gap: 0.5rem;
+  color: #1e293b;
+}
+
+.section + .section {
+  margin-top: 2rem;
+}
+
+.playground {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.playground-tabs {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.playground-tab {
+  text-align: left;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background-color: #f8fafc;
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.playground-tab:is(:hover, :focus-visible) {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  outline: none;
+}
+
+.playground-tab.is-active {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(14, 116, 144, 0.08));
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.playground-tab-title {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.playground-tab-summary {
+  font-size: 0.875rem;
+  color: #475569;
+}
+
+.playground-content {
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  min-height: 180px;
+}
+
+.playground-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.playground-panel h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.playground-panel p {
+  margin: 0;
+  color: #475569;
+}
+
+.playground-control-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .playground-control-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    align-items: start;
+  }
+}

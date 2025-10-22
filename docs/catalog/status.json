@@ -1,0 +1,304 @@
+{
+  "$schema": "./status.schema.json",
+  "lastUpdated": "2025-01-16",
+  "waves": [
+    {
+      "id": "navigation-layout",
+      "title": "Navigation & Layout",
+      "components": [
+        "accordion",
+        "collapsible",
+        "tabs",
+        "navigation-menu",
+        "menu",
+        "menubar",
+        "toolbar",
+        "separator",
+        "scroll-area"
+      ]
+    },
+    {
+      "id": "inputs-forms",
+      "title": "Inputs & Forms",
+      "components": [
+        "input",
+        "number-field",
+        "field",
+        "fieldset",
+        "form",
+        "checkbox",
+        "checkbox-group",
+        "radio",
+        "switch",
+        "toggle",
+        "toggle-group",
+        "slider",
+        "combobox",
+        "select",
+        "autocomplete"
+      ]
+    },
+    {
+      "id": "status-data",
+      "title": "Status & Data",
+      "components": ["progress", "meter", "preview-card", "avatar", "tooltip"]
+    },
+    {
+      "id": "overlays-feedback",
+      "title": "Overlays & Feedback",
+      "components": ["dialog", "alert-dialog", "popover", "context-menu", "toast"]
+    },
+    {
+      "id": "utilities",
+      "title": "Utilities & Composition",
+      "components": ["direction-provider"]
+    }
+  ],
+  "components": [
+    {
+      "id": "accordion",
+      "category": "navigation-layout",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "alert-dialog",
+      "category": "overlays-feedback",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "autocomplete",
+      "category": "inputs-forms",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "avatar",
+      "category": "status-data",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "checkbox",
+      "category": "inputs-forms",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "checkbox-group",
+      "category": "inputs-forms",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "collapsible",
+      "category": "navigation-layout",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "combobox",
+      "category": "inputs-forms",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "context-menu",
+      "category": "overlays-feedback",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "dialog",
+      "category": "overlays-feedback",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "field",
+      "category": "inputs-forms",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "fieldset",
+      "category": "inputs-forms",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "form",
+      "category": "inputs-forms",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "input",
+      "category": "inputs-forms",
+      "implementation": "in-progress",
+      "docs": "in-progress",
+      "tests": "in-progress"
+    },
+    {
+      "id": "menu",
+      "category": "navigation-layout",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "menubar",
+      "category": "navigation-layout",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "meter",
+      "category": "status-data",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "navigation-menu",
+      "category": "navigation-layout",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "number-field",
+      "category": "inputs-forms",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "popover",
+      "category": "overlays-feedback",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "preview-card",
+      "category": "status-data",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "progress",
+      "category": "status-data",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "radio",
+      "category": "inputs-forms",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "scroll-area",
+      "category": "navigation-layout",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "select",
+      "category": "inputs-forms",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "separator",
+      "category": "navigation-layout",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "slider",
+      "category": "inputs-forms",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "switch",
+      "category": "inputs-forms",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "tabs",
+      "category": "navigation-layout",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "toast",
+      "category": "overlays-feedback",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "toggle",
+      "category": "inputs-forms",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "toggle-group",
+      "category": "inputs-forms",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "toolbar",
+      "category": "navigation-layout",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "tooltip",
+      "category": "status-data",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    },
+    {
+      "id": "direction-provider",
+      "category": "utilities",
+      "implementation": "not-started",
+      "docs": "not-started",
+      "tests": "not-started"
+    }
+  ]
+}

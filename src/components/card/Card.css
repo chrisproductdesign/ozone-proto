@@ -1,0 +1,228 @@
+/* Base Card */
+.ui-card {
+  --card-radius: 0.75rem;
+  --card-padding-sm: 1rem;
+  --card-padding-md: 1.5rem;
+  --card-padding-lg: 2rem;
+  --card-bg: white;
+  --card-border: #e2e8f0;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  position: relative;
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  transition: all 200ms ease;
+}
+
+/* Variants */
+.ui-card--default {
+  background: var(--card-bg);
+}
+
+.ui-card--elevated {
+  box-shadow: var(--card-shadow);
+}
+
+.ui-card--outlined {
+  border: 1px solid var(--card-border);
+}
+
+.ui-card--gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+/* Padding */
+.ui-card--padding-sm {
+  padding: var(--card-padding-sm);
+}
+
+.ui-card--padding-md {
+  padding: var(--card-padding-md);
+}
+
+.ui-card--padding-lg {
+  padding: var(--card-padding-lg);
+}
+
+/* Interactive */
+.ui-card--interactive {
+  cursor: pointer;
+}
+
+.ui-card--interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ui-card--interactive:active {
+  transform: translateY(0);
+}
+
+/* MetricCard */
+.ui-metric-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ui-metric-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ui-metric-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.ui-metric-card__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.ui-metric-card__value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.2;
+}
+
+.ui-metric-card__sub-value {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.ui-metric-card__trend {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.ui-metric-card__trend--up {
+  color: #10b981;
+}
+
+.ui-metric-card__trend--down {
+  color: #ef4444;
+}
+
+.ui-metric-card__trend--neutral {
+  color: #64748b;
+}
+
+.ui-metric-card__trend-arrow {
+  font-size: 1rem;
+}
+
+/* AccountCard */
+.ui-account-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ui-account-card__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ui-account-card__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: #f1f5f9;
+  flex-shrink: 0;
+}
+
+.ui-account-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ui-account-card__name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  margin-bottom: 0.25rem;
+}
+
+.ui-account-card__balance {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.ui-account-card__change {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.ui-account-card__change--positive {
+  color: #10b981;
+}
+
+.ui-account-card__change--negative {
+  color: #ef4444;
+}
+
+.ui-account-card__change-percent {
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  background: currentColor;
+  color: white;
+  opacity: 0.9;
+}
+
+.ui-account-card__change--positive .ui-account-card__change-percent {
+  background: #10b981;
+}
+
+.ui-account-card__change--negative .ui-account-card__change-percent {
+  background: #ef4444;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .ui-card {
+    --card-bg: #1e293b;
+    --card-border: #334155;
+    --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  .ui-metric-card__value,
+  .ui-account-card__balance {
+    color: white;
+  }
+
+  .ui-metric-card__label,
+  .ui-metric-card__sub-value,
+  .ui-account-card__name {
+    color: #94a3b8;
+  }
+
+  .ui-metric-card__icon,
+  .ui-account-card__logo {
+    background: #334155;
+    color: #94a3b8;
+  }
+}
