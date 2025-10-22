@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { classNames } from '@/lib/classNames';
 import { FormSection } from '@/components/form/FormSection';
 import { FormField } from '@/components/form/FormField';
@@ -6,27 +6,65 @@ import { TextInput } from '@/components/form/TextInput';
 import { CurrencyInput } from '@/components/form/CurrencyInput';
 import { NumberInput } from '@/components/form/NumberInput';
 import { SelectInput } from '@/components/form/SelectInput';
+import { useDeal } from '@/contexts/DealContext';
+import { useToast } from '@/components/feedback/Toast';
+import { type NavigationProps } from '@playground/App';
 
-export const DealInputScreen: React.FC = () => {
-  const [formData, setFormData] = useState({
-    businessName: 'Business Name LLC, Business Name',
-    state: 'CO',
-    industry: 'Subcontract',
-    naicsCode: '238320',
-    timeInBusiness: '18.1',
-    fico: '650',
-    monthlyRevenue: '120000',
-    monthlyExpenses: '90000',
-    position: '3rd',
-    grossFundedAmount: '102000',
-    term: '180',
-    paymentFrequency: 'Weekly',
-    advanceType: 'New',
-    isoCommission: '180'
-  });
+interface DealInputScreenProps extends NavigationProps {}
+
+export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) => {
+  const { currentDeal, updateDeal, saveDraft, dealName } = useDeal();
+  const { showToast } = useToast();
+  const [showSaved, setShowSaved] = useState(false);
+  const saveTimerRef = useRef<NodeJS.Timeout>();
+
+  // Use context data as form data
+  const formData = currentDeal;
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    updateDeal({ [field]: value });
+  };
+
+  // Auto-save with debounce
+  useEffect(() => {
+    // Clear any existing timer
+    if (saveTimerRef.current) {
+      clearTimeout(saveTimerRef.current);
+    }
+
+    // Don't save if form is empty
+    if (!currentDeal.businessName && !currentDeal.fico && !currentDeal.monthlyRevenue) {
+      return;
+    }
+
+    // Set a new timer to save after 500ms of no changes
+    saveTimerRef.current = setTimeout(() => {
+      saveDraft();
+      setShowSaved(true);
+
+      // Hide the "Saved" indicator after 2 seconds
+      setTimeout(() => {
+        setShowSaved(false);
+      }, 2000);
+    }, 500);
+
+    return () => {
+      if (saveTimerRef.current) {
+        clearTimeout(saveTimerRef.current);
+      }
+    };
+  }, [currentDeal, saveDraft]);
+
+  // Check if required fields are complete
+  const isFormValid = () => {
+    const requiredFields = ['businessName', 'state', 'fico', 'monthlyRevenue', 'grossFundedAmount', 'term'];
+    return requiredFields.every(field => currentDeal[field as keyof typeof currentDeal]);
+  };
+
+  const handleContinue = () => {
+    if (navigateTo && isFormValid()) {
+      navigateTo('dashboard');
+    }
   };
 
   const stateOptions = [
@@ -77,21 +115,36 @@ export const DealInputScreen: React.FC = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               <h1 className="text-lg font-medium text-gray-900">
-                Name of the deal goes here LLC
+                {dealName}
               </h1>
             </div>
             <div className="flex items-center gap-3">
+              {/* Saved indicator */}
+              {showSaved && (
+                <span className="text-sm text-green-600 font-medium flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Saved
+                </span>
+              )}
+
               <button
+                onClick={() => showToast('Deals list coming soon', 'info')}
                 className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                aria-label="Save draft"
+                aria-label="View deals"
               >
-                Save draft
+                Deals
               </button>
               <button
-                className="px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors"
-                style={{ backgroundColor: '#4A4543' }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#3A3533'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#4A4543'}
+                onClick={handleContinue}
+                disabled={!isFormValid()}
+                className={classNames(
+                  "px-4 py-2 text-sm font-medium rounded-lg transition-colors",
+                  isFormValid()
+                    ? "text-white bg-[#4A4543] hover:bg-[#3A3533]"
+                    : "text-gray-400 bg-gray-200 cursor-not-allowed"
+                )}
                 aria-label="Continue"
               >
                 Continue
@@ -245,23 +298,6 @@ export const DealInputScreen: React.FC = () => {
                       value={formData.advanceType}
                       onChange={(e) => handleInputChange('advanceType', e.target.value)}
                       options={advanceTypeOptions}
-                    />
-                  </FormField>
-                  <FormField label="Gross Funded Amount">
-                    <CurrencyInput
-                      value={formData.grossFundedAmount}
-                      onChange={(e) => handleInputChange('grossFundedAmount', e.target.value)}
-                      placeholder="0.00"
-                    />
-                  </FormField>
-                  <FormField label="Term (Days)">
-                    <NumberInput
-                      value={formData.term}
-                      onChange={(e) => handleInputChange('term', e.target.value)}
-                      min="1"
-                      max="365"
-                      step="1"
-                      placeholder="Days"
                     />
                   </FormField>
                 </div>

@@ -4,10 +4,28 @@ import { ScoreCard } from '@/components/dashboard/ScoreCard';
 import { ScoreCardWithInputs } from '@/components/dashboard/ScoreCardWithInputs';
 import { ConfidenceCard } from '@/components/dashboard/ConfidenceCard';
 import { MetricCard } from '@/components/dashboard/MetricCard';
+import { useDeal } from '@/contexts/DealContext';
+import { useToast } from '@/components/feedback/Toast';
+import { type NavigationProps } from '@playground/App';
 
-export const DashboardScreen: React.FC = () => {
+interface DashboardScreenProps extends NavigationProps {}
+
+export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) => {
   const [activeTab, setActiveTab] = useState<'pricing' | 'performance'>('pricing');
   const [layout, setLayout] = useState<'A' | 'B'>('A');
+  const { dealName, resetDeal } = useDeal();
+  const { showToast } = useToast();
+
+  const handleNewDeal = () => {
+    resetDeal();
+    if (navigateTo) {
+      navigateTo('dealinput');
+    }
+  };
+
+  const handleViewDeals = () => {
+    showToast('Deals list coming soon', 'info');
+  };
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#F5F2ED' }}>
@@ -17,7 +35,7 @@ export const DashboardScreen: React.FC = () => {
           <div className="max-w-[1000px] mx-auto flex items-center justify-between">
             {/* Deal Name */}
             <h1 className="text-lg font-medium text-gray-900">
-              Name of the deal goes here LLC
+              {dealName}
             </h1>
 
             {/* Action Buttons */}
@@ -34,12 +52,21 @@ export const DashboardScreen: React.FC = () => {
                 Layout {layout}
               </button>
               <button
+                onClick={handleViewDeals}
                 className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
                 aria-label="View deals"
               >
                 Deals
               </button>
               <button
+                onClick={() => navigateTo?.('dealinput')}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
+                aria-label="Edit deal inputs"
+              >
+                Edit inputs
+              </button>
+              <button
+                onClick={handleNewDeal}
                 className="px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
                 style={{ backgroundColor: '#4A4543' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#3A3533'}

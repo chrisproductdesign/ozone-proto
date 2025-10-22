@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react';
+import { type NavigationProps } from '../App';
 
 import { Typography } from './Typography';
 import { Colors } from './Colors';
@@ -14,24 +15,24 @@ import { DealInput } from './DealInput';
 export type PlaygroundPage = {
   id: string;
   title: string;
-  render: () => ReactNode;
+  render: (navProps?: NavigationProps) => ReactNode;
 };
 
 export const playgroundPages: PlaygroundPage[] = [
   {
     id: 'login',
     title: 'Login',
-    render: () => <Login />,
+    render: (navProps) => <Login {...navProps} />,
   },
   {
     id: 'dashboard',
     title: 'Dashboard',
-    render: () => <Dashboard />,
+    render: (navProps) => <Dashboard {...navProps} />,
   },
   {
     id: 'dealinput',
     title: 'Deal Input',
-    render: () => <DealInput />,
+    render: (navProps) => <DealInput {...navProps} />,
   },
   {
     id: 'typography',

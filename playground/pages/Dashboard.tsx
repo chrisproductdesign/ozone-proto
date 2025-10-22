@@ -1,5 +1,6 @@
 import { DashboardScreen } from '@/screens/Dashboard';
+import { type NavigationProps } from '../App';
 
-export const Dashboard = () => {
-  return <DashboardScreen />;
+export const Dashboard = (props?: NavigationProps) => {
+  return <DashboardScreen {...props} />;
 };
