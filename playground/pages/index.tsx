@@ -7,6 +7,7 @@ import { Layout } from './Layout';
 import { Data } from './Data';
 import { Feedback } from './Feedback';
 import { Navigation } from './Navigation';
+import { Login } from './Login';
 
 export type PlaygroundPage = {
   id: string;
@@ -15,6 +16,11 @@ export type PlaygroundPage = {
 };
 
 export const playgroundPages: PlaygroundPage[] = [
+  {
+    id: 'login',
+    title: 'Login',
+    render: () => <Login />,
+  },
   {
     id: 'typography',
     title: 'Typography',

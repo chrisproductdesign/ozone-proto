@@ -33,6 +33,14 @@ lerna-debug.log*
 
 # Claude
 .claude/
+.mcp.json
+fix_mcp_setup.sh
+MCP_SERVER_SETUP.md
+
+# Playwright artifacts
+.playwright-mcp/
+playwright-report/
+test-results/
 
 # Local DB
 dev.db
