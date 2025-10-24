@@ -103,9 +103,9 @@ export const colors = {
 
 // Semantic Color Tokens
 export const semanticColors = {
-  // Brand primary (Purple for fintech)
+  // Brand primary (Purple placeholder - to be updated with actual brand)
   brand: {
-    DEFAULT: colors.purple[700], // #7e22ce (matches Origin brand)
+    DEFAULT: colors.purple[700], // #7e22ce (placeholder)
     hover: colors.purple[800],
     active: colors.purple[900],
     subtle: colors.purple[50],
@@ -119,6 +119,37 @@ export const semanticColors = {
     active: colors.purple[900],
     subtle: colors.purple[50],
     subtleHover: colors.purple[100],
+  },
+
+  // Emphasis colors (for special text like scores, metrics)
+  emphasis: {
+    primary: '#4A3F42', // Dark brown for score displays
+    secondary: '#6B5B73', // Purple-brown for accents
+  },
+
+  // Status colors (for badges, status indicators)
+  status: {
+    high: {
+      bg: '#D0F5ED',     // Teal background
+      bgHover: '#B8ECE3', // Darker on hover
+      text: '#0A7A6B',   // Teal text
+      icon: '#0A7A6B',   // Same as text
+      border: '#7DD3C0', // Teal border
+    },
+    medium: {
+      bg: colors.yellow[50],   // '#fffbeb'
+      bgHover: colors.yellow[100],
+      text: colors.yellow[700], // '#b45309'
+      icon: colors.yellow[700],
+      border: colors.yellow[300],
+    },
+    low: {
+      bg: colors.red[50],      // '#fef2f2'
+      bgHover: colors.red[100],
+      text: colors.red[700],   // '#b91c1c'
+      icon: colors.red[700],
+      border: colors.red[300],
+    },
   },
 
   // Success states

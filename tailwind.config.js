@@ -134,6 +134,11 @@ export default {
         'disabled': semanticColors.text.disabled,
         'inverse': semanticColors.text.inverse,
         'placeholder': semanticColors.text.placeholder,
+        'emphasis': semanticColors.emphasis.primary,
+        'emphasis-secondary': semanticColors.emphasis.secondary,
+        'status-high': semanticColors.status.high.text,
+        'status-medium': semanticColors.status.medium.text,
+        'status-low': semanticColors.status.low.text,
       },
 
       // Additional semantic background colors
@@ -144,6 +149,12 @@ export default {
         'disabled': semanticColors.background.disabled,
         'overlay': semanticColors.background.overlay,
         'inverse': semanticColors.background.inverse,
+        'status-high': semanticColors.status.high.bg,
+        'status-high-hover': semanticColors.status.high.bgHover,
+        'status-medium': semanticColors.status.medium.bg,
+        'status-medium-hover': semanticColors.status.medium.bgHover,
+        'status-low': semanticColors.status.low.bg,
+        'status-low-hover': semanticColors.status.low.bgHover,
       },
 
       // Additional semantic border colors
@@ -153,6 +164,9 @@ export default {
         'strong': semanticColors.border.strong,
         'focus': semanticColors.border.focus,
         'error': semanticColors.border.error,
+        'status-high': semanticColors.status.high.border,
+        'status-medium': semanticColors.status.medium.border,
+        'status-low': semanticColors.status.low.border,
       },
 
       // Ring colors for focus states

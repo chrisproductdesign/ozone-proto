@@ -1,4 +1,4 @@
-# Origin Fintech Flow Structure
+# Fintech Flow Structure
 
 ## Core User Journey
 
@@ -108,26 +108,7 @@ Apply → Review → Approve → Fund → Repay → Apply Again
 - Quick actions from anywhere
 - Keyboard navigation support
 
-## Design System Integration
-
-### Color Usage
-- **Purple (Brand)**: Primary CTAs, active states, brand moments
-- **Gray**: Text, borders, backgrounds
-- **Green**: Success states, positive metrics
-- **Red**: Errors, negative changes
-- **Blue**: Links, secondary actions
-
-### Typography Hierarchy
-- **Headings**: Bold, clear hierarchy
-- **Body**: Readable, professional
-- **Captions**: Subtle, supportive
-- **Numbers**: Monospace for financial data
-
-### Spacing & Layout
-- Consistent 8px grid system
-- Generous whitespace for clarity
-- Card-based layout for sections
-- Responsive breakpoints for mobile
+**For design system details, see `DESIGN_TOKENS.md`**
 
 ## Next Implementation Steps
 

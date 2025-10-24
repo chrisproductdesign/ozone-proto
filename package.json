@@ -39,6 +39,7 @@
     "@base-ui-components/react": "^1.0.0-beta.4",
     "@tailwindcss/vite": "^4.1.15",
     "autoprefixer": "^10.4.21",
+    "lucide-react": "^0.546.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.15"

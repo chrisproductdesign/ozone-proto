@@ -1,75 +1,92 @@
-import React, { useState } from 'react';
-import { classNames } from '@/lib/classNames';
+import React from 'react';
+import { RefreshCw } from 'lucide-react';
 import { BaseUISlider } from '@/components/form/BaseUISlider';
+import { ButtonBaseUIWrapper } from '@/components/button/ButtonBaseUIWrapper';
 
-interface MetricCardProps {
-  icon?: React.ReactNode;
+export interface MetricCardProps {
   label: string;
-  value: string | number;
-  min?: number;
-  max?: number;
-  currentValue?: number;
-  unit?: string;
-  showSlider?: boolean;
-  onChange?: (value: number) => void;
+  displayValue: string;
+  sliderMin: number;
+  sliderMax: number;
+  sliderValue: number;
+  sliderStep?: number;
+  sliderMinLabel?: string;
+  sliderMaxLabel?: string;
+  onSliderChange?: (value: number) => void;
+  showRecalculate?: boolean;
+  onRecalculate?: () => void;
   className?: string;
 }
 
+/**
+ * MetricCard - Unified card component for dashboard metrics
+ *
+ * Features:
+ * - Label with optional recalculate button
+ * - Large value display
+ * - Interactive slider with min/max labels
+ * - Consistent padding and spacing
+ *
+ * @example
+ * <MetricCard
+ *   label="TERM"
+ *   displayValue="180 days"
+ *   sliderMin={30}
+ *   sliderMax={180}
+ *   sliderValue={180}
+ *   onSliderChange={(val) => setTerm(val)}
+ * />
+ */
 export const MetricCard: React.FC<MetricCardProps> = ({
-  icon,
   label,
-  value,
-  min = 0,
-  max = 100,
-  currentValue = 20,
-  unit = '',
-  showSlider = true,
-  onChange,
-  className
+  displayValue,
+  sliderMin,
+  sliderMax,
+  sliderValue,
+  sliderStep,
+  sliderMinLabel,
+  sliderMaxLabel,
+  onSliderChange,
+  showRecalculate = false,
+  onRecalculate,
+  className = '',
 }) => {
-  const [sliderValue, setSliderValue] = useState(currentValue);
-
-  const handleSliderChange = (newValue: number) => {
-    setSliderValue(newValue);
-    onChange?.(newValue);
-  };
-
   return (
-    <div className={classNames(
-      'bg-white rounded-2xl p-5 shadow-sm',
-      'flex flex-col',
-      className
-    )}>
-      <div className="flex items-center gap-2 mb-4">
-        {icon && (
-          <span className="text-gray-700">
-            {icon}
-          </span>
+    <div className={`bg-white rounded-lg py-7 px-6 border border-gray-200 ${className}`}>
+      {/* Label row with optional recalculate button */}
+      <div className="flex items-center justify-between mb-2">
+        <div className="text-xs text-gray-600">● {label}</div>
+        {showRecalculate && (
+          <ButtonBaseUIWrapper
+            variant="ghost"
+            size="icon"
+            onClick={onRecalculate}
+            aria-label="Recalculate"
+          >
+            <RefreshCw className="w-4 h-4" />
+          </ButtonBaseUIWrapper>
         )}
-        <h3 className="text-xs font-medium text-gray-700 tracking-wide uppercase">
-          {label}
-        </h3>
       </div>
 
-      <div className="flex-1">
-        <div className="text-3xl font-bold text-gray-900 mb-6">
-          {typeof value === 'number' && unit === '$' ? (
-            <span>${value.toLocaleString()}</span>
-          ) : typeof value === 'number' ? (
-            <span>{value}{unit}</span>
-          ) : (
-            <span>{value}</span>
-          )}
-        </div>
+      {/* Large value display */}
+      <div className="text-3xl font-bold mb-4">{displayValue}</div>
 
-        {showSlider && (
-          <BaseUISlider
-            value={sliderValue}
-            min={min}
-            max={max}
-            onChange={handleSliderChange}
-          />
-        )}
+      {/* Slider */}
+      <div className="space-y-2">
+        <BaseUISlider
+          value={sliderValue}
+          min={sliderMin}
+          max={sliderMax}
+          step={sliderStep}
+          onChange={onSliderChange}
+          className="w-full"
+        />
+
+        {/* Min/Max labels */}
+        <div className="flex justify-between text-xs text-gray-500">
+          <span>{sliderMinLabel || sliderMin}</span>
+          <span>{sliderMaxLabel || sliderMax}</span>
+        </div>
       </div>
     </div>
   );

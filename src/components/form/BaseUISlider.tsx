@@ -6,6 +6,7 @@ interface BaseUISliderProps {
   defaultValue?: number;
   min?: number;
   max?: number;
+  step?: number;
   onChange?: (value: number) => void;
   className?: string;
 }
@@ -15,6 +16,7 @@ export const BaseUISlider: React.FC<BaseUISliderProps> = ({
   defaultValue = 50,
   min = 0,
   max = 100,
+  step = 1,
   onChange,
   className
 }) => {
@@ -29,13 +31,14 @@ export const BaseUISlider: React.FC<BaseUISliderProps> = ({
       defaultValue={defaultValue}
       min={min}
       max={max}
+      step={step}
       onValueChange={handleChange}
       className={className}
     >
       <Slider.Control className="flex w-full touch-none items-center py-2 select-none">
-        <Slider.Track className="h-1 w-full rounded bg-gray-200 shadow-[inset_0_0_0_1px] shadow-gray-200 select-none relative">
-          <Slider.Indicator className="rounded bg-gray-700 select-none h-full" />
-          <Slider.Thumb className="size-4 rounded-full bg-white outline outline-1 outline-gray-300 select-none hover:outline-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-800 cursor-pointer absolute top-1/2 -translate-y-1/2" />
+        <Slider.Track className="h-2 w-full rounded-full bg-gray-200 select-none relative">
+          <Slider.Indicator className="rounded-full bg-purple-600 select-none h-full" />
+          <Slider.Thumb className="size-4 rounded-full bg-white outline outline-2 outline-purple-600 select-none cursor-pointer absolute top-1/2 -translate-y-1/2 hover:outline-[3px] hover:shadow-md focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-purple-700 data-[dragging]:shadow-lg transition-[outline,box-shadow] duration-150" />
         </Slider.Track>
       </Slider.Control>
     </Slider.Root>

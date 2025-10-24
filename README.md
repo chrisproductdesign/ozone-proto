@@ -1,11 +1,11 @@
-# Origin Proto 0.5 🚀
+# Fintech Prototype v0.7 🚀
 
-A beautiful fintech prototype demonstrating business funding application flows with exceptional UX.
+A fintech application prototype focused on creating an optimal business funding experience with 3-4 key screens and a complete user flow.
 
 ## ✨ Features
 
-### 🔐 Clean Login Interface
-- Minimalist design with purple gradient accents
+### 🔐 Authentication
+- Clean login interface
 - Smooth transitions and micro-interactions
 - Email/password authentication flow
 
@@ -14,7 +14,7 @@ A beautiful fintech prototype demonstrating business funding application flows w
   - Company details and industry selection
   - Years in operation and monthly revenue
 - **Step 2**: Funding Needs
-  - Interactive slider for funding amount ($5K - $500K)
+  - Interactive slider for funding amount
   - Purpose selection and urgency indicators
   - Real-time payment calculations
 - **Step 3**: Review & Submit
@@ -22,7 +22,7 @@ A beautiful fintech prototype demonstrating business funding application flows w
   - Terms acceptance and submission
 
 ### 📊 Business Dashboard
-- Key metrics displayed in beautiful cards
+- Key metrics displayed in cards
 - Recent transaction history with status badges
 - Account overview with balances
 - Quick actions for common tasks
@@ -33,9 +33,12 @@ A beautiful fintech prototype demonstrating business funding application flows w
 - **React 19.2** - Latest React with automatic JSX runtime
 - **TypeScript** - Type-safe development
 - **Vite** - Lightning-fast build tooling
-- **Custom Components** - Optimized for fintech UX patterns
-  - Button, Card, Badge, Select, Slider
-  - Table, Tabs, Sidebar, Input components
+- **Base UI Components** (`@base-ui-components/react`) - Unstyled, accessible component foundation
+- **Tailwind CSS v4** - Utility-first styling with custom design tokens
+- **Custom Components** - Fintech-optimized wrappers and components
+  - Button, Input, Card, Badge, Select, Slider
+  - Table, Tabs, Sidebar, Form components
+  - MetricCard, ScoreCard for financial data display
 
 ## 🚀 Getting Started
 
@@ -47,8 +50,8 @@ A beautiful fintech prototype demonstrating business funding application flows w
 
 ```bash
 # Clone the repository
-git clone https://github.com/chrisproductdesign/ogion-proto-0.3.git
-cd ogion-proto-0.3
+git clone https://github.com/chrisproductdesign/ogion-proto-0.5.git
+cd ogion-proto-v0.7
 
 # Install dependencies
 npm install
@@ -72,41 +75,45 @@ npm run preview
 ## 📁 Project Structure
 
 ```
-ogion-proto-0.5/
+ogion-proto-v0.7/
 ├── src/
-│   ├── components/      # Reusable UI components
-│   │   ├── button/
+│   ├── components/          # Reusable UI components
+│   │   ├── button/          # ButtonBaseUIWrapper
+│   │   ├── input/           # InputBaseUIWrapper
 │   │   ├── card/
-│   │   ├── input/
+│   │   ├── dashboard/       # ScoreCard, MetricCard, ConfidenceCard
+│   │   ├── form/            # Form components
 │   │   └── ...
-│   ├── playground/      # Demo pages
-│   │   └── pages/
-│   │       ├── FintechDashboard.tsx
-│   │       └── FundingCalculator.tsx
-│   └── styles/          # Global styles and themes
+│   ├── design-system/       # Design tokens
+│   │   ├── tokens/          # colors, spacing, typography
+│   │   └── themes/          # light, dark themes
+│   └── lib/                 # Utilities (classNames, etc.)
+├── playground/              # Component development & testing
+│   └── pages/               # Login, Dashboard, Forms, etc.
+├── design-specs/            # Design mockups and specifications
+├── docs/                    # Base UI documentation
+├── DESIGN_TOKENS.md         # Token system documentation
+├── CLAUDE.md                # Development guide
 ├── package.json
 └── vite.config.ts
 ```
 
 ## 🎨 Design System
 
-### Colors
-- **Primary**: Purple (#7c3aed)
-- **Success**: Green (#10b981)
-- **Warning**: Amber (#f59e0b)
-- **Danger**: Red (#ef4444)
+The project uses a comprehensive design token system built on:
+- **Base UI** - Unstyled, accessible component primitives
+- **Tailwind CSS v4** - Utility-first styling with custom tokens
+- **Design Tokens** - Centralized colors, spacing, typography, and more
 
-### Typography
-- Clean, modern system fonts
-- Responsive sizing
-- Clear hierarchy
+**See `DESIGN_TOKENS.md` for complete token documentation.**
 
-### Components
+### Component Features
 All components support:
-- Light/dark mode
-- Responsive design
+- Base UI state attributes (`data-disabled`, `data-focused`, etc.)
+- Responsive design (mobile-first)
 - Accessibility (ARIA attributes)
 - Keyboard navigation
+- Consistent token-based styling
 
 ## 🧪 Development Commands
 

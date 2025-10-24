@@ -28,7 +28,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Fintech Prototype v0.5** - A fintech application focused on creating an optimal business funding experience. Building 3-4 key screens with a complete user flow, iterating on component design and UX for the most intuitive, simple, and polished interface possible.
+**Fintech Prototype v0.7** - A fintech application focused on creating an optimal business funding experience. Building 3-4 key screens with a complete user flow, iterating on component design and UX for the most intuitive, simple, and polished interface possible.
 
 ### Project Goals
 1. **Create Core Screens**: Login, Dashboard, Funding Application, Approval Status
@@ -93,47 +93,66 @@ Types: `feat`, `fix`, `refactor`, `style`, `docs`, `test`, `chore`
 The app uses a **minimal tab-based playground** for component development and iteration:
 - `src/main.tsx` → `src/App.tsx` (directly renders PlaygroundApp) → `playground/App.tsx` → `playground/pages/index.tsx`
 
-**Current State (Session: 2025-10-22):**
+**Current Implementation Status:**
 
-✅ **Phase 1 Complete: Technical Foundation**
+✅ **Technical Foundation Complete**
 - Tailwind CSS v4 integrated with Vite
-- All design tokens mapped to Tailwind configuration
-- CSS architecture updated to use Tailwind utilities
-- Component wrapper pattern established with examples:
-  - `ButtonBaseUIWrapper.tsx` - Tailwind + Base UI button pattern
-  - `InputBaseUIWrapper.tsx` - Form input wrapper with variants
-- Forms playground tab demonstrates working integration
-- Development workflow documented in `TAILWIND_WORKFLOW.md`
+- Design token system established (see `DESIGN_TOKENS.md`)
+- Component wrapper pattern: `ButtonBaseUIWrapper`, `InputBaseUIWrapper`
+- Base UI + Tailwind integration working
 
-🚀 **Phase 2 In Progress: Design Implementation**
-- ✅ **Login Screen**: Implemented with Ogion branding
-  - LoginCard component with interactive states
-  - Proper brown button color (#4A4543)
-  - Subtle focus states (no purple rings)
-  - Responsive design for mobile/desktop
-  - ARIA labels for accessibility
-  - Cream background (#F5F2ED) with SVG decorations
-- 📁 Design specs workflow: Local images in `design-specs/` folder
-- 🔍 Playwright testing for visual verification
-- 🎨 UX design reviewer agent for continuous feedback
-- 📝 Git workflow established in `GIT_WORKFLOW.md`
+🎯 **Dashboard Rebuild (v0.7) - Phase 2: Refinement**
 
-**Next Screens to Implement:**
-- Dashboard (with metrics and funding status)
-- Funding Application (multi-step form)
-- Approval Status (progress tracking)
+**Current Status**: Structure complete, refining interactions and components
+
+**Phase 1 Complete** ✅:
+- Full-page layout with sidebar navigation + top header
+- Status hero section (green bg, dynamic for yellow/red risk levels)
+- 2x2 metrics grid with unified MetricCard component
+- Composite score card (96px letter grade with green circular bg)
+- Graph placeholders (marketplace, funder portfolio - stacked vertically)
+- Background check section (4 cards: Data merch, Integrations, Checklist, Perplexity)
+- Responsive layout (375px → 768px → 1280px)
+
+**Phase 2 In Progress**:
+- ✅ Unified MetricCard component (`src/components/dashboard/MetricCard.tsx`)
+  - All 4 metrics use same component
+  - Functional Base UI sliders with proper ranges
+  - Recalculate buttons on MOIC and Factor Rate
+  - Min/max labels (K notation for funding amount)
+- ✅ BaseUISlider refinement (`src/components/form/BaseUISlider.tsx`)
+  - Removed `transition-all` to fix lag/trailing during drag
+  - Selective transitions: `transition-[outline,box-shadow]` only
+  - Uses `data-dragging` attribute for visual feedback
+  - Instant thumb response, smooth visual effects
+
+**Metric Ranges**:
+- Gross Funding: $10K-$100K (step: $1K)
+- Term: 30-180 days (step: 1 day)
+- Target MOIC: 1.1-1.4 (step: 0.01)
+- Factor Rate: 1.2-1.6 (step: 0.01)
+
+**Design Spec Location**: `design-specs/screens/dashboard-layout-wireframe-v0.7.jpg`
+
+**Next**: Continue section refinement as directed
 
 **Playground Tabs:**
-1. **Login** (`Login.tsx`) - ✅ Complete Ogion login screen implementation
-2. **Typography** (`Typography.tsx`) - For text styles and hierarchy
-3. **Colors** (`Colors.tsx`) - For color system and palettes
-4. **Forms** (`Forms.tsx`) - ✅ Component integration test complete
-5. **Layout** (`Layout.tsx`) - For spacing and container components
-6. **Data** (`Data.tsx`) - For tables, lists, and data display
-7. **Feedback** (`Feedback.tsx`) - For alerts, toasts, and status indicators
-8. **Navigation** (`Navigation.tsx`) - For navigation patterns and menus
+1. **Login** (`Login.tsx`) - Login screen
+2. **Dashboard** (`Dashboard.tsx`) - Dashboard with metrics
+3. **DealInput** (`DealInput.tsx`) - Funding application form
+4. **Typography** (`Typography.tsx`) - Text styles and hierarchy
+5. **Colors** (`Colors.tsx`) - Color system and palettes
+6. **Forms** (`Forms.tsx`) - Form component testing
+7. **Layout** (`Layout.tsx`) - Spacing and containers
+8. **Data** (`Data.tsx`) - Tables, lists, data display
+9. **Feedback** (`Feedback.tsx`) - Alerts, toasts, status indicators
+10. **Navigation** (`Navigation.tsx`) - Navigation patterns and menus
 
-**Flow Documentation:** See `FLOW_STRUCTURE.md` for planned user journey and screen requirements (to be implemented)
+**Documentation:**
+- Design token system: `DESIGN_TOKENS.md` (single source of truth)
+- User journey: `FLOW_STRUCTURE.md`
+- Git workflow: `GIT_WORKFLOW.md`
+- Tailwind workflow: `TAILWIND_WORKFLOW.md`
 
 ### Component System
 
@@ -148,16 +167,16 @@ Components follow a **hybrid approach** combining Base UI foundations with custo
 ```
 src/components/{name}/
 ├── {Name}.tsx       # Component implementation with forwardRef
-├── {Name}.css       # BEM-style CSS (ui-component__element--modifier)
 ├── index.ts         # Public exports
-└── variants.ts      # Optional variant definitions (size, appearance)
+└── (optional files as needed)
 ```
 
 **Current Components:**
-- **Fintech-Specific**: `MetricCard`, `AccountCard` for financial data display
-- **Compound Components**: `Table`, `Sidebar`, `Tabs` use dot notation (e.g., `Table.Root`, `Table.Row`)
-- **Form Controls**: `Input` (Base UI wrapper), `Select`, `Slider` support controlled/uncontrolled patterns
-- **UI Elements**: `Button`, `Badge`, `Card` for interface building
+- **Base UI Wrappers**: `ButtonBaseUIWrapper`, `InputBaseUIWrapper` (Tailwind + Base UI)
+- **Dashboard**: `ScoreCard`, `MetricCard`, `ConfidenceCard` for financial data display
+- **Form Controls**: `TextInput`, `NumberInput`, `CurrencyInput`, `SelectInput`, `BaseUISlider`
+- **Compound Components**: `Table`, `Sidebar`, `Tabs` (dot notation: `Table.Root`, `Table.Row`)
+- **UI Elements**: `Button`, `Badge`, `Card`
 
 ### Path Aliases
 
@@ -169,26 +188,27 @@ Configured in both `tsconfig.json` and `vite.config.ts`:
 
 ### Design System
 
-#### Token System (`src/design-system/tokens/`)
-Centralized design tokens for systematic styling:
-- **Colors**: Brand purple, semantic colors, gradients
-- **Typography**: Font sizes, weights, line heights
-- **Spacing**: 8px grid system
-- **Borders**: Radius tokens from sm to full
-- **Shadows**: Elevation system
-- **Animation**: Duration and easing curves
+**See `DESIGN_TOKENS.md` for complete design token documentation.**
 
-**Default Colors (To be updated with actual brand colors):**
-- Primary: TBD (currently purple `#7e22ce` as placeholder)
-- Success: Green (`#22c55e`)
-- Warning: Amber (`#f59e0b`)
-- Danger: Red (`#ef4444`)
+This project uses a comprehensive design token system:
+- **Location**: `src/design-system/tokens/` (colors, spacing, typography, etc.)
+- **Configuration**: `tailwind.config.js` (token → Tailwind mappings)
+- **Styling**: Tailwind CSS v4 utilities based on design tokens
+- **Themes**: `src/design-system/themes/` (light, dark)
 
-#### Styling Strategy
-- **CSS Modules**: Each component has its own CSS file
-- **BEM Naming**: `ui-{component}`, `ui-{component}__element`, `ui-{component}--modifier`
-- **Responsive**: Mobile-first with breakpoint tokens
-- **Systematic Changes**: Update tokens in `design-system/tokens/` for app-wide changes
+#### Quick Token Reference
+- **Colors**: Semantic colors (primary, success, warning, danger), text, background, border
+  - **NEW**: `emphasis.primary/secondary` for scores/metrics
+  - **NEW**: `status.high/medium/low` for badges and status cards
+- **Typography**: Font presets (h1-h6, body, button, label, caption)
+  - Current h1: 48px, h2: 36px, h4: 24px
+  - **Dashboard needs**: 20px, 32px (may need to add tokens)
+- **Spacing**: 8px grid system + component spacing presets
+- **Borders**: Radius tokens (sm, md, lg, xl, 2xl, full)
+- **Shadows**: Elevation system (sm, md, lg, xl)
+- **Animations**: Duration and easing curves
+
+All tokens are mapped to Tailwind utilities for direct use in components.
 
 ### Component Patterns
 
@@ -270,21 +290,27 @@ npx playwright test tests/e2e/dashboard.spec.ts
 
 ### How to Provide Design Specs
 
-**Recommended Approach: Local Images**
-1. Add design images to `design-specs/` folder in the repo
-2. Organize by type:
-   - `design-specs/components/` - Individual component designs
-   - `design-specs/screens/` - Full screen layouts
-   - `design-specs/flows/` - User journey flows
-3. Tell Claude the file path: `"Implement design-specs/screens/login.png"`
-4. Claude reads the image, implements using Tailwind + Base UI foundation
-5. Claude takes Playwright screenshot for your review
-6. Iterate on the implementation
+**Current Approach: Local Screenshots** (not Figma MCP)
+1. Export design from Figma as PNG/JPG
+2. Add to `design-specs/screens/` folder (e.g., `dashboard-v0.7.png`)
+3. Tell Claude the file path: `"Implement design-specs/screens/dashboard-v0.7.png"`
+4. Claude analyzes and implements using Tailwind + Base UI + design tokens
 
-**Design Maturity Levels Supported:**
-- 90-100% polish: Direct implementation
-- 70-90% polish: Implementation with clarifying questions
-- 50-70% polish: Implementation with UX suggestions when asked
+**Why Screenshots vs. Figma MCP**:
+- ✅ Faster for iteration when designs aren't final
+- ✅ No Figma node IDs to manage
+- ✅ Git tracks design evolution
+- ✅ Can version iterations (v1, v2, v3)
+
+**Design Maturity Levels Supported**:
+- **Rough wireframes**: Structure first, refine later (current dashboard approach)
+- **70-90% polish**: Implementation with clarifying questions
+- **90-100% polish**: Direct implementation
+
+**Iterative Workflow for Complex Screens**:
+1. **Full-page structure**: Analyze entire layout, create skeleton with placeholders
+2. **Section-by-section refinement**: Polish each area (nav, scorecard, metrics, etc.)
+3. **Iterate**: Replace placeholders, fine-tune typography/spacing/interactions
 
 ### Implementation Process
 
@@ -297,30 +323,7 @@ npx playwright test tests/e2e/dashboard.spec.ts
 
 See `TAILWIND_WORKFLOW.md` for complete technical workflow details.
 
-## Next Steps (Ready to Implement)
-
-**Phase 2: Screen Implementation**
-When you provide design specs, Claude will implement:
-
-1. **Login Screen** - Authentication with trust signals
-2. **Dashboard** - Overview with metrics and actions
-3. **Funding Application** - Multi-step form with validation
-4. **Approval Status** - Application tracking and updates
-
-**Component Evolution:**
-- Refine ButtonBaseUIWrapper with actual brand colors
-- Enhance InputBaseUIWrapper with fintech validation patterns
-- Create additional wrappers as needed (Card, Table, Modal, etc.)
-- Build fintech-specific components (MetricCard, StatusBadge, etc.)
-
-**UX Quick Wins (from review):**
-- Add trust signals and security badges
-- Improve error message visibility
-- Fix spacing consistency
-- Add focus states for accessibility
-- Enhance required field indicators
-
-## Technical Recommendations & Future Enhancements
+## Technical Foundation & Best Practices
 
 ### Tailwind CSS Integration ✅ Complete
 
@@ -401,7 +404,7 @@ export const Input = ({ ...props }) => {
 
 ## Repository
 
-GitHub: https://github.com/chrisproductdesign/ogion-proto-0.5
+GitHub: https://github.com/chrisproductdesign/ogion-proto-0.5 (v0.7 local)
 
 ## MCP Server Configuration (Model Context Protocol)
 

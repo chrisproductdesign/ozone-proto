@@ -20,7 +20,7 @@ import { classNames } from '../../lib/classNames';
 
 // Fintech-specific button variants
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'success';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonSize = 'sm' | 'md' | 'lg' | 'icon-sm' | 'icon' | 'icon-lg';
 
 // Extend HTML button props with fintech-specific props
 export interface ButtonBaseUIWrapperProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> {
@@ -101,6 +101,9 @@ const sizeClasses: Record<ButtonSize, string> = {
   sm: 'px-3 py-1.5 text-sm',
   md: 'px-4 py-2.5 text-base',
   lg: 'px-6 py-3.5 text-lg',
+  'icon-sm': 'size-8 p-0',
+  'icon': 'size-9 p-0',
+  'icon-lg': 'size-10 p-0',
 };
 
 /**
@@ -121,6 +124,11 @@ const sizeClasses: Record<ButtonSize, string> = {
  *   endIcon={<ArrowRightIcon />}
  * >
  *   Complete Application
+ * </ButtonBaseUIWrapper>
+ *
+ * @example Icon-only button
+ * <ButtonBaseUIWrapper variant="ghost" size="icon">
+ *   <SettingsIcon />
  * </ButtonBaseUIWrapper>
  *
  * @example Loading state
@@ -145,6 +153,9 @@ export const ButtonBaseUIWrapper = forwardRef<HTMLButtonElement, ButtonBaseUIWra
     },
     ref
   ) => {
+    // Check if this is an icon-only button
+    const isIconButton = size === 'icon-sm' || size === 'icon' || size === 'icon-lg';
+
     // Compose all Tailwind classes
     const buttonClasses = classNames(
       // Base styles
@@ -169,6 +180,15 @@ export const ButtonBaseUIWrapper = forwardRef<HTMLButtonElement, ButtonBaseUIWra
       className
     );
 
+    // Icon sizing based on button size
+    const iconSizeClass = isIconButton
+      ? size === 'icon-sm'
+        ? 'w-3 h-3'
+        : size === 'icon'
+        ? 'w-4 h-4'
+        : 'w-5 h-5'
+      : 'w-4 h-4';
+
     return (
       <button
         ref={ref}
@@ -180,43 +200,82 @@ export const ButtonBaseUIWrapper = forwardRef<HTMLButtonElement, ButtonBaseUIWra
         data-loading={loading}
         {...otherProps}
       >
-        {/* Loading spinner */}
-        {loading && (
-          <span className="mr-2 animate-spin" aria-hidden="true">
-            <svg
-              className="w-4 h-4"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              />
-            </svg>
-          </span>
-        )}
+        {/* Icon button: only show icon */}
+        {isIconButton ? (
+          <>
+            {/* Loading spinner for icon buttons */}
+            {loading && (
+              <span className="animate-spin" aria-hidden="true">
+                <svg
+                  className={iconSizeClass}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
+                </svg>
+              </span>
+            )}
+            {/* Icon content (prefer startIcon, fall back to children) */}
+            {!loading && (
+              <span className={classNames('flex items-center', iconSizeClass)}>
+                {startIcon || children}
+              </span>
+            )}
+          </>
+        ) : (
+          <>
+            {/* Loading spinner */}
+            {loading && (
+              <span className="mr-2 animate-spin" aria-hidden="true">
+                <svg
+                  className="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
+                </svg>
+              </span>
+            )}
 
-        {/* Start icon */}
-        {startIcon && !loading && (
-          <span className="mr-2 flex items-center">{startIcon}</span>
-        )}
+            {/* Start icon */}
+            {startIcon && !loading && (
+              <span className="mr-2 flex items-center">{startIcon}</span>
+            )}
 
-        {/* Button content */}
-        <span>{children}</span>
+            {/* Button content */}
+            <span>{children}</span>
 
-        {/* End icon */}
-        {endIcon && !loading && (
-          <span className="ml-2 flex items-center">{endIcon}</span>
+            {/* End icon */}
+            {endIcon && !loading && (
+              <span className="ml-2 flex items-center">{endIcon}</span>
+            )}
+          </>
         )}
       </button>
     );
@@ -248,7 +307,18 @@ ButtonBaseUIWrapper.displayName = 'ButtonBaseUIWrapper';
  *      Submitting Application...
  *    </ButtonBaseUIWrapper>
  *
- * 5. Custom Styled Button:
+ * 5. Icon-Only Buttons:
+ *    <ButtonBaseUIWrapper variant="ghost" size="icon-sm">
+ *      <PencilIcon />
+ *    </ButtonBaseUIWrapper>
+ *    <ButtonBaseUIWrapper variant="secondary" size="icon">
+ *      <SettingsIcon />
+ *    </ButtonBaseUIWrapper>
+ *    <ButtonBaseUIWrapper variant="primary" size="icon-lg">
+ *      <PlusIcon />
+ *    </ButtonBaseUIWrapper>
+ *
+ * 6. Custom Styled Button:
  *    <ButtonBaseUIWrapper
  *      variant="ghost"
  *      className="hover:text-purple-600 hover:bg-purple-50"
