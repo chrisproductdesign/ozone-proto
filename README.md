@@ -50,7 +50,7 @@ A fintech application prototype focused on creating an optimal business funding 
 
 ```bash
 # Clone the repository
-git clone https://github.com/chrisproductdesign/ogion-proto-0.5.git
+git clone https://github.com/chrisproductdesign/ozone-proto-v0.7.git
 cd ogion-proto-v0.7
 
 # Install dependencies

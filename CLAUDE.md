@@ -404,7 +404,7 @@ export const Input = ({ ...props }) => {
 
 ## Repository
 
-GitHub: https://github.com/chrisproductdesign/ogion-proto-0.5 (v0.7 local)
+GitHub: https://github.com/chrisproductdesign/ozone-proto-v0.7.git
 
 ## MCP Server Configuration (Model Context Protocol)
 
