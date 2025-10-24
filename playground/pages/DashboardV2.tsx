@@ -78,19 +78,21 @@ export function DashboardV2() {
 
         {/* Content container with max-width */}
         <main className="flex-1 overflow-auto">
-          <div className="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+          <div className="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
             {/* 1. Status Hero Section */}
-            <StatusCard
-              status="stable"
-              title="Stable pay"
-              description="Tortor diam rhoncus lorem dapibus mauris malesuada aliquam cursus interdum. Enim aliquet"
-              confidenceScore={51}
-            />
+            <section className="mb-3">
+              <p className="text-xs text-gray-600 mb-3">AI Predicted deal snapshot</p>
+              <StatusCard
+                status="stable"
+                title="Stable pay"
+                description="Tortor diam rhoncus lorem dapibus mauris malesuada aliquam cursus interdum. Enim aliquet"
+                confidenceScore={51}
+              />
+            </section>
 
             {/* 2. Deal Metrics Grid (2x2) */}
-            <section>
-              <p className="text-xs text-gray-600 mb-3">AI Predicted deal snapshot</p>
+            <section className="mb-12">
               <div className="rounded-lg overflow-hidden bg-gray-200">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-[2px]">
                   {/* Gross Funding Amount */}
@@ -162,7 +164,7 @@ export function DashboardV2() {
             </section>
 
             {/* 3. Composite Score Card */}
-            <section>
+            <section className="mb-12">
               <p className="text-xs text-gray-600 mb-3">Custom scorecard</p>
               <CompositeScoreCard
                 grade="A"
@@ -172,9 +174,9 @@ export function DashboardV2() {
             </section>
 
             {/* 4. Deal Benchmarking - 2 Graphs (stacked vertically) */}
-            <section>
+            <section className="mb-12">
               <p className="text-xs text-gray-600 mb-3">Deal benchmarking</p>
-              <div className="space-y-4">
+              <div>
                 {/* Marketplace Graph */}
                 <div className="bg-[#f7f5f1] rounded-lg p-6 border border-black/10">
                   <div className="flex items-center justify-between mb-4">
@@ -193,7 +195,7 @@ export function DashboardV2() {
                 </div>
 
                 {/* Funder Portfolio Graph */}
-                <div className="bg-[#f7f5f1] rounded-lg p-6 border border-black/10">
+                <div className="bg-[#f7f5f1] rounded-lg p-6 border border-black/10 mt-3">
                   <div className="flex items-center justify-between mb-4">
                     <div className="text-xs text-gray-600">FUNDER PORTFOLIO</div>
                     <ButtonBaseUIWrapper
@@ -212,7 +214,7 @@ export function DashboardV2() {
             </section>
 
             {/* 5. Background Check - 3 Cards */}
-            <section>
+            <section className="mb-12">
               <p className="text-xs text-gray-600 mb-3">Background check</p>
               <div className="space-y-4">
                 {/* Top row - 2 columns */}
