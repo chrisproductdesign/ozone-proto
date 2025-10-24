@@ -1,32 +1,6 @@
-# Fintech Prototype v0.7 🚀
+# Ozone Proto v0.7
 
-A fintech application prototype focused on creating an optimal business funding experience with 3-4 key screens and a complete user flow.
-
-## ✨ Features
-
-### 🔐 Authentication
-- Clean login interface
-- Smooth transitions and micro-interactions
-- Email/password authentication flow
-
-### 📋 Multi-Step Funding Application
-- **Step 1**: Business Information
-  - Company details and industry selection
-  - Years in operation and monthly revenue
-- **Step 2**: Funding Needs
-  - Interactive slider for funding amount
-  - Purpose selection and urgency indicators
-  - Real-time payment calculations
-- **Step 3**: Review & Submit
-  - Summary cards with edit capabilities
-  - Terms acceptance and submission
-
-### 📊 Business Dashboard
-- Key metrics displayed in cards
-- Recent transaction history with status badges
-- Account overview with balances
-- Quick actions for common tasks
-- Smooth navigation between dashboard and application
+Web application prototype built with React, TypeScript, and a custom design system.
 
 ## 🛠 Tech Stack
 
@@ -35,10 +9,10 @@ A fintech application prototype focused on creating an optimal business funding 
 - **Vite** - Lightning-fast build tooling
 - **Base UI Components** (`@base-ui-components/react`) - Unstyled, accessible component foundation
 - **Tailwind CSS v4** - Utility-first styling with custom design tokens
-- **Custom Components** - Fintech-optimized wrappers and components
+- **Custom Components** - Base UI wrappers and compound components
   - Button, Input, Card, Badge, Select, Slider
   - Table, Tabs, Sidebar, Form components
-  - MetricCard, ScoreCard for financial data display
+  - MetricCard, ScoreCard for data display
 
 ## 🚀 Getting Started
 
@@ -125,14 +99,3 @@ npm run format       # Format code
 npm test            # Run tests
 ```
 
-## 📄 License
-
-MIT
-
-## 🤝 Contributing
-
-This is a prototype project for demonstration purposes.
-
----
-
-Built with ❤️ for exceptional fintech experiences

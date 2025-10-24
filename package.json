@@ -1,7 +1,7 @@
 {
   "name": "ozone-proto",
   "version": "0.7.0",
-  "description": "Origin fintech prototype - Business banking and funding applications built with Base UI components",
+  "description": "Web application prototype built with Base UI components and Tailwind CSS v4",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -25,12 +25,11 @@
     "catalog:validate": "node scripts/validate-catalog.mjs"
   },
   "keywords": [
-    "fintech",
-    "banking",
-    "funding",
+    "prototype",
     "base-ui",
     "react",
-    "typescript"
+    "typescript",
+    "tailwind"
   ],
   "author": "",
   "license": "MIT",
