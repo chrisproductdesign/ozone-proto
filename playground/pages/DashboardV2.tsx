@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Home, ArrowLeft, Save, Share2, Download, Settings, RefreshCw } from 'lucide-react';
+import { Home, ArrowLeft, Save, Share2, Download, RefreshCw, DollarSign, Clock, BadgeCheck } from 'lucide-react';
 import { MetricCard } from '@/components/dashboard/MetricCard';
 import { StatusCard } from '@/components/dashboard/StatusCard';
+import { CompositeScoreCard } from '@/components/dashboard/CompositeScoreCard';
+import { BackgroundCheckCard } from '@/components/dashboard/BackgroundCheckCard';
 import { ButtonBaseUIWrapper } from '@/components/button/ButtonBaseUIWrapper';
 
 /**
@@ -16,9 +18,9 @@ export function DashboardV2() {
   const [factorRate, setFactorRate] = useState(1.40);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
+    <div className="min-h-screen bg-[#E7E6E4] flex">
       {/* Left Sidebar */}
-      <aside className="w-16 bg-white border-r border-gray-200 flex flex-col items-center py-6 gap-6">
+      <aside className="w-16 bg-[#DBDAD9] flex flex-col items-center py-6 gap-6">
         {/* Logo placeholder */}
         <div className="w-10 h-10 bg-gray-300 rounded flex items-center justify-center text-xs">
           Logo
@@ -46,7 +48,7 @@ export function DashboardV2() {
       {/* Main content area */}
       <div className="flex-1 flex flex-col">
         {/* Top Header */}
-        <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+        <header className="bg-[#E7E6E4] px-6 py-4 flex items-center justify-between sticky top-0 z-10">
           <h1 className="text-lg font-semibold">Deal name LLC</h1>
 
           <div className="flex items-center gap-3">
@@ -89,84 +91,84 @@ export function DashboardV2() {
             {/* 2. Deal Metrics Grid (2x2) */}
             <section>
               <p className="text-xs text-gray-600 mb-3">AI Predicted deal snapshot</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Gross Funding Amount */}
-                <MetricCard
-                  label="GROSS FUNDING AMOUNT"
-                  displayValue={`$${grossFunding.toLocaleString()}`}
-                  sliderMin={10000}
-                  sliderMax={100000}
-                  sliderStep={1000}
-                  sliderMinLabel="10K"
-                  sliderMaxLabel="100K"
-                  sliderValue={grossFunding}
-                  onSliderChange={setGrossFunding}
-                />
+              <div className="rounded-lg overflow-hidden bg-gray-200">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-[2px]">
+                  {/* Gross Funding Amount */}
+                  <MetricCard
+                    icon={<DollarSign className="w-[18px] h-[18px]" />}
+                    label="GROSS FUNDING AMOUNT"
+                    displayValue={`$${grossFunding.toLocaleString()}`}
+                    sliderMin={10000}
+                    sliderMax={100000}
+                    sliderStep={1000}
+                    sliderMinLabel="10K"
+                    sliderMaxLabel="100K"
+                    sliderValue={grossFunding}
+                    onSliderChange={setGrossFunding}
+                    onValueChange={setGrossFunding}
+                    noBorder
+                    noRounded
+                  />
 
-                {/* Term */}
-                <MetricCard
-                  label="TERM"
-                  displayValue={`${term} days`}
-                  sliderMin={30}
-                  sliderMax={180}
-                  sliderValue={term}
-                  onSliderChange={setTerm}
-                />
+                  {/* Term */}
+                  <MetricCard
+                    icon={<Clock className="w-[18px] h-[18px]" />}
+                    label="TERM"
+                    displayValue={`${term} days`}
+                    sliderMin={30}
+                    sliderMax={180}
+                    sliderValue={term}
+                    onSliderChange={setTerm}
+                    onValueChange={setTerm}
+                    noBorder
+                    noRounded
+                  />
 
-                {/* MOIC */}
-                <MetricCard
-                  label="TARGET MOIC"
-                  displayValue={moic.toFixed(2)}
-                  sliderMin={1.1}
-                  sliderMax={1.4}
-                  sliderStep={0.01}
-                  sliderValue={moic}
-                  onSliderChange={setMoic}
-                  showRecalculate
-                  onRecalculate={() => console.log('Recalculate MOIC')}
-                />
+                  {/* MOIC */}
+                  <MetricCard
+                    icon={<BadgeCheck className="w-[18px] h-[18px]" />}
+                    label="TARGET MOIC"
+                    displayValue={moic.toFixed(2)}
+                    sliderMin={1.1}
+                    sliderMax={1.4}
+                    sliderStep={0.01}
+                    sliderValue={moic}
+                    onSliderChange={setMoic}
+                    onValueChange={setMoic}
+                    showRecalculate
+                    onRecalculate={() => console.log('Recalculate MOIC')}
+                    noBorder
+                    noRounded
+                  />
 
-                {/* Factor Rate */}
-                <MetricCard
-                  label="FACTOR RATE"
-                  displayValue={factorRate.toFixed(2)}
-                  sliderMin={1.2}
-                  sliderMax={1.6}
-                  sliderStep={0.01}
-                  sliderValue={factorRate}
-                  onSliderChange={setFactorRate}
-                  showRecalculate
-                  onRecalculate={() => console.log('Recalculate Factor Rate')}
-                />
+                  {/* Factor Rate */}
+                  <MetricCard
+                    icon={<BadgeCheck className="w-[18px] h-[18px]" />}
+                    label="FACTOR RATE"
+                    displayValue={factorRate.toFixed(2)}
+                    sliderMin={1.2}
+                    sliderMax={1.6}
+                    sliderStep={0.01}
+                    sliderValue={factorRate}
+                    onSliderChange={setFactorRate}
+                    onValueChange={setFactorRate}
+                    showRecalculate
+                    onRecalculate={() => console.log('Recalculate Factor Rate')}
+                    noBorder
+                    noRounded
+                  />
+                </div>
               </div>
             </section>
 
             {/* 3. Composite Score Card */}
             <section>
               <p className="text-xs text-gray-600 mb-3">Custom scorecard</p>
-              <div className="bg-white rounded-lg p-8 border border-gray-200">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-6">
-                    {/* Large letter grade with visual background */}
-                    <div className="relative">
-                      <div className="w-32 h-32 rounded-full bg-green-100 flex items-center justify-center">
-                        <div className="text-[96px] font-bold text-green-700 leading-none">A</div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-xs text-gray-600 mb-2">COMPOSITE SCORE</div>
-                      <div className="text-sm text-gray-700">Strong revenue predictability</div>
-                    </div>
-                  </div>
-                  <ButtonBaseUIWrapper
-                    variant="ghost"
-                    size="icon"
-                    aria-label="Settings"
-                  >
-                    <Settings className="w-5 h-5" />
-                  </ButtonBaseUIWrapper>
-                </div>
-              </div>
+              <CompositeScoreCard
+                grade="A"
+                description="Strong revenue predictability"
+                onSettingsClick={() => console.log('Settings clicked')}
+              />
             </section>
 
             {/* 4. Deal Benchmarking - 2 Graphs (stacked vertically) */}
@@ -174,7 +176,7 @@ export function DashboardV2() {
               <p className="text-xs text-gray-600 mb-3">Deal benchmarking</p>
               <div className="space-y-4">
                 {/* Marketplace Graph */}
-                <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <div className="bg-[#f7f5f1] rounded-lg p-6 border border-black/10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="text-xs text-gray-600">MARKETPLACE</div>
                     <ButtonBaseUIWrapper
@@ -191,7 +193,7 @@ export function DashboardV2() {
                 </div>
 
                 {/* Funder Portfolio Graph */}
-                <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <div className="bg-[#f7f5f1] rounded-lg p-6 border border-black/10">
                   <div className="flex items-center justify-between mb-4">
                     <div className="text-xs text-gray-600">FUNDER PORTFOLIO</div>
                     <ButtonBaseUIWrapper
@@ -209,69 +211,18 @@ export function DashboardV2() {
               </div>
             </section>
 
-            {/* 5. Background Check - 4 Cards */}
+            {/* 5. Background Check - 3 Cards */}
             <section>
               <p className="text-xs text-gray-600 mb-3">Background check</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Data Merch */}
-                <div className="bg-white rounded-lg p-6 border border-gray-200 min-h-[200px]">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="text-sm font-semibold">Data merch</div>
-                    <button className="text-gray-500 hover:text-gray-700">ℹ️</button>
-                  </div>
-                  <div className="text-gray-400">[Content placeholder]</div>
+              <div className="space-y-4">
+                {/* Top row - 2 columns */}
+                <div className="grid grid-cols-2 gap-2.5">
+                  <BackgroundCheckCard variant="checklist" />
+                  <BackgroundCheckCard variant="data-merch" />
                 </div>
 
-                {/* Custom Integrations */}
-                <div className="bg-white rounded-lg p-6 border border-gray-200 min-h-[200px]">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="text-sm font-semibold">Custom integrations</div>
-                    <button className="text-gray-500 hover:text-gray-700">ℹ️</button>
-                  </div>
-                  <div className="text-gray-400">[Content placeholder]</div>
-                </div>
-
-                {/* Custom Checklist */}
-                <div className="bg-white rounded-lg p-6 border border-gray-200 min-h-[200px]">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="text-sm font-semibold">Custom checklist</div>
-                    <button className="text-gray-500 hover:text-gray-700">ℹ️</button>
-                  </div>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-start gap-2">
-                      <span className="text-green-600">✓</span>
-                      <span>Viverra urna orci pellentesque viverra.</span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <span className="text-green-600">✓</span>
-                      <span>Etiam mattis nunc nec ac gravida sed varius massa.</span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <span className="text-green-600">✓</span>
-                      <span>Massa quis mauris leo eget amet id.</span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <span className="text-green-600">✓</span>
-                      <span>Velit sagittis volutpat in tempor quam.</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Perplexity Search */}
-                <div className="bg-white rounded-lg p-6 border border-gray-200 min-h-[200px]">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="text-sm font-semibold">Perplexity search</div>
-                    <button className="text-gray-500 hover:text-gray-700">ℹ️</button>
-                  </div>
-                  <div className="space-y-2 text-sm">
-                    <div className="text-xs font-semibold mb-2">RESULTS</div>
-                    <ul className="space-y-2 list-disc list-inside">
-                      <li>Quis eget pellentesque eget consectetur. Commodo viverra velit condimentum consectetur donec.</li>
-                      <li>Quis viverra arcu dui donec turpis consectetur aliquam. Enim et est leo duis et.</li>
-                      <li>Ut at adipiscing cras sit placerat faucibus tincidunt mattis. Quam et non nibh orci.</li>
-                    </ul>
-                  </div>
-                </div>
+                {/* Bottom row - full width */}
+                <BackgroundCheckCard variant="perplexity" />
               </div>
             </section>
 

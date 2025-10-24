@@ -31,6 +31,22 @@ export interface StatusCardProps {
   className?: string;
 }
 
+// Color variants for different status levels
+const statusColors = {
+  stable: {
+    bgGradient: 'linear-gradient(to right, rgba(56, 239, 125, 0.2), rgba(17, 153, 142, 0.2))',
+    textureGradient: 'linear-gradient(to right, rgba(56, 239, 125, 0.94), rgba(17, 153, 142, 0.94))',
+  },
+  moderate: {
+    bgGradient: 'linear-gradient(to right, rgba(255, 115, 0, 0.2), rgba(255, 95, 0, 0.2))',
+    textureGradient: 'linear-gradient(to right, rgba(255, 115, 0, 0.94), rgba(255, 95, 0, 0.94))',
+  },
+  critical: {
+    bgGradient: 'linear-gradient(to right, rgba(255, 55, 45, 0.2), rgba(240, 45, 38, 0.2))',
+    textureGradient: 'linear-gradient(to right, rgba(255, 55, 45, 0.94), rgba(240, 45, 38, 0.94))',
+  },
+};
+
 /**
  * StatusCard - Neo-glassmorphism card with mesh gradient background
  *
@@ -55,11 +71,13 @@ export const StatusCard: React.FC<StatusCardProps> = ({
   confidenceScore,
   className = '',
 }) => {
+  const colors = statusColors[status];
+
   return (
     <div
       className={classNames('relative overflow-hidden rounded-lg px-6 py-8', className)}
       style={{
-        background: `linear-gradient(to right, rgba(56, 239, 125, 0.2), rgba(17, 153, 142, 0.2))`,
+        background: colors.bgGradient,
       }}
     >
       {/* Background Texture Layer with Blur and Blend Modes */}
@@ -80,7 +98,7 @@ export const StatusCard: React.FC<StatusCardProps> = ({
         <div
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(to right, rgba(56, 239, 125, 0.94), rgba(17, 153, 142, 0.94))',
+            background: colors.textureGradient,
             mixBlendMode: 'soft-light',
           }}
         />

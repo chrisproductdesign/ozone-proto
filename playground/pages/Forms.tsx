@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { ButtonBaseUIWrapper } from '@/components/button/ButtonBaseUIWrapper';
 import { InputBaseUIWrapper } from '@/components/input/InputBaseUIWrapper';
+import { StatusCard } from '@/components/dashboard/StatusCard';
+import { CompositeScoreCard } from '@/components/dashboard/CompositeScoreCard';
+import { BackgroundCheckCard } from '@/components/dashboard/BackgroundCheckCard';
 
 export const Forms = () => {
   const [email, setEmail] = useState('');
@@ -15,6 +18,81 @@ export const Forms = () => {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
+      {/* Status Card Variants */}
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold text-gray-800">Status Card Variants</h2>
+
+        <div className="space-y-4">
+          <StatusCard
+            status="stable"
+            title="Stable pay"
+            description="Tortor diam rhoncus lorem dapibus mauris malesuada aliquam cursus interdum. Enim aliquet"
+            confidenceScore={51}
+          />
+
+          <StatusCard
+            status="moderate"
+            title="Collections"
+            description="Tortor diam rhoncus lorem dapibus mauris malesuada aliquam cursus interdum. Enim aliquet"
+            confidenceScore={51}
+          />
+
+          <StatusCard
+            status="critical"
+            title="Legal"
+            description="Tortor diam rhoncus lorem dapibus mauris malesuada aliquam cursus interdum. Enim aliquet"
+            confidenceScore={51}
+          />
+        </div>
+      </section>
+
+      {/* Composite Score Card Variants */}
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold text-gray-800">Composite Score Card Variants</h2>
+
+        <div className="space-y-4">
+          <CompositeScoreCard
+            grade="A"
+            description="Strong revenue predictability"
+            onSettingsClick={() => console.log('Settings clicked')}
+          />
+
+          <CompositeScoreCard
+            grade="B"
+            description="Ipsum nullam aenean sem"
+            onSettingsClick={() => console.log('Settings clicked')}
+          />
+
+          <CompositeScoreCard
+            grade="C"
+            description="Scelerisque viverra risus"
+            onSettingsClick={() => console.log('Settings clicked')}
+          />
+
+          <CompositeScoreCard
+            grade="D"
+            description="Strong revenue predictability"
+            onSettingsClick={() => console.log('Settings clicked')}
+          />
+        </div>
+      </section>
+
+      {/* Background Check Cards */}
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold text-gray-800">Background Check Cards</h2>
+
+        <div className="space-y-4">
+          {/* Top row - 2 columns */}
+          <div className="grid grid-cols-2 gap-2.5">
+            <BackgroundCheckCard variant="checklist" />
+            <BackgroundCheckCard variant="data-merch" />
+          </div>
+
+          {/* Bottom row - full width */}
+          <BackgroundCheckCard variant="perplexity" />
+        </div>
+      </section>
+
       {/* Button Examples */}
       <section className="space-y-4">
         <h2 className="text-xl font-semibold text-gray-800">Button Components</h2>

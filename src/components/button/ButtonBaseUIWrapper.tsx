@@ -78,7 +78,7 @@ const variantClasses: Record<ButtonVariant, string> = {
   `,
   ghost: `
     bg-transparent text-gray-700 border-transparent
-    hover:bg-gray-100 active:bg-gray-200
+    hover:bg-black/5 active:bg-black/10
     focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2
     disabled:text-gray-400 disabled:cursor-not-allowed
   `,
