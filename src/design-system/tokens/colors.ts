@@ -137,11 +137,11 @@ export const semanticColors = {
       border: '#7DD3C0', // Teal border
     },
     medium: {
-      bg: colors.yellow[50],   // '#fffbeb'
-      bgHover: colors.yellow[100],
-      text: colors.yellow[700], // '#b45309'
-      icon: colors.yellow[700],
-      border: colors.yellow[300],
+      bg: colors.amber[50],   // '#fffbeb'
+      bgHover: colors.amber[100],
+      text: colors.amber[700], // '#b45309'
+      icon: colors.amber[700],
+      border: colors.amber[300],
     },
     low: {
       bg: colors.red[50],      // '#fef2f2'

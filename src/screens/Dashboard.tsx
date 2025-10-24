@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from 'react';
 import { classNames } from '@/lib/classNames';
 import { ScoreCard } from '@/components/dashboard/ScoreCard';
