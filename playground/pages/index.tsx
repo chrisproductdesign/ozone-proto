@@ -9,7 +9,6 @@ import { Data } from './Data';
 import { Feedback } from './Feedback';
 import { Navigation } from './Navigation';
 import { Login } from './Login';
-import { Dashboard } from './Dashboard';
 import { DashboardV2 } from './DashboardV2';
 import { DealInput } from './DealInput';
 
@@ -31,13 +30,8 @@ export const playgroundPages: PlaygroundPage[] = [
     render: (navProps) => <DealInput navigateTo={navProps.navigateTo} currentPage={navProps.currentPage} />,
   },
   {
-    id: 'dashboard',
-    title: 'Dashboard',
-    render: (navProps) => <Dashboard navigateTo={navProps.navigateTo} currentPage={navProps.currentPage} />,
-  },
-  {
     id: 'dashboard-v2',
-    title: 'Dashboard v0.7',
+    title: 'Dashboard',
     render: () => <DashboardV2 />,
   },
   {
