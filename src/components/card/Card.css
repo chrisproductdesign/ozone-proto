@@ -5,7 +5,7 @@
   --card-padding-md: 1.5rem;
   --card-padding-lg: 2rem;
   --card-bg: white;
-  --card-border: #e2e8f0;
+  --card-border: var(--color-neutral-400);
   --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
   position: relative;
@@ -28,7 +28,7 @@
 }
 
 .ui-card--gradient {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--color-purple-500) 0%, var(--color-purple-800) 100%);
   color: white;
 }
 
@@ -79,14 +79,14 @@
   width: 2rem;
   height: 2rem;
   border-radius: 0.5rem;
-  background: #f1f5f9;
-  color: #64748b;
+  background: var(--color-neutral-200);
+  color: var(--color-neutral-600);
 }
 
 .ui-metric-card__label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #64748b;
+  color: var(--color-neutral-600);
   text-transform: uppercase;
   letter-spacing: 0.025em;
 }
@@ -94,13 +94,13 @@
 .ui-metric-card__value {
   font-size: 2rem;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--color-neutral-900);
   line-height: 1.2;
 }
 
 .ui-metric-card__sub-value {
   font-size: 0.875rem;
-  color: #64748b;
+  color: var(--color-neutral-600);
 }
 
 .ui-metric-card__trend {
@@ -112,15 +112,15 @@
 }
 
 .ui-metric-card__trend--up {
-  color: #10b981;
+  color: var(--color-green-500);
 }
 
 .ui-metric-card__trend--down {
-  color: #ef4444;
+  color: var(--color-red-500);
 }
 
 .ui-metric-card__trend--neutral {
-  color: #64748b;
+  color: var(--color-neutral-600);
 }
 
 .ui-metric-card__trend-arrow {
@@ -147,7 +147,7 @@
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background: #f1f5f9;
+  background: var(--color-neutral-200);
   flex-shrink: 0;
 }
 
@@ -159,14 +159,14 @@
 .ui-account-card__name {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #64748b;
+  color: var(--color-neutral-600);
   margin-bottom: 0.25rem;
 }
 
 .ui-account-card__balance {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--color-neutral-900);
 }
 
 .ui-account-card__change {
@@ -178,11 +178,11 @@
 }
 
 .ui-account-card__change--positive {
-  color: #10b981;
+  color: var(--color-green-500);
 }
 
 .ui-account-card__change--negative {
-  color: #ef4444;
+  color: var(--color-red-500);
 }
 
 .ui-account-card__change-percent {
@@ -194,18 +194,18 @@
 }
 
 .ui-account-card__change--positive .ui-account-card__change-percent {
-  background: #10b981;
+  background: var(--color-green-500);
 }
 
 .ui-account-card__change--negative .ui-account-card__change-percent {
-  background: #ef4444;
+  background: var(--color-red-500);
 }
 
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   .ui-card {
-    --card-bg: #1e293b;
-    --card-border: #334155;
+    --card-bg: var(--color-neutral-900);
+    --card-border: var(--color-neutral-700);
     --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
 
@@ -217,12 +217,12 @@
   .ui-metric-card__label,
   .ui-metric-card__sub-value,
   .ui-account-card__name {
-    color: #94a3b8;
+    color: var(--color-neutral-400);
   }
 
   .ui-metric-card__icon,
   .ui-account-card__logo {
-    background: #334155;
-    color: #94a3b8;
+    background: var(--color-neutral-700);
+    color: var(--color-neutral-400);
   }
 }

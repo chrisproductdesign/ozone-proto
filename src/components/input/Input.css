@@ -1,9 +1,9 @@
 .ui-input {
   --input-radius: 0.625rem;
-  --input-border-color: rgba(15, 23, 42, 0.14);
+  --input-border-color: rgba(58, 56, 54, 0.14);
   --input-background: rgba(255, 255, 255, 0.9);
-  --input-text: #0f172a;
-  --input-placeholder: rgba(15, 23, 42, 0.45);
+  --input-text: var(--color-neutral-900);
+  --input-placeholder: rgba(58, 56, 54, 0.45);
   --input-border-width: 1px;
   --input-padding-x: 0.875rem;
   --input-padding-y: 0.625rem;
@@ -137,7 +137,7 @@
   --input-padding-y: 0.875rem;
   --input-padding-x: 1rem;
   --input-gap: 0.625rem;
-  --input-font-size: 1.0625rem;
+  --input-font-size: var(--text-lg);
   --input-line-height: 1.45;
 }
 

@@ -67,28 +67,28 @@ const sizeClasses: Record<InputSize, string> = {
 // Variant mappings for Tailwind classes
 const variantClasses: Record<InputVariant, string> = {
   default: `
-    bg-white border-gray-200
-    hover:border-gray-300
+    bg-white border-neutral-300
+    hover:border-neutral-400
     focus:border-purple-700 focus:ring-2 focus:ring-purple-700/20
-    disabled:bg-gray-50 disabled:text-gray-400 disabled:border-gray-100
+    disabled:bg-neutral-50 disabled:text-neutral-500 disabled:border-neutral-200
   `,
   filled: `
-    bg-gray-50 border-transparent
-    hover:bg-gray-100
+    bg-neutral-50 border-transparent
+    hover:bg-neutral-100
     focus:bg-white focus:border-purple-700 focus:ring-2 focus:ring-purple-700/20
-    disabled:bg-gray-100 disabled:text-gray-400
+    disabled:bg-neutral-100 disabled:text-neutral-500
   `,
   error: `
     bg-white border-red-500
     hover:border-red-600
     focus:border-red-500 focus:ring-2 focus:ring-red-500/20
-    disabled:bg-gray-50 disabled:text-gray-400 disabled:border-gray-100
+    disabled:bg-neutral-50 disabled:text-neutral-500 disabled:border-neutral-200
   `,
   success: `
     bg-white border-green-500
     hover:border-green-600
     focus:border-green-500 focus:ring-2 focus:ring-green-500/20
-    disabled:bg-gray-50 disabled:text-gray-400 disabled:border-gray-100
+    disabled:bg-neutral-50 disabled:text-neutral-500 disabled:border-neutral-200
   `,
 };
 
@@ -147,7 +147,7 @@ export const InputBaseUIWrapper = forwardRef<HTMLInputElement, InputBaseUIWrappe
     // Compose input classes
     const inputClasses = classNames(
       // Base styles
-      'block rounded-lg border text-gray-900 placeholder-gray-400',
+      'block rounded-lg border text-neutral-800 placeholder-neutral-500',
       'transition-all duration-150 ease-out',
       'outline-none',
 
@@ -180,8 +180,8 @@ export const InputBaseUIWrapper = forwardRef<HTMLInputElement, InputBaseUIWrappe
       'mt-1 text-sm',
       variant === 'error' && 'text-red-500',
       variant === 'success' && 'text-green-500',
-      variant === 'default' && 'text-gray-500',
-      variant === 'filled' && 'text-gray-500'
+      variant === 'default' && 'text-neutral-500',
+      variant === 'filled' && 'text-neutral-500'
     );
 
     return (
@@ -190,7 +190,7 @@ export const InputBaseUIWrapper = forwardRef<HTMLInputElement, InputBaseUIWrappe
         {label && (
           <label
             htmlFor={inputId}
-            className="block mb-2 text-sm font-medium text-gray-700"
+            className="block mb-2 text-sm font-medium text-neutral-700"
           >
             {label}
             {required && <span className="ml-1 text-red-500">*</span>}
@@ -201,7 +201,7 @@ export const InputBaseUIWrapper = forwardRef<HTMLInputElement, InputBaseUIWrappe
         <div className="relative">
           {/* Start icon */}
           {startIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 pointer-events-none">
               {startIcon}
             </div>
           )}
@@ -218,7 +218,7 @@ export const InputBaseUIWrapper = forwardRef<HTMLInputElement, InputBaseUIWrappe
 
           {/* End icon */}
           {endIcon && (
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 pointer-events-none">
               {endIcon}
             </div>
           )}
@@ -244,7 +244,7 @@ InputBaseUIWrapper.displayName = 'InputBaseUIWrapper';
  *    <InputBaseUIWrapper
  *      label="Funding Amount"
  *      type="number"
- *      startIcon={<span className="text-gray-500">$</span>}
+ *      startIcon={<span className="text-neutral-500">$</span>}
  *      placeholder="50,000"
  *      helperText="Minimum funding amount is $10,000"
  *    />

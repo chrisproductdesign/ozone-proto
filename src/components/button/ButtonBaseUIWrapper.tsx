@@ -68,31 +68,31 @@ const variantClasses: Record<ButtonVariant, string> = {
     bg-purple-700 text-white border-transparent
     hover:bg-purple-800 active:bg-purple-900
     focus-visible:ring-2 focus-visible:ring-purple-700 focus-visible:ring-offset-2
-    disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed
+    disabled:bg-neutral-200 disabled:text-neutral-500 disabled:cursor-not-allowed
   `,
   secondary: `
-    bg-white text-gray-900 border-gray-200
-    hover:bg-gray-50 active:bg-gray-100
-    focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2
-    disabled:bg-gray-50 disabled:text-gray-400 disabled:cursor-not-allowed
+    bg-white text-neutral-800 border-neutral-300
+    hover:bg-neutral-50 active:bg-neutral-100
+    focus-visible:ring-2 focus-visible:ring-neutral-600 focus-visible:ring-offset-2
+    disabled:bg-neutral-50 disabled:text-neutral-500 disabled:cursor-not-allowed
   `,
   ghost: `
-    bg-transparent text-gray-700 border-transparent
+    bg-transparent text-neutral-700 border-transparent
     hover:bg-black/5 active:bg-black/10
-    focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2
-    disabled:text-gray-400 disabled:cursor-not-allowed
+    focus-visible:ring-2 focus-visible:ring-neutral-600 focus-visible:ring-offset-2
+    disabled:text-neutral-500 disabled:cursor-not-allowed
   `,
   danger: `
     bg-red-500 text-white border-transparent
     hover:bg-red-600 active:bg-red-700
     focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2
-    disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed
+    disabled:bg-neutral-200 disabled:text-neutral-500 disabled:cursor-not-allowed
   `,
   success: `
     bg-green-500 text-white border-transparent
     hover:bg-green-600 active:bg-green-700
     focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2
-    disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed
+    disabled:bg-neutral-200 disabled:text-neutral-500 disabled:cursor-not-allowed
   `,
 };
 

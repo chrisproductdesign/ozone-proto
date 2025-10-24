@@ -30,12 +30,12 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({
 
   return (
     <div className={classNames(
-      'bg-white rounded-2xl p-5 shadow-sm',
+      'bg-base rounded-2xl p-5 shadow-sm',
       'flex flex-col',
       className
     )}>
       <div className="flex items-start justify-between mb-6">
-        <h3 className="text-xs font-medium text-gray-500 tracking-wide uppercase">
+        <h3 className="text-xs font-medium text-neutral-500 tracking-wide uppercase">
           {title}
         </h3>
         {status && (
@@ -59,7 +59,7 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({
           {score.toFixed(2)}
         </div>
         {description && (
-          <p className="text-gray-600 text-base">
+          <p className="text-neutral-600 text-base">
             {description}
           </p>
         )}

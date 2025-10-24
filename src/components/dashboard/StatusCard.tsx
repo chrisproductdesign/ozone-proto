@@ -126,10 +126,10 @@ export const StatusCard: React.FC<StatusCardProps> = ({
       <div className="relative flex items-start gap-4">
         {/* Title and Description */}
         <div className="flex-1">
-          <h2 className="text-2xl font-semibold mb-4 text-black">
+          <h2 className="text-2xl font-semibold mb-4 text-primary">
             {title}
           </h2>
-          <p className="text-[13px] font-medium leading-4 text-black">
+          <p className="text-[13px] font-medium leading-4 text-primary">
             {description}
           </p>
         </div>
@@ -156,7 +156,7 @@ export const StatusCard: React.FC<StatusCardProps> = ({
           {/* Icon + Label */}
           <div className="flex items-center gap-2">
             <img src={SPARKLES_ICON} alt="" className="w-4 h-4" />
-            <p className="text-xs font-medium uppercase text-black">
+            <p className="text-xs font-medium uppercase text-primary">
               AI Confidence
             </p>
           </div>

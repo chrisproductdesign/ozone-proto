@@ -1,6 +1,6 @@
 {
-  "name": "ogion-proto",
-  "version": "0.5.0",
+  "name": "ozone-proto",
+  "version": "0.7.0",
   "description": "Origin fintech prototype - Business banking and funding applications built with Base UI components",
   "type": "module",
   "scripts": {

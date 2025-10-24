@@ -51,7 +51,7 @@ A fintech application prototype focused on creating an optimal business funding 
 ```bash
 # Clone the repository
 git clone https://github.com/chrisproductdesign/ozone-proto-v0.7.git
-cd ogion-proto-v0.7
+cd ozone-proto-v0.7
 
 # Install dependencies
 npm install
@@ -75,7 +75,7 @@ npm run preview
 ## 📁 Project Structure
 
 ```
-ogion-proto-v0.7/
+ozone-proto-v0.7/
 ├── src/
 │   ├── components/          # Reusable UI components
 │   │   ├── button/          # ButtonBaseUIWrapper
@@ -84,9 +84,8 @@ ogion-proto-v0.7/
 │   │   ├── dashboard/       # ScoreCard, MetricCard, ConfidenceCard
 │   │   ├── form/            # Form components
 │   │   └── ...
-│   ├── design-system/       # Design tokens
-│   │   ├── tokens/          # colors, spacing, typography
-│   │   └── themes/          # light, dark themes
+│   ├── design-system/       # Design system exports (minimal)
+│   ├── index.css            # ⭐ Design tokens (@theme directive)
 │   └── lib/                 # Utilities (classNames, etc.)
 ├── playground/              # Component development & testing
 │   └── pages/               # Login, Dashboard, Forms, etc.

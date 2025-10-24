@@ -20,7 +20,7 @@ export const Forms = () => {
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Status Card Variants */}
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold text-gray-800">Status Card Variants</h2>
+        <h2 className="text-xl font-semibold text-neutral-800">Status Card Variants</h2>
 
         <div className="space-y-4">
           <StatusCard
@@ -48,7 +48,7 @@ export const Forms = () => {
 
       {/* Composite Score Card Variants */}
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold text-gray-800">Composite Score Card Variants</h2>
+        <h2 className="text-xl font-semibold text-neutral-800">Composite Score Card Variants</h2>
 
         <div className="space-y-4">
           <CompositeScoreCard
@@ -79,7 +79,7 @@ export const Forms = () => {
 
       {/* Background Check Cards */}
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold text-gray-800">Background Check Cards</h2>
+        <h2 className="text-xl font-semibold text-neutral-800">Background Check Cards</h2>
 
         <div className="space-y-4">
           {/* Top row - 2 columns */}
@@ -95,9 +95,9 @@ export const Forms = () => {
 
       {/* Button Examples */}
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold text-gray-800">Button Components</h2>
+        <h2 className="text-xl font-semibold text-neutral-800">Button Components</h2>
 
-        <div className="p-6 bg-gray-50 rounded-lg space-y-4">
+        <div className="p-6 bg-neutral-50 rounded-lg space-y-4">
           <div className="flex flex-wrap gap-3">
             <ButtonBaseUIWrapper variant="primary">Primary Action</ButtonBaseUIWrapper>
             <ButtonBaseUIWrapper variant="secondary">Secondary</ButtonBaseUIWrapper>
@@ -127,9 +127,9 @@ export const Forms = () => {
 
       {/* Input Examples */}
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold text-gray-800">Input Components</h2>
+        <h2 className="text-xl font-semibold text-neutral-800">Input Components</h2>
 
-        <div className="p-6 bg-gray-50 rounded-lg space-y-4">
+        <div className="p-6 bg-neutral-50 rounded-lg space-y-4">
           <InputBaseUIWrapper
             label="Email Address"
             placeholder="Enter your email"
@@ -145,7 +145,7 @@ export const Forms = () => {
             type="number"
             value={amount}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmount(e.target.value)}
-            startIcon={<span className="text-gray-500">$</span>}
+            startIcon={<span className="text-neutral-500">$</span>}
             helperText="Minimum funding amount is $10,000"
           />
 
@@ -180,9 +180,9 @@ export const Forms = () => {
 
       {/* Form Example */}
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold text-gray-800">Complete Form Example</h2>
+        <h2 className="text-xl font-semibold text-neutral-800">Complete Form Example</h2>
 
-        <form onSubmit={handleSubmit} className="p-6 bg-white border border-gray-200 rounded-xl shadow-sm space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 bg-white border border-neutral-300 rounded-xl shadow-sm space-y-4">
           <InputBaseUIWrapper
             label="Business Email"
             type="email"
@@ -199,7 +199,7 @@ export const Forms = () => {
             required
             value={amount}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmount(e.target.value)}
-            startIcon={<span className="text-gray-500">$</span>}
+            startIcon={<span className="text-neutral-500">$</span>}
             helperText="Enter the amount you'd like to request"
           />
 
@@ -219,7 +219,7 @@ export const Forms = () => {
 
       {/* Tailwind Utility Classes Demo */}
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold text-gray-800">Design Tokens via Tailwind</h2>
+        <h2 className="text-xl font-semibold text-neutral-800">Design Tokens via Tailwind</h2>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="p-4 bg-purple-700 text-white rounded-lg text-center">

@@ -61,7 +61,7 @@ export const CompositeScoreCard: React.FC<CompositeScoreCardProps> = ({
       <div className="box-border flex gap-[24px] items-start px-[24px] py-[32px] w-full shrink-0">
         <div className="flex flex-1 gap-[24px] items-center min-w-0">
           {/* Foreground A */}
-          <div className="flex flex-col h-[93px] w-[91px] justify-center leading-[0] text-[132px] font-bold text-[rgba(255,255,255,0.8)] shrink-0" style={{ mixBlendMode: 'overlay' }}>
+          <div className="flex flex-col h-[93px] w-[91px] justify-center leading-[0] text-[length:var(--text-grade-overlay)] font-bold text-[rgba(255,255,255,0.8)] shrink-0" style={{ mixBlendMode: 'overlay' }}>
             <p className="leading-normal whitespace-pre-wrap">{grade}</p>
           </div>
 
@@ -82,21 +82,21 @@ export const CompositeScoreCard: React.FC<CompositeScoreCardProps> = ({
             aria-label="Settings"
             className="p-0"
           >
-            <Settings className="w-[35px] h-[35px] text-black" />
+            <Settings className="w-[35px] h-[35px] text-primary" />
           </ButtonBaseUIWrapper>
         </div>
       </div>
 
       {/* Background A #2 - 10% opacity, 332px */}
       <div className="absolute left-[70px] top-[calc(50%+0.5px)] -translate-y-1/2 flex h-[154px] items-center justify-center overflow-clip gap-[10px]">
-        <div className="flex flex-col justify-center leading-[0] text-[332px] font-bold text-[rgba(255,255,255,0.1)] whitespace-nowrap shrink-0">
+        <div className="flex flex-col justify-center leading-[0] text-[length:var(--text-grade-bg-sm)] font-bold text-[rgba(255,255,255,0.1)] whitespace-nowrap shrink-0">
           <p className="leading-normal">{grade}</p>
         </div>
       </div>
 
       {/* Background A #3 - 8% opacity, 450px */}
       <div className="absolute left-[calc(50%+0.5px)] top-[calc(50%+0.5px)] -translate-x-1/2 -translate-y-1/2 flex h-[154px] items-center justify-center overflow-clip gap-[10px]">
-        <div className="flex flex-col justify-center leading-[0] text-[450px] font-bold text-[rgba(255,255,255,0.08)] whitespace-nowrap shrink-0">
+        <div className="flex flex-col justify-center leading-[0] text-[length:var(--text-grade-bg-lg)] font-bold text-[rgba(255,255,255,0.08)] whitespace-nowrap shrink-0">
           <p className="leading-normal">{grade}</p>
         </div>
       </div>

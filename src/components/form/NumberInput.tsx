@@ -44,12 +44,12 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           max={max}
           step={step}
           className={classNames(
-            'px-3.5 py-2.5 rounded-lg border bg-white text-gray-900',
-            'text-sm placeholder:text-gray-400',
+            'px-3.5 py-2.5 rounded-lg border bg-white text-neutral-800',
+            'text-sm placeholder:text-neutral-500',
             'transition-all duration-200',
             'focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-50',
             '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
-            error ? 'border-red-300 focus:border-red-400 focus:ring-red-50' : 'border-gray-300',
+            error ? 'border-red-300 focus:border-red-400 focus:ring-red-50' : 'border-neutral-400',
             showControls ? 'pr-10' : '',
             fullWidth ? 'w-full' : '',
             className
@@ -61,20 +61,20 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
             <button
               type="button"
               onClick={handleIncrement}
-              className="flex-1 px-2 hover:bg-gray-50 rounded-t transition-colors"
+              className="flex-1 px-2 hover:bg-neutral-50 rounded-t transition-colors"
               aria-label="Increment"
             >
-              <svg className="w-3 h-3 text-gray-400" viewBox="0 0 12 12">
+              <svg className="w-3 h-3 text-neutral-500" viewBox="0 0 12 12">
                 <path d="M6 4L10 8H2L6 4Z" fill="currentColor"/>
               </svg>
             </button>
             <button
               type="button"
               onClick={handleDecrement}
-              className="flex-1 px-2 hover:bg-gray-50 rounded-b transition-colors"
+              className="flex-1 px-2 hover:bg-neutral-50 rounded-b transition-colors"
               aria-label="Decrement"
             >
-              <svg className="w-3 h-3 text-gray-400" viewBox="0 0 12 12">
+              <svg className="w-3 h-3 text-neutral-500" viewBox="0 0 12 12">
                 <path d="M6 8L2 4H10L6 8Z" fill="currentColor"/>
               </svg>
             </button>

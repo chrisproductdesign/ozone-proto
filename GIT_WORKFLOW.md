@@ -1,4 +1,4 @@
-# Git Workflow for Ogion Proto v0.5
+# Git Workflow for Ozone Proto v0.7
 
 ## 🎯 Workflow Philosophy
 Our Git workflow balances rapid iteration with stable progress, optimized for a design-driven development process where we frequently iterate on UI components and user experience.
@@ -61,7 +61,7 @@ feat: Implement LoginCard with interactive states
 
 - Add email and password fields with validation
 - Implement button state changes based on input
-- Use Ogion brown (#4A4543) for active button
+- Use brand color (#4A4543) for active button
 - Add responsive padding for mobile devices
 - Include ARIA labels for accessibility
 ```

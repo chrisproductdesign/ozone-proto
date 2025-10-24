@@ -19,7 +19,7 @@ export const FormField: React.FC<FormFieldProps> = ({
   return (
     <div className={classNames('flex flex-col', className)}>
       {label && (
-        <label className="text-xs font-medium text-gray-700 mb-2 flex items-center gap-1">
+        <label className="text-xs font-medium text-neutral-700 mb-2 flex items-center gap-1">
           {label}
           {required && <span className="text-red-500" aria-label="required">*</span>}
           {completed && (

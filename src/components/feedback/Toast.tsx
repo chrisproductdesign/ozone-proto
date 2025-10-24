@@ -53,7 +53,7 @@ export const Toast: React.FC<ToastProps> = ({
         );
       default:
         return (
-          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         );
@@ -64,7 +64,7 @@ export const Toast: React.FC<ToastProps> = ({
     <div
       className={classNames(
         'fixed top-6 left-1/2 -translate-x-1/2 z-50',
-        'bg-white rounded-lg shadow-lg border border-gray-200',
+        'bg-white rounded-lg shadow-lg border border-neutral-300',
         'px-4 py-3 min-w-[300px] max-w-[500px]',
         'transition-all duration-300 ease-in-out',
         isExiting ? 'opacity-0 translate-y-[-10px]' : 'opacity-100 translate-y-0'
@@ -73,7 +73,7 @@ export const Toast: React.FC<ToastProps> = ({
     >
       <div className="flex items-center gap-3">
         {getIcon()}
-        <p className="text-sm font-medium text-gray-900">{message}</p>
+        <p className="text-sm font-medium text-neutral-800">{message}</p>
       </div>
     </div>
   );

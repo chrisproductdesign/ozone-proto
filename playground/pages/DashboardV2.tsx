@@ -18,11 +18,11 @@ export function DashboardV2() {
   const [factorRate, setFactorRate] = useState(1.40);
 
   return (
-    <div className="min-h-screen bg-[#E7E6E4] flex">
+    <div className="min-h-screen bg-secondary flex">
       {/* Left Sidebar */}
-      <aside className="w-16 bg-[#DBDAD9] flex flex-col items-center py-6 gap-6">
+      <aside className="w-16 bg-tertiary flex flex-col items-center py-6 gap-6">
         {/* Logo placeholder */}
-        <div className="w-10 h-10 bg-gray-300 rounded flex items-center justify-center text-xs">
+        <div className="w-10 h-10 bg-neutral-300 rounded flex items-center justify-center text-xs">
           Logo
         </div>
 
@@ -48,7 +48,7 @@ export function DashboardV2() {
       {/* Main content area */}
       <div className="flex-1 flex flex-col">
         {/* Top Header */}
-        <header className="bg-[#E7E6E4] px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+        <header className="bg-secondary px-6 py-4 flex items-center justify-between sticky top-0 z-10">
           <h1 className="text-lg font-semibold">Deal name LLC</h1>
 
           <div className="flex items-center gap-3">
@@ -82,7 +82,7 @@ export function DashboardV2() {
 
             {/* 1. Status Hero Section */}
             <section className="mb-3">
-              <p className="text-xs text-gray-600 mb-3">AI Predicted deal snapshot</p>
+              <p className="text-xs text-neutral-600 mb-3">AI Predicted deal snapshot</p>
               <StatusCard
                 status="stable"
                 title="Stable pay"
@@ -93,7 +93,7 @@ export function DashboardV2() {
 
             {/* 2. Deal Metrics Grid (2x2) */}
             <section className="mb-12">
-              <div className="rounded-lg overflow-hidden bg-gray-200">
+              <div className="rounded-lg overflow-hidden bg-neutral-300">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-[2px]">
                   {/* Gross Funding Amount */}
                   <MetricCard
@@ -165,7 +165,7 @@ export function DashboardV2() {
 
             {/* 3. Composite Score Card */}
             <section className="mb-12">
-              <p className="text-xs text-gray-600 mb-3">Custom scorecard</p>
+              <p className="text-xs text-neutral-600 mb-3">Custom scorecard</p>
               <CompositeScoreCard
                 grade="A"
                 description="Strong revenue predictability"
@@ -175,12 +175,12 @@ export function DashboardV2() {
 
             {/* 4. Deal Benchmarking - 2 Graphs (stacked vertically) */}
             <section className="mb-12">
-              <p className="text-xs text-gray-600 mb-3">Deal benchmarking</p>
+              <p className="text-xs text-neutral-600 mb-3">Deal benchmarking</p>
               <div>
                 {/* Marketplace Graph */}
-                <div className="bg-[#f7f5f1] rounded-lg p-6 border border-black/10">
+                <div className="bg-base rounded-lg p-6 border border-black/10">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="text-xs text-gray-600">MARKETPLACE</div>
+                    <div className="text-xs text-neutral-600">MARKETPLACE</div>
                     <ButtonBaseUIWrapper
                       variant="ghost"
                       size="icon"
@@ -189,15 +189,15 @@ export function DashboardV2() {
                       <RefreshCw className="w-4 h-4" />
                     </ButtonBaseUIWrapper>
                   </div>
-                  <div className="h-[250px] bg-gray-100 rounded flex items-center justify-center text-gray-400">
+                  <div className="h-[250px] bg-neutral-100 rounded flex items-center justify-center text-neutral-500">
                     [Graph] Scatter Plot
                   </div>
                 </div>
 
                 {/* Funder Portfolio Graph */}
-                <div className="bg-[#f7f5f1] rounded-lg p-6 border border-black/10 mt-3">
+                <div className="bg-base rounded-lg p-6 border border-black/10 mt-3">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="text-xs text-gray-600">FUNDER PORTFOLIO</div>
+                    <div className="text-xs text-neutral-600">FUNDER PORTFOLIO</div>
                     <ButtonBaseUIWrapper
                       variant="ghost"
                       size="icon"
@@ -206,7 +206,7 @@ export function DashboardV2() {
                       <RefreshCw className="w-4 h-4" />
                     </ButtonBaseUIWrapper>
                   </div>
-                  <div className="h-[250px] bg-gray-100 rounded flex items-center justify-center text-gray-400">
+                  <div className="h-[250px] bg-neutral-100 rounded flex items-center justify-center text-neutral-500">
                     [Graph] Scatter Plot
                   </div>
                 </div>
@@ -215,7 +215,7 @@ export function DashboardV2() {
 
             {/* 5. Background Check - 3 Cards */}
             <section className="mb-12">
-              <p className="text-xs text-gray-600 mb-3">Background check</p>
+              <p className="text-xs text-neutral-600 mb-3">Background check</p>
               <div className="space-y-4">
                 {/* Top row - 2 columns */}
                 <div className="grid grid-cols-2 gap-2.5">

@@ -136,16 +136,16 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
   ];
 
   return (
-    <div className="min-h-full" style={{ backgroundColor: '#F5F2ED' }}>
+    <div className="min-h-full bg-secondary">
       {/* Header */}
-      <header className="border-b border-gray-200 sticky top-0 z-10" style={{ backgroundColor: '#F5F2ED' }}>
+      <header className="border-b border-neutral-300 sticky top-0 z-10 bg-secondary">
         <div className="px-6 py-8">
           <div className="max-w-[1000px] mx-auto flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              <h1 className="text-lg font-medium text-gray-900">
+              <h1 className="text-lg font-medium text-neutral-800">
                 {dealName}
               </h1>
             </div>
@@ -162,7 +162,7 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
 
               <button
                 onClick={() => showToast('Deals list coming soon', 'info')}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                className="px-4 py-2 text-sm font-medium text-neutral-700 bg-base border border-neutral-400 rounded-lg hover:bg-neutral-50 transition-colors"
                 aria-label="View deals"
               >
                 Deals
@@ -174,7 +174,7 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
                   "px-4 py-2 text-sm font-medium rounded-lg transition-colors",
                   isFormValid()
                     ? "text-white bg-[#4A4543] hover:bg-[#3A3533]"
-                    : "text-gray-400 bg-gray-200 cursor-not-allowed"
+                    : "text-neutral-500 bg-neutral-200 cursor-not-allowed"
                 )}
                 aria-label="Continue"
               >
@@ -357,31 +357,31 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
           {/* Deal Summary */}
           <FormSection title="Deal Summary">
             <div className="bg-purple-50 border border-purple-100 rounded-xl p-6">
-              <h4 className="text-sm font-semibold text-gray-900 mb-4">
+              <h4 className="text-sm font-semibold text-neutral-800 mb-4">
                 Review Deal Terms
               </h4>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div>
-                  <dt className="text-xs text-gray-600 mb-1">Total Funded</dt>
-                  <dd className="text-lg font-semibold text-gray-900">
+                  <dt className="text-xs text-neutral-600 mb-1">Total Funded</dt>
+                  <dd className="text-lg font-semibold text-neutral-800">
                     ${Number(formData.grossFundedAmount || 0).toLocaleString()}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-gray-600 mb-1">Term</dt>
-                  <dd className="text-lg font-semibold text-gray-900">
+                  <dt className="text-xs text-neutral-600 mb-1">Term</dt>
+                  <dd className="text-lg font-semibold text-neutral-800">
                     {formData.term || 0} days
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-gray-600 mb-1">Payment Schedule</dt>
-                  <dd className="text-lg font-semibold text-gray-900">
+                  <dt className="text-xs text-neutral-600 mb-1">Payment Schedule</dt>
+                  <dd className="text-lg font-semibold text-neutral-800">
                     {formData.paymentFrequency}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-gray-600 mb-1">Advance Type</dt>
-                  <dd className="text-lg font-semibold text-gray-900">
+                  <dt className="text-xs text-neutral-600 mb-1">Advance Type</dt>
+                  <dd className="text-lg font-semibold text-neutral-800">
                     {formData.advanceType}
                   </dd>
                 </div>

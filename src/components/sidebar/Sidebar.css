@@ -4,7 +4,7 @@
   width: 260px;
   height: 100vh;
   background: white;
-  border-right: 1px solid #e2e8f0;
+  border-right: 1px solid var(--color-neutral-400);
   transition: width 200ms ease;
   overflow: hidden;
   position: relative;
@@ -12,7 +12,7 @@
 
 .ui-sidebar--right {
   border-right: none;
-  border-left: 1px solid #e2e8f0;
+  border-left: 1px solid var(--color-neutral-400);
 }
 
 .ui-sidebar--collapsed {
@@ -22,7 +22,7 @@
 /* Header */
 .ui-sidebar__header {
   padding: 1.5rem 1.25rem;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--color-neutral-400);
   flex-shrink: 0;
 }
 
@@ -46,18 +46,18 @@
 }
 
 .ui-sidebar__content::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: var(--color-neutral-500);
   border-radius: 3px;
 }
 
 .ui-sidebar__content::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: var(--color-neutral-600);
 }
 
 /* Footer */
 .ui-sidebar__footer {
   padding: 1.25rem;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--color-neutral-400);
   flex-shrink: 0;
 }
 
@@ -84,7 +84,7 @@
   border-radius: 0.5rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #64748b;
+  color: var(--color-neutral-600);
   text-align: left;
   cursor: pointer;
   transition: all 150ms ease;
@@ -93,17 +93,17 @@
 }
 
 .ui-sidebar__nav-item:hover {
-  background: #f8fafc;
-  color: #1e293b;
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-900);
 }
 
 .ui-sidebar__nav-item--active {
-  background: #7c3aed;
+  background: var(--color-purple-600);
   color: white;
 }
 
 .ui-sidebar__nav-item--active:hover {
-  background: #6d28d9;
+  background: var(--color-purple-700);
 }
 
 .ui-sidebar__nav-item--disabled {
@@ -113,7 +113,7 @@
 
 .ui-sidebar__nav-item--disabled:hover {
   background: transparent;
-  color: #64748b;
+  color: var(--color-neutral-600);
 }
 
 .ui-sidebar__nav-icon {
@@ -139,7 +139,7 @@
 .ui-sidebar__nav-badge {
   margin-left: auto;
   padding: 0.125rem 0.375rem;
-  background: #ef4444;
+  background: var(--color-red-500);
   color: white;
   font-size: 0.75rem;
   font-weight: 600;
@@ -161,7 +161,7 @@
 
 .ui-sidebar__nav-item--active .ui-sidebar__nav-badge {
   background: white;
-  color: #7c3aed;
+  color: var(--color-purple-600);
 }
 
 /* Section */
@@ -175,7 +175,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #94a3b8;
+  color: var(--color-neutral-600);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -184,7 +184,7 @@
 .ui-sidebar--collapsed .ui-sidebar__section-title {
   padding: 0.5rem;
   text-align: center;
-  font-size: 0.625rem;
+  font-size: var(--text-xs);
 }
 
 /* Mobile */
@@ -215,54 +215,54 @@
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   .ui-sidebar {
-    background: #0f172a;
-    border-color: #334155;
+    background: var(--color-neutral-900);
+    border-color: var(--color-neutral-700);
   }
 
   .ui-sidebar--right {
-    border-color: #334155;
+    border-color: var(--color-neutral-700);
   }
 
   .ui-sidebar__header {
-    border-color: #334155;
+    border-color: var(--color-neutral-700);
   }
 
   .ui-sidebar__footer {
-    border-color: #334155;
+    border-color: var(--color-neutral-700);
   }
 
   .ui-sidebar__content::-webkit-scrollbar-thumb {
-    background: #475569;
+    background: var(--color-neutral-600);
   }
 
   .ui-sidebar__content::-webkit-scrollbar-thumb:hover {
-    background: #64748b;
+    background: var(--color-neutral-600);
   }
 
   .ui-sidebar__nav-item {
-    color: #94a3b8;
+    color: var(--color-neutral-400);
   }
 
   .ui-sidebar__nav-item:hover {
-    background: #1e293b;
-    color: #f1f5f9;
+    background: var(--color-neutral-800);
+    color: var(--color-neutral-200);
   }
 
   .ui-sidebar__nav-item--active {
-    background: #7c3aed;
+    background: var(--color-purple-600);
     color: white;
   }
 
   .ui-sidebar__nav-item--active:hover {
-    background: #6d28d9;
+    background: var(--color-purple-700);
   }
 
   .ui-sidebar__nav-item--disabled:hover {
-    color: #94a3b8;
+    color: var(--color-neutral-400);
   }
 
   .ui-sidebar__section-title {
-    color: #64748b;
+    color: var(--color-neutral-600);
   }
 }
 

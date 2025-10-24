@@ -26,6 +26,203 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Present a plan if the task is complex
 - Wait for approval to proceed
 
+---
+
+## 🛡️ CRITICAL: Design System Rules - PREVENT TECH DEBT
+
+**THESE RULES ARE MANDATORY. VIOLATING THEM CREATES TECH DEBT AND CONFUSION.**
+
+**Full rules document:** `DESIGN_SYSTEM_RULES.md` - Read this for complete reference.
+
+### Single Source of Truth: `src/index.css` @theme
+
+**ALL design tokens live in ONE place:**
+```
+src/index.css
+  ↓
+@theme {
+  --text-xl: 1.25rem;
+  --spacing-4: 1rem;
+  --color-purple-700: #7e22ce;
+  /* etc. */
+}
+```
+
+### Absolute Rules - NO EXCEPTIONS:
+
+#### ❌ NEVER DO THIS:
+1. **Create TypeScript token files** (`src/design-system/tokens/*.ts`)
+2. **Import tokens in tailwind.config.js** (theme spreading, token imports)
+3. **Define tokens in JavaScript/TypeScript** (duplicate sources of truth)
+4. **Use arbitrary values without semantic tokens** (`text-[32px]` without purpose)
+5. **Create inline styles for token values** (`style={{ fontSize: '32px' }}`)
+6. **Add tokens to multiple files** (CSS + TS = duplicate source of truth)
+7. **Create "helper" or "utility" token files** outside of src/index.css @theme
+
+#### ✅ ALWAYS DO THIS:
+1. **Add tokens to `src/index.css` @theme block** - This is the ONLY place
+2. **Use Tailwind utilities in components** - `className="text-xl p-4"`
+3. **For values not in ramp:** Create semantic tokens in @theme first
+4. **Ask before adding tokens** if unsure about naming or category
+5. **Update DESIGN_SYSTEM.md** when adding new token categories
+
+### How to Add New Design Tokens (Step-by-Step):
+
+#### Example: Adding a new metric value size (32px)
+
+**CORRECT Process:**
+```css
+/* 1. Add to src/index.css @theme */
+@theme {
+  /* Existing tokens... */
+
+  /* Semantic dashboard tokens */
+  --text-metric-value: 2rem;  /* 32px - Standard metric values */
+}
+```
+
+```tsx
+/* 2. Use in components via Tailwind arbitrary value referencing CSS var */
+<div className="text-[length:var(--text-metric-value)]">$50,000</div>
+
+/* OR if Tailwind generates it automatically (for common sizes): */
+<div className="text-4xl">$50,000</div>
+```
+
+```markdown
+/* 3. Document in DESIGN_SYSTEM.md */
+| --text-metric-value | 2rem | 32px | Standard metric values |
+```
+
+**WRONG Process (DO NOT DO THIS):**
+```typescript
+// ❌ Creating TypeScript token file
+export const fontSize = {
+  metricValue: '2rem', // NO! This creates duplicate source
+}
+```
+
+```javascript
+// ❌ Adding to tailwind.config.js
+export default {
+  theme: {
+    fontSize: {
+      'metric-value': '2rem', // NO! CSS @theme is the source
+    }
+  }
+}
+```
+
+### When to Ask vs When to Proceed:
+
+**ASK FIRST if:**
+- Adding a new token category (e.g., first animation token)
+- Creating semantic tokens (need to confirm naming convention)
+- Value doesn't fit existing scale (e.g., 32px when scale is 12/14/16/18/20/24/30/36/48)
+- Unsure whether to use primitive vs semantic token
+
+**PROCEED WITHOUT ASKING if:**
+- Using existing Tailwind utility (text-xl, p-4, bg-purple-700)
+- Fixing off-ramp sizes by rounding to nearest defined token
+- Adding clearly defined tokens that follow existing patterns
+
+### Common Mistakes to Avoid:
+
+1. **"I'll create a helper file for easier imports"** → NO. Use Tailwind utilities.
+2. **"Let me add this to tailwind.config for consistency"** → NO. @theme is the source.
+3. **"I'll make a TypeScript version for type safety"** → NO. Components use className strings.
+4. **"This value is used a lot, I'll make it reusable"** → YES, but ONLY in @theme.
+
+### Red Flags - Stop and Ask:
+
+If you find yourself:
+- Creating a new file in `src/design-system/tokens/`
+- Importing tokens in `tailwind.config.js`
+- Writing `export const` for design token values
+- Seeing duplicate token definitions
+- Finding multiple "sources of truth"
+
+**STOP. Ask the user before proceeding.**
+
+### Verification Checklist:
+
+Before committing design system changes:
+- [ ] ALL new tokens are in `src/index.css` @theme
+- [ ] NO TypeScript files in `src/design-system/tokens/`
+- [ ] NO token imports in `tailwind.config.js`
+- [ ] Components use Tailwind utilities (`className="text-xl"`)
+- [ ] DESIGN_SYSTEM.md is updated with new tokens
+- [ ] `npm run build` passes
+
+### File Structure Reference - What Exists and Why:
+
+**Design System Files (THESE ARE THE ONLY ONES):**
+
+```
+src/
+├── index.css                    # ⭐ SINGLE SOURCE OF TRUTH
+│                               # Contains @theme with ALL design tokens
+│                               # 228 lines: colors, typography, spacing, shadows, etc.
+│
+├── design-system/
+│   └── index.ts                # Empty placeholder (just documentation comment)
+│                               # NO exports, NO token definitions
+│
+└── (no tokens/ directory)      # ❌ DELETED - was unused, created tech debt
+```
+
+**Configuration Files:**
+
+```
+tailwind.config.js              # Minimal config (77 lines)
+                               # ONLY contains: custom animations (keyframes)
+                               # NO token imports, NO theme spreading
+                               # Tailwind reads tokens from @theme automatically
+
+tsconfig.json                   # TypeScript config
+vite.config.ts                  # Vite config
+package.json                    # Dependencies
+```
+
+**Documentation Files:**
+
+```
+DESIGN_SYSTEM.md               # Complete design token documentation
+                              # Reference for all tokens in src/index.css
+
+DESIGN_SYSTEM_RULES.md        # ⭐ CRITICAL - Tech debt prevention rules
+                              # Must read before touching design tokens
+
+CLAUDE.md                      # This file - developer instructions
+
+GIT_WORKFLOW.md               # Git commit/push guidelines
+FLOW_STRUCTURE.md             # User journey documentation
+```
+
+**What Does NOT Exist (and should NEVER be created):**
+
+```
+❌ src/design-system/tokens/               # DELETED - Do not recreate
+❌ src/design-system/tokens/typography.ts  # DELETED - Do not recreate
+❌ src/design-system/tokens/spacing.ts     # DELETED - Do not recreate
+❌ src/design-system/tokens/colors.ts      # DELETED - Do not recreate
+❌ src/design-system/tokens/index.ts       # DELETED - Do not recreate
+❌ Any file that exports design token values
+```
+
+### Quick Reference: Where to Find Things
+
+**Need to add a color?** → `src/index.css` @theme block
+**Need to add font size?** → `src/index.css` @theme block
+**Need to add spacing?** → `src/index.css` @theme block
+**Need to see all tokens?** → `src/index.css` @theme block (lines ~5-228)
+**Need token documentation?** → `DESIGN_SYSTEM.md`
+**Need to use tokens in component?** → Use Tailwind utility: `className="text-xl"`
+
+**Everything else is in src/index.css @theme. There is no other place.**
+
+---
+
 ## Project Overview
 
 **Fintech Prototype v0.7** - A fintech application focused on creating an optimal business funding experience. Building 3-4 key screens with a complete user flow, iterating on component design and UX for the most intuitive, simple, and polished interface possible.
@@ -97,7 +294,7 @@ The app uses a **minimal tab-based playground** for component development and it
 
 ✅ **Technical Foundation Complete**
 - Tailwind CSS v4 integrated with Vite
-- Design token system established (see `DESIGN_TOKENS.md`)
+- Design token system established (see `DESIGN_SYSTEM.md`)
 - Component wrapper pattern: `ButtonBaseUIWrapper`, `InputBaseUIWrapper`
 - Base UI + Tailwind integration working
 
@@ -149,10 +346,9 @@ The app uses a **minimal tab-based playground** for component development and it
 10. **Navigation** (`Navigation.tsx`) - Navigation patterns and menus
 
 **Documentation:**
-- Design token system: `DESIGN_TOKENS.md` (single source of truth)
+- Design token system: `DESIGN_SYSTEM.md` (single source of truth)
 - User journey: `FLOW_STRUCTURE.md`
 - Git workflow: `GIT_WORKFLOW.md`
-- Tailwind workflow: `TAILWIND_WORKFLOW.md`
 
 ### Component System
 
@@ -188,27 +384,34 @@ Configured in both `tsconfig.json` and `vite.config.ts`:
 
 ### Design System
 
-**See `DESIGN_TOKENS.md` for complete design token documentation.**
+**See `DESIGN_SYSTEM.md` for complete design token documentation.**
 
-This project uses a comprehensive design token system:
-- **Location**: `src/design-system/tokens/` (colors, spacing, typography, etc.)
-- **Configuration**: `tailwind.config.js` (token → Tailwind mappings)
-- **Styling**: Tailwind CSS v4 utilities based on design tokens
-- **Themes**: `src/design-system/themes/` (light, dark)
+**Pure CSS Architecture (Tailwind v4 @theme Pattern):**
+- **Single Source of Truth**: `src/index.css` (@theme directive)
+- **No TypeScript Tokens**: All values defined in CSS, accessed via Tailwind utilities
+- **Minimal Config**: `tailwind.config.js` contains only custom animations
+- **Direct Usage**: Components use `className="text-xl p-4 bg-purple-700"`
 
-#### Quick Token Reference
-- **Colors**: Semantic colors (primary, success, warning, danger), text, background, border
-  - **NEW**: `emphasis.primary/secondary` for scores/metrics
-  - **NEW**: `status.high/medium/low` for badges and status cards
-- **Typography**: Font presets (h1-h6, body, button, label, caption)
-  - Current h1: 48px, h2: 36px, h4: 24px
-  - **Dashboard needs**: 20px, 32px (may need to add tokens)
-- **Spacing**: 8px grid system + component spacing presets
-- **Borders**: Radius tokens (sm, md, lg, xl, 2xl, full)
-- **Shadows**: Elevation system (sm, md, lg, xl)
-- **Animations**: Duration and easing curves
+#### Architecture Flow
+```
+src/index.css (@theme)
+        ↓
+CSS Custom Properties (--text-xl, --spacing-4, etc.)
+        ↓
+Tailwind Utilities (text-xl, p-4, bg-purple-700)
+        ↓
+Components use utilities directly
+```
 
-All tokens are mapped to Tailwind utilities for direct use in components.
+#### Available Token Categories
+- **Colors**: Warm neutrals (300-900), brand purple, semantic (green, amber, red, blue)
+- **Typography**: xs-9xl (12px-128px) + semantic tokens (--text-metric-value, --text-grade-overlay)
+- **Spacing**: 8px grid system (0-96)
+- **Borders**: Radius tokens (sm, md, lg, xl, 2xl, 3xl, full)
+- **Shadows**: Elevation system (sm, md, lg, xl, 2xl, inner)
+- **Animations**: Duration (instant, fast, normal, slow) + easing curves
+
+All tokens are CSS custom properties that Tailwind automatically generates utilities from.
 
 ### Component Patterns
 
@@ -321,8 +524,6 @@ npx playwright test tests/e2e/dashboard.spec.ts
 5. **Iterate**: Refinements based on your feedback
 6. **Document**: Updates component docs and patterns
 
-See `TAILWIND_WORKFLOW.md` for complete technical workflow details.
-
 ## Technical Foundation & Best Practices
 
 ### Tailwind CSS Integration ✅ Complete
@@ -347,8 +548,7 @@ className={classNames(
 
 **Configuration:**
 - Config: `tailwind.config.js`
-- Tokens: `src/design-system/tokens/`
-- Workflow: `TAILWIND_WORKFLOW.md`
+- Tokens: `src/index.css` (@theme directive) + `src/design-system/tokens/` (spacing, typography)
 
 ### Base UI Foundation Strategy
 **Why Base UI:**
@@ -452,9 +652,8 @@ MCP servers must be configured in the Claude Desktop application config:
 3. **Restart Claude Desktop** for changes to take effect
 
 ### Reference Documentation
-- **Setup Guide**: `MCP_SERVER_SETUP.md` - Complete configuration instructions
-- **Fix Script**: `fix_mcp_setup.sh` - Automated setup helper
 - **Available Servers**: Check npm for `@modelcontextprotocol/server-*` packages
+- **Archived Docs**: `design-specs/archive/` contains older documentation versions for reference
 
 ### Common Issues & Solutions
 - **GitHub Desktop shows "branched"**: Usually just `.DS_Store` files - add to `.gitignore`
@@ -477,6 +676,10 @@ MCP servers must be configured in the Claude Desktop application config:
 - Make UX decisions without design specifications
 - Start building when user is providing context or background
 - Implement your own vision instead of the provided designs
+- **Create TypeScript token files** in `src/design-system/tokens/`
+- **Import design tokens in `tailwind.config.js`**
+- **Create duplicate sources of truth** for design tokens
+- **Use inline styles for design token values** (e.g., `style={{ fontSize: '32px' }}`)
 
 ### ALWAYS:
 - Wait for explicit instructions before building
@@ -484,3 +687,7 @@ MCP servers must be configured in the Claude Desktop application config:
 - Confirm understanding before starting work
 - Respect that the user is the product design lead
 - Use placeholder content until real content is provided
+- **Add all design tokens to `src/index.css` @theme block ONLY**
+- **Use Tailwind utilities in components** (e.g., `className="text-xl"`)
+- **Check DESIGN_SYSTEM.md** before adding new token categories
+- **Ask first** if creating semantic tokens or unsure about naming

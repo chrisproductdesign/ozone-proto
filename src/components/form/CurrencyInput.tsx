@@ -67,7 +67,7 @@ export const CurrencyInput = forwardRef<HTMLInputElement, CurrencyInputProps>(
 
     return (
       <div className={classNames('relative', fullWidth ? 'w-full' : '')}>
-        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">
+        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500 text-sm pointer-events-none">
           $
         </span>
         <input
@@ -78,11 +78,11 @@ export const CurrencyInput = forwardRef<HTMLInputElement, CurrencyInputProps>(
           onFocus={handleFocus}
           onBlur={handleBlur}
           className={classNames(
-            'pl-8 pr-3.5 py-2.5 rounded-lg border bg-white text-gray-900',
-            'text-sm placeholder:text-gray-400',
+            'pl-8 pr-3.5 py-2.5 rounded-lg border bg-white text-neutral-800',
+            'text-sm placeholder:text-neutral-500',
             'transition-all duration-200',
             'focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-50',
-            error ? 'border-red-300 focus:border-red-400 focus:ring-red-50' : 'border-gray-300',
+            error ? 'border-red-300 focus:border-red-400 focus:ring-red-50' : 'border-neutral-400',
             fullWidth ? 'w-full' : '',
             className
           )}

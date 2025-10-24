@@ -29,13 +29,13 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
   };
 
   return (
-    <div className="min-h-full" style={{ backgroundColor: '#F5F2ED' }}>
+    <div className="min-h-full bg-secondary">
       {/* Header */}
-      <header className="border-b border-gray-200 w-full sticky top-0 z-10" style={{ backgroundColor: '#F5F2ED' }}>
+      <header className="border-b border-neutral-300 w-full sticky top-0 z-10 bg-secondary">
         <div className="px-6 py-8">
           <div className="max-w-[1000px] mx-auto flex items-center justify-between">
             {/* Deal Name */}
-            <h1 className="text-lg font-medium text-gray-900">
+            <h1 className="text-lg font-medium text-neutral-800">
               {dealName}
             </h1>
 
@@ -43,7 +43,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
             <div className="flex items-center gap-3">
               <button
                 onClick={handleViewDeals}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
+                className="px-4 py-2 text-sm font-medium text-neutral-700 bg-white border border-neutral-400 rounded-lg hover:bg-neutral-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
                 aria-label="View deals"
               >
                 Deals
@@ -63,7 +63,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
         </div>
 
         {/* Tab Navigation with Layout Toggle */}
-        <div className="px-6 border-t border-gray-200">
+        <div className="px-6 border-t border-neutral-300">
           <div className="max-w-[1000px] mx-auto flex items-center justify-between">
             <nav className="flex gap-8" role="tablist">
               <button
@@ -73,8 +73,8 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
                 className={classNames(
                   'py-3 px-1 text-sm font-medium border-b-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700',
                   activeTab === 'performance'
-                    ? 'border-gray-900 text-gray-900'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                    ? 'border-neutral-800 text-neutral-800'
+                    : 'border-transparent text-neutral-500 hover:text-neutral-700'
                 )}
               >
                 Performance
@@ -86,8 +86,8 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
                 className={classNames(
                   'py-3 px-1 text-sm font-medium border-b-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700',
                   activeTab === 'pricing'
-                    ? 'border-gray-900 text-gray-900'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                    ? 'border-neutral-800 text-neutral-800'
+                    : 'border-transparent text-neutral-500 hover:text-neutral-700'
                 )}
               >
                 Pricing
@@ -99,7 +99,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
               {/* Layout Toggle */}
               <button
                 onClick={() => setLayout(layout === 'A' ? 'B' : 'A')}
-                className="flex items-center gap-2 px-3 py-1 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                className="flex items-center gap-2 px-3 py-1 text-sm font-medium text-neutral-600 hover:text-neutral-800 transition-colors"
                 aria-label={`Switch to layout ${layout === 'A' ? 'B' : 'A'}`}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,7 +110,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
               {/* Export Button */}
               <button
                 onClick={() => showToast('Export functionality coming soon', 'info')}
-                className="flex items-center gap-2 px-3 py-1 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                className="flex items-center gap-2 px-3 py-1 text-sm font-medium text-neutral-600 hover:text-neutral-800 transition-colors"
                 aria-label="Export dashboard data"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -203,8 +203,8 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
 
             {/* Graph Placeholder */}
             <div className="col-span-12">
-              <div className="bg-white rounded-2xl p-5 h-96 flex items-center justify-center shadow-sm">
-                <p className="text-2xl text-gray-400">Scatterplot Graph Goes Here</p>
+              <div className="bg-base rounded-2xl p-5 h-96 flex items-center justify-center shadow-sm">
+                <p className="text-2xl text-neutral-500">Scatterplot Graph Goes Here</p>
               </div>
             </div>
           </div>
@@ -269,8 +269,8 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
 
             {/* Bottom Row - Graph */}
             <div className="col-span-12">
-              <div className="bg-white rounded-2xl p-5 h-96 flex items-center justify-center shadow-sm">
-                <p className="text-2xl text-gray-400">Scatterplot Graph Goes Here</p>
+              <div className="bg-base rounded-2xl p-5 h-96 flex items-center justify-center shadow-sm">
+                <p className="text-2xl text-neutral-500">Scatterplot Graph Goes Here</p>
               </div>
             </div>
           </div>
