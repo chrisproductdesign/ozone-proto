@@ -84,10 +84,16 @@
   --color-red-900: #7f1d1d;
   --color-red-950: #450a0a;
 
-  /* Semantic Shortcuts */
+  /* Semantic Shortcuts - Backgrounds */
   --color-base: var(--color-neutral-300);       /* Card surfaces */
   --color-secondary: var(--color-neutral-400);  /* Page background */
   --color-tertiary: var(--color-neutral-500);   /* Nav/lowest depth */
+
+  /* Semantic Shortcuts - Text Colors */
+  --color-text-primary: var(--color-neutral-900);    /* Main body text */
+  --color-text-secondary: var(--color-neutral-700);  /* De-emphasized text */
+  --color-text-muted: var(--color-neutral-600);      /* Lighter text */
+  --color-text-disabled: var(--color-neutral-400);   /* Disabled state */
 
   /* Typography - Font Sizes */
   --text-xs: 0.75rem;      /* 12px */
@@ -230,10 +236,11 @@
 /* Base Styles */
 @layer base {
   :root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    color: var(--color-neutral-900);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: var(--color-text-primary);
     background-color: var(--color-white);
     line-height: 1.5;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11'; /* Inter stylistic alternates */
   }
 
   *,
