@@ -35,7 +35,7 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({
       className
     )}>
       <div className="flex items-start justify-between mb-6">
-        <h3 className="text-xs font-medium text-neutral-500 tracking-wide uppercase">
+        <h3 className="text-xs font-medium text-muted tracking-wide uppercase">
           {title}
         </h3>
         {status && (
@@ -59,7 +59,7 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({
           {score.toFixed(2)}
         </div>
         {description && (
-          <p className="text-neutral-600 text-base">
+          <p className="text-muted text-base">
             {description}
           </p>
         )}

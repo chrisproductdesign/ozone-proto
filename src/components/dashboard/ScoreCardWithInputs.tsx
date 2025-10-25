@@ -86,14 +86,14 @@ export const ScoreCardWithInputs: React.FC<ScoreCardWithInputsProps> = ({
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h3 className="text-xs font-medium text-neutral-500 tracking-wide uppercase mb-2">
+          <h3 className="text-xs font-medium text-muted tracking-wide uppercase mb-2">
             {title}
           </h3>
           <div className="text-7xl font-bold mb-2 text-emphasis">
             {score.toFixed(2)}
           </div>
           {description && (
-            <p className="text-neutral-600 text-base">
+            <p className="text-muted text-base">
               {description}
             </p>
           )}
@@ -126,7 +126,7 @@ export const ScoreCardWithInputs: React.FC<ScoreCardWithInputsProps> = ({
                   value={input.value}
                   onChange={(e) => handleInputChange(input.id, e.target.value)}
                   placeholder={input.placeholder || 'Input value'}
-                  className="w-full px-2 py-1 text-xs border border-neutral-300 rounded-lg focus:outline-none focus:border-neutral-500 text-neutral-700"
+                  className="w-full px-2 py-1 text-xs border border-neutral-300 rounded-lg focus:outline-none focus:border-neutral-500 text-primary"
                   aria-label={input.label}
                 />
               </div>
@@ -146,7 +146,7 @@ export const ScoreCardWithInputs: React.FC<ScoreCardWithInputsProps> = ({
 
               {/* Risk Label */}
               <div className="w-28 text-right">
-                <span className="text-xs font-medium text-neutral-700">
+                <span className="text-xs font-medium text-primary">
                   {riskLevel.label}
                 </span>
               </div>

@@ -31,12 +31,12 @@ export const LoginCard: React.FC<LoginCardProps> = ({
     <div className="bg-base rounded-3xl shadow-sm w-full max-w-lg flex flex-col justify-center" style={{ height: '600px', padding: '80px 60px' }}>
       {/* Brand */}
       <div className="text-center" style={{ marginBottom: '50px' }}>
-        <h2 className="text-neutral-500 text-lg font-light" style={{ letterSpacing: '0.5px' }}>Ozone</h2>
+        <h2 className="text-muted text-lg font-light" style={{ letterSpacing: '0.5px' }}>Ozone</h2>
       </div>
 
       {/* Welcome Message */}
       <div className="text-center" style={{ marginBottom: '50px' }}>
-        <h1 className="text-neutral-800 font-light text-4xl leading-tight">
+        <h1 className="text-primary font-light text-4xl leading-tight">
           Welcome back
           <br />
           Jasmine
@@ -54,8 +54,8 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             placeholder="Enter your email"
             aria-label="Email address"
             className={classNames(
-              'w-full rounded-xl border text-neutral-800',
-              'placeholder:text-neutral-500',
+              'w-full rounded-xl border text-primary',
+              'placeholder:text-muted',
               'transition-all duration-200',
               'focus:outline-none focus:border-neutral-500',
               email ? 'border-neutral-400' : 'border-neutral-300'
@@ -78,8 +78,8 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             placeholder="Password"
             aria-label="Password"
             className={classNames(
-              'w-full rounded-xl border text-neutral-800',
-              'placeholder:text-neutral-500',
+              'w-full rounded-xl border text-primary',
+              'placeholder:text-muted',
               'transition-all duration-200',
               'focus:outline-none focus:border-neutral-500',
               password ? 'border-neutral-400' : 'border-neutral-300'
@@ -104,7 +104,7 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             'disabled:opacity-50 disabled:cursor-not-allowed',
             email && password
               ? 'text-white hover:opacity-90'
-              : 'text-neutral-500'
+              : 'text-disabled'
           )}
           style={{
             padding: '16px',
@@ -118,11 +118,11 @@ export const LoginCard: React.FC<LoginCardProps> = ({
 
       {/* Sign Up Link */}
       <div className="text-center" style={{ marginTop: '40px' }}>
-        <span className="text-neutral-500 text-base">
+        <span className="text-muted text-base">
           Don't have an account?{' '}
           <a
             href="#"
-            className="text-neutral-800 font-semibold hover:text-neutral-700 transition-colors"
+            className="text-primary font-semibold hover:text-secondary transition-colors"
           >
             Sign up
           </a>

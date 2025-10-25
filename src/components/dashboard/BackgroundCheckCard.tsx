@@ -36,7 +36,7 @@ export const BackgroundCheckCard: React.FC<BackgroundCheckCardProps> = ({
           <p className="text-base font-medium text-primary">
             Background checklist
           </p>
-          <Info className="w-[18px] h-[18px] text-neutral-600" />
+          <Info className="w-[18px] h-[18px] text-muted" />
         </div>
 
         {/* Checklist Items */}
