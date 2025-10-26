@@ -82,7 +82,7 @@ export const CompositeScoreCard: React.FC<CompositeScoreCardProps> = ({
             aria-label="Settings"
             className="p-0"
           >
-            <Settings className="w-[35px] h-[35px] text-primary" />
+            <Settings className="w-[35px] h-[35px] text-neutral-900" />
           </ButtonBaseUIWrapper>
         </div>
       </div>

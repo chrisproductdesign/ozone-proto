@@ -84,17 +84,6 @@
   --color-red-900: #7f1d1d;
   --color-red-950: #450a0a;
 
-  /* Semantic Shortcuts - Backgrounds */
-  --color-base: var(--color-neutral-300);       /* Card surfaces */
-  --color-secondary: var(--color-neutral-400);  /* Page background */
-  --color-tertiary: var(--color-neutral-500);   /* Nav/lowest depth */
-
-  /* Semantic Shortcuts - Text Colors */
-  --color-text-primary: var(--color-neutral-900);    /* Main body text */
-  --color-text-secondary: var(--color-neutral-700);  /* De-emphasized text */
-  --color-text-muted: var(--color-neutral-600);      /* Lighter text */
-  --color-text-disabled: var(--color-neutral-400);   /* Disabled state */
-
   /* Typography - Font Sizes */
   --text-xs: 0.75rem;      /* 12px */
   --text-sm: 0.875rem;     /* 14px */

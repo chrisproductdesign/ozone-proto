@@ -15,7 +15,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigateTo }) => {
   };
 
   return (
-    <div className="min-h-full relative overflow-hidden bg-secondary">
+    <div className="min-h-full relative overflow-hidden bg-neutral-400">
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Left decorative element */}

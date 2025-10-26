@@ -28,15 +28,15 @@ export const LoginCard: React.FC<LoginCardProps> = ({
   };
 
   return (
-    <div className="bg-base rounded-3xl shadow-sm w-full max-w-lg flex flex-col justify-center" style={{ height: '600px', padding: '80px 60px' }}>
+    <div className="bg-neutral-300 rounded-3xl shadow-sm w-full max-w-lg flex flex-col justify-center" style={{ height: '600px', padding: '80px 60px' }}>
       {/* Brand */}
       <div className="text-center" style={{ marginBottom: '50px' }}>
-        <h2 className="text-muted text-lg font-light" style={{ letterSpacing: '0.5px' }}>Ozone</h2>
+        <h2 className="text-neutral-600 text-lg font-light" style={{ letterSpacing: '0.5px' }}>Ozone</h2>
       </div>
 
       {/* Welcome Message */}
       <div className="text-center" style={{ marginBottom: '50px' }}>
-        <h1 className="text-primary font-light text-4xl leading-tight">
+        <h1 className="text-neutral-900 font-light text-4xl leading-tight">
           Welcome back
           <br />
           Jasmine
@@ -54,8 +54,8 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             placeholder="Enter your email"
             aria-label="Email address"
             className={classNames(
-              'w-full rounded-xl border text-primary',
-              'placeholder:text-muted',
+              'w-full rounded-xl border text-neutral-900',
+              'placeholder:text-neutral-600',
               'transition-all duration-200',
               'focus:outline-none focus:border-neutral-500',
               email ? 'border-neutral-400' : 'border-neutral-300'
@@ -78,8 +78,8 @@ export const LoginCard: React.FC<LoginCardProps> = ({
             placeholder="Password"
             aria-label="Password"
             className={classNames(
-              'w-full rounded-xl border text-primary',
-              'placeholder:text-muted',
+              'w-full rounded-xl border text-neutral-900',
+              'placeholder:text-neutral-600',
               'transition-all duration-200',
               'focus:outline-none focus:border-neutral-500',
               password ? 'border-neutral-400' : 'border-neutral-300'

@@ -79,21 +79,21 @@ export const ScoreCardWithInputs: React.FC<ScoreCardWithInputsProps> = ({
 
   return (
     <div className={classNames(
-      'bg-base rounded-2xl p-5 shadow-sm',
+      'bg-neutral-300 rounded-2xl p-5 shadow-sm',
       'flex flex-col',
       className
     )}>
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h3 className="text-xs font-medium text-muted tracking-wide uppercase mb-2">
+          <h3 className="text-xs font-medium text-neutral-600 tracking-wide uppercase mb-2">
             {title}
           </h3>
-          <div className="text-7xl font-bold mb-2 text-emphasis">
+          <div className="text-7xl font-bold mb-2 text-neutral-900">
             {score.toFixed(2)}
           </div>
           {description && (
-            <p className="text-muted text-base">
+            <p className="text-neutral-600 text-base">
               {description}
             </p>
           )}
@@ -126,7 +126,7 @@ export const ScoreCardWithInputs: React.FC<ScoreCardWithInputsProps> = ({
                   value={input.value}
                   onChange={(e) => handleInputChange(input.id, e.target.value)}
                   placeholder={input.placeholder || 'Input value'}
-                  className="w-full px-2 py-1 text-xs border border-neutral-300 rounded-lg focus:outline-none focus:border-neutral-500 text-primary"
+                  className="w-full px-2 py-1 text-xs border border-neutral-300 rounded-lg focus:outline-none focus:border-neutral-500 text-neutral-900"
                   aria-label={input.label}
                 />
               </div>

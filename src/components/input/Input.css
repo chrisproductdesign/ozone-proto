@@ -2,7 +2,7 @@
   --input-radius: 0.625rem;
   --input-border-color: rgba(58, 56, 54, 0.14);
   --input-background: rgba(255, 255, 255, 0.9);
-  --input-text: var(--color-text-primary);
+  --input-text: var(--color-neutral-900);
   --input-placeholder: rgba(58, 56, 54, 0.45);
   --input-border-width: 1px;
   --input-padding-x: 0.875rem;

@@ -136,9 +136,9 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
   ];
 
   return (
-    <div className="min-h-full bg-secondary">
+    <div className="min-h-full bg-neutral-400">
       {/* Header */}
-      <header className="border-b border-neutral-300 sticky top-0 z-10 bg-secondary">
+      <header className="border-b border-neutral-300 sticky top-0 z-10 bg-neutral-400">
         <div className="px-6 py-8">
           <div className="max-w-[1000px] mx-auto flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -162,7 +162,7 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
 
               <button
                 onClick={() => showToast('Deals list coming soon', 'info')}
-                className="px-4 py-2 text-sm font-medium text-neutral-700 bg-base border border-neutral-400 rounded-lg hover:bg-neutral-50 transition-colors"
+                className="px-4 py-2 text-sm font-medium text-neutral-700 bg-neutral-300 border border-neutral-400 rounded-lg hover:bg-neutral-50 transition-colors"
                 aria-label="View deals"
               >
                 Deals

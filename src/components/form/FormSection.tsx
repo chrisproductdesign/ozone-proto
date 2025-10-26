@@ -14,7 +14,7 @@ export const FormSection: React.FC<FormSectionProps> = ({
 }) => {
   return (
     <div className={classNames(
-      'bg-base rounded-2xl p-8 shadow-sm',
+      'bg-neutral-300 rounded-2xl p-8 shadow-sm',
       className
     )}>
       {title && (

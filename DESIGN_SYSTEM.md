@@ -86,16 +86,6 @@ Used for surfaces, text, and borders. **No cool grays.**
 - `--color-blue-600`: `#2563eb`
 - `--color-blue-700`: `#1d4ed8`
 
-### Semantic Shortcuts
-
-```css
---color-base: var(--color-neutral-300);       /* Card surfaces */
---color-secondary: var(--color-neutral-400);  /* Page background */
---color-tertiary: var(--color-neutral-500);   /* Nav/lowest depth */
-```
-
-**Tailwind Utilities**: `bg-base`, `bg-secondary`, `bg-tertiary`
-
 ---
 
 ## Core Spacing

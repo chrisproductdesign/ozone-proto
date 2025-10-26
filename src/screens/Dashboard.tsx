@@ -29,9 +29,9 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
   };
 
   return (
-    <div className="min-h-full bg-secondary">
+    <div className="min-h-full bg-neutral-400">
       {/* Header */}
-      <header className="border-b border-neutral-300 w-full sticky top-0 z-10 bg-secondary">
+      <header className="border-b border-neutral-300 w-full sticky top-0 z-10 bg-neutral-400">
         <div className="px-6 py-8">
           <div className="max-w-[1000px] mx-auto flex items-center justify-between">
             {/* Deal Name */}
@@ -203,7 +203,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
 
             {/* Graph Placeholder */}
             <div className="col-span-12">
-              <div className="bg-base rounded-2xl p-5 h-96 flex items-center justify-center shadow-sm">
+              <div className="bg-neutral-300 rounded-2xl p-5 h-96 flex items-center justify-center shadow-sm">
                 <p className="text-2xl text-neutral-500">Scatterplot Graph Goes Here</p>
               </div>
             </div>
@@ -269,7 +269,7 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
 
             {/* Bottom Row - Graph */}
             <div className="col-span-12">
-              <div className="bg-base rounded-2xl p-5 h-96 flex items-center justify-center shadow-sm">
+              <div className="bg-neutral-300 rounded-2xl p-5 h-96 flex items-center justify-center shadow-sm">
                 <p className="text-2xl text-neutral-500">Scatterplot Graph Goes Here</p>
               </div>
             </div>

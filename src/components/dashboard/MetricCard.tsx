@@ -122,10 +122,10 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   };
 
   return (
-    <div className={`bg-base py-7 px-6 ${borderClass} ${roundedClass} ${className}`}>
+    <div className={`bg-neutral-300 py-7 px-6 ${borderClass} ${roundedClass} ${className}`}>
       {/* Label row with optional recalculate button */}
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2 text-xs text-muted uppercase">
+        <div className="flex items-center gap-2 text-xs text-neutral-600 uppercase">
           {icon && <span className="flex items-center">{icon}</span>}
           <span>{label}</span>
         </div>
@@ -149,7 +149,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
         onBlur={handleInputBlur}
         onKeyDown={handleKeyDown}
         onFocus={handleFocus}
-        className="text-3xl font-bold mb-4 w-full bg-transparent border-0 outline-none text-primary
+        className="text-3xl font-bold mb-4 w-full bg-transparent border-0 outline-none text-neutral-900
                    hover:bg-neutral-50 hover:px-2 hover:rounded
                    focus:bg-neutral-100 focus:px-2 focus:rounded
                    transition-all duration-150"
@@ -167,7 +167,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
         />
 
         {/* Min/Max labels */}
-        <div className="flex justify-between text-xs text-muted">
+        <div className="flex justify-between text-xs text-neutral-600">
           <span>{sliderMinLabel || sliderMin}</span>
           <span>{sliderMaxLabel || sliderMax}</span>
         </div>
