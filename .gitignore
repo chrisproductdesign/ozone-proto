@@ -33,7 +33,7 @@ lerna-debug.log*
 
 # Claude
 .claude/
-.mcp.json
+.mcp.json*
 fix_mcp_setup.sh
 MCP_SERVER_SETUP.md
 

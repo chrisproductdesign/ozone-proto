@@ -14,11 +14,11 @@ export const FormSection: React.FC<FormSectionProps> = ({
 }) => {
   return (
     <div className={classNames(
-      'bg-neutral-300 rounded-2xl p-8 shadow-sm',
+      'bg-neutral-300 rounded py-6 px-6 shadow-sm',
       className
     )}>
       {title && (
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-600 mb-5 pb-2 border-b border-neutral-200">
+        <h3 className="text-xs font-bold uppercase tracking-wide text-neutral-700 mb-4">
           {title}
         </h3>
       )}

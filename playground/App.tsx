@@ -31,25 +31,50 @@ const PlaygroundApp = () => {
     <DealProvider>
       <ToastProvider>
         <div className="playground">
-          <div className="playground-tabs" role="tablist" aria-label="Base UI reference sections">
-            {playgroundPages.map((page) => {
-              const isActive = page.id === activeId;
+          <div className="playground-tabs" role="tablist" aria-label="Base UI reference sections" style={{ display: 'flex', justifyContent: 'space-between' }}>
+            {/* Core pages - left side */}
+            <div style={{ display: 'flex' }}>
+              {playgroundPages.slice(0, 4).map((page) => {
+                const isActive = page.id === activeId;
 
-              return (
-                <button
-                  key={page.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  aria-controls={`panel-${page.id}`}
-                  id={`tab-${page.id}`}
-                  className={`playground-tab${isActive ? ' is-active' : ''}`}
-                  onClick={() => setActiveId(page.id)}
-                >
-                  {page.title}
-                </button>
-              );
-            })}
+                return (
+                  <button
+                    key={page.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={`panel-${page.id}`}
+                    id={`tab-${page.id}`}
+                    className={`playground-tab${isActive ? ' is-active' : ''}`}
+                    onClick={() => setActiveId(page.id)}
+                  >
+                    {page.title}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Experimental pages - flush right */}
+            <div style={{ display: 'flex' }}>
+              {playgroundPages.slice(4).map((page) => {
+                const isActive = page.id === activeId;
+
+                return (
+                  <button
+                    key={page.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={`panel-${page.id}`}
+                    id={`tab-${page.id}`}
+                    className={`playground-tab${isActive ? ' is-active' : ''}`}
+                    onClick={() => setActiveId(page.id)}
+                  >
+                    {page.title}
+                  </button>
+                );
+              })}
+            </div>
           </div>
           <div
             id={`panel-${activeId}`}

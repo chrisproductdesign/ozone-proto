@@ -5,6 +5,13 @@ import { ScoreCard } from '@/components/dashboard/ScoreCard';
 import { ScoreCardWithInputs } from '@/components/dashboard/ScoreCardWithInputs';
 import { ConfidenceCard } from '@/components/dashboard/ConfidenceCard';
 import { MetricCard } from '@/components/dashboard/MetricCard';
+import {
+  OfferHistoryChart,
+  ForecastChart,
+  OverviewBars,
+  IndustryRegionHeatmap,
+  DealSizeDonutChart,
+} from '@/components/charts';
 import { useDeal } from '@/contexts/DealContext';
 import { useToast } from '@/components/feedback/Toast';
 import { type NavigationProps } from '@playground/App';
@@ -43,14 +50,14 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
             <div className="flex items-center gap-3">
               <button
                 onClick={handleViewDeals}
-                className="px-4 py-2 text-sm font-medium text-neutral-700 bg-white border border-neutral-400 rounded-lg hover:bg-neutral-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
+                className="px-4 py-2 text-sm font-medium text-neutral-700 bg-white border border-neutral-400 rounded-full hover:bg-neutral-50 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
                 aria-label="View deals"
               >
                 Deals
               </button>
               <button
                 onClick={handleNewDeal}
-                className="px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
+                className="px-4 py-2 text-sm font-medium text-white rounded-full transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-700"
                 style={{ backgroundColor: '#4A4543' }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#3A3533'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#4A4543'}
@@ -201,10 +208,41 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
               />
             </div>
 
-            {/* Graph Placeholder */}
+            {/* Charts Row - Offer History and Forecast */}
+            <div className="col-span-12 md:col-span-6">
+              <div className="bg-neutral-300 rounded-2xl p-5 shadow-sm min-h-[260px]">
+                <h3 className="text-sm font-medium text-neutral-700 mb-3">Offer history</h3>
+                <OfferHistoryChart />
+              </div>
+            </div>
+
+            <div className="col-span-12 md:col-span-6">
+              <div className="bg-neutral-300 rounded-2xl p-5 shadow-sm min-h-[260px]">
+                <h3 className="text-sm font-medium text-neutral-700 mb-3">Forecast</h3>
+                <ForecastChart />
+              </div>
+            </div>
+
+            {/* Overview Bars Section */}
             <div className="col-span-12">
-              <div className="bg-neutral-300 rounded-2xl p-5 h-96 flex items-center justify-center shadow-sm">
-                <p className="text-2xl text-neutral-500">Scatterplot Graph Goes Here</p>
+              <div className="bg-neutral-300 rounded-2xl p-5 shadow-sm min-h-[260px]">
+                <h3 className="text-sm font-medium text-neutral-700 mb-4">Overview</h3>
+                <OverviewBars />
+              </div>
+            </div>
+
+            {/* Portfolio Risk Charts Row */}
+            <div className="col-span-12 md:col-span-6">
+              <div className="bg-neutral-300 rounded-2xl p-5 shadow-sm min-h-[260px]">
+                <h3 className="text-sm font-medium text-neutral-700 mb-3">Portfolio Risk: Industry × Region</h3>
+                <IndustryRegionHeatmap />
+              </div>
+            </div>
+
+            <div className="col-span-12 md:col-span-6">
+              <div className="bg-neutral-300 rounded-2xl p-5 shadow-sm min-h-[260px]">
+                <h3 className="text-sm font-medium text-neutral-700 mb-3">Portfolio Risk: Deal Size</h3>
+                <DealSizeDonutChart />
               </div>
             </div>
           </div>
@@ -267,10 +305,41 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) 
               />
             </div>
 
-            {/* Bottom Row - Graph */}
+            {/* Charts Row - Offer History and Forecast */}
+            <div className="col-span-12 md:col-span-6">
+              <div className="bg-neutral-300 rounded-2xl p-5 shadow-sm min-h-[260px]">
+                <h3 className="text-sm font-medium text-neutral-700 mb-3">Offer history</h3>
+                <OfferHistoryChart />
+              </div>
+            </div>
+
+            <div className="col-span-12 md:col-span-6">
+              <div className="bg-neutral-300 rounded-2xl p-5 shadow-sm min-h-[260px]">
+                <h3 className="text-sm font-medium text-neutral-700 mb-3">Forecast</h3>
+                <ForecastChart />
+              </div>
+            </div>
+
+            {/* Overview Bars Section */}
             <div className="col-span-12">
-              <div className="bg-neutral-300 rounded-2xl p-5 h-96 flex items-center justify-center shadow-sm">
-                <p className="text-2xl text-neutral-500">Scatterplot Graph Goes Here</p>
+              <div className="bg-neutral-300 rounded-2xl p-5 shadow-sm min-h-[260px]">
+                <h3 className="text-sm font-medium text-neutral-700 mb-4">Overview</h3>
+                <OverviewBars />
+              </div>
+            </div>
+
+            {/* Portfolio Risk Charts Row */}
+            <div className="col-span-12 md:col-span-6">
+              <div className="bg-neutral-300 rounded-2xl p-5 shadow-sm min-h-[260px]">
+                <h3 className="text-sm font-medium text-neutral-700 mb-3">Portfolio Risk: Industry × Region</h3>
+                <IndustryRegionHeatmap />
+              </div>
+            </div>
+
+            <div className="col-span-12 md:col-span-6">
+              <div className="bg-neutral-300 rounded-2xl p-5 shadow-sm min-h-[260px]">
+                <h3 className="text-sm font-medium text-neutral-700 mb-3">Portfolio Risk: Deal Size</h3>
+                <DealSizeDonutChart />
               </div>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import { classNames } from '@/lib/classNames';
+import { getBaseInputClasses } from './inputStyles';
 
 interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
@@ -13,12 +14,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         ref={ref}
         type="text"
         className={classNames(
-          'px-3.5 py-2.5 rounded-lg border bg-white text-neutral-800',
-          'text-sm placeholder:text-neutral-500',
-          'transition-all duration-200',
-          'focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-50',
-          error ? 'border-red-300 focus:border-red-400 focus:ring-red-50' : 'border-neutral-400',
-          fullWidth ? 'w-full' : '',
+          getBaseInputClasses(error, fullWidth),
           className
         )}
         {...props}

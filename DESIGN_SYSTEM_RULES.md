@@ -187,4 +187,96 @@ Before committing design system changes:
 
 ---
 
+## 🔒 Token Usage Enforcement
+
+**Rule: ONLY use tokens that exist in `src/index.css` @theme**
+
+### Allowed Token Usage
+
+```tsx
+// ✅ CORRECT: Using defined tokens
+<div className="bg-neutral-400">Page background</div>
+<div className="bg-neutral-500">Sidebar</div>
+<div className="text-neutral-900">Primary text</div>
+<div className="text-neutral-600">Secondary text</div>
+```
+
+### Forbidden Token Usage
+
+```tsx
+// ❌ WRONG: Using undefined tokens
+<div className="bg-secondary">ERROR - token doesn't exist</div>
+<div className="bg-tertiary">ERROR - token doesn't exist</div>
+<div className="text-primary">ERROR - token doesn't exist</div>
+```
+
+### How to Verify Before Using
+
+**Step 1: Check if token exists in @theme**
+```bash
+# Search src/index.css for the token
+grep "color-neutral-400" src/index.css
+# If found → ✅ Use it
+# If not found → ❌ Don't use it, add it first
+```
+
+**Step 2: Reference design system documentation**
+- Check `DESIGN_SYSTEM.md` for all available tokens
+- Use exact token names from documentation
+- Don't invent new semantic names without adding to @theme first
+
+**Step 3: Validate in browser**
+- If a utility doesn't apply styles, the token likely doesn't exist
+- Check browser DevTools for invalid CSS custom properties
+
+### Pre-Commit Validation
+
+Before committing code that uses design tokens:
+
+1. **Grep check for undefined tokens**:
+   ```bash
+   # Check if you're using undefined semantic colors
+   grep -r "bg-primary\|bg-secondary\|bg-tertiary\|text-primary" src/ playground/
+   # Should return ZERO results
+   ```
+
+2. **Build verification**:
+   ```bash
+   npm run build
+   # Must pass without warnings about undefined variables
+   ```
+
+3. **Visual inspection**:
+   - Run `npm run dev`
+   - Check that all backgrounds, text colors, spacing render correctly
+   - Unstyled elements indicate undefined tokens
+
+### Common Mistakes and Fixes
+
+| ❌ Mistake | ✅ Fix |
+|-----------|--------|
+| `bg-secondary` | `bg-neutral-400` (page background) |
+| `bg-tertiary` | `bg-neutral-500` (sidebar/nav) |
+| `text-primary` | `text-neutral-900` (primary text) |
+| `text-secondary` | `text-neutral-600` (secondary text) |
+| `text-[32px]` | Add semantic token first, then use `text-[length:var(--text-metric-value)]` |
+| `p-[18px]` | Round to nearest defined spacing: `p-4` (16px) or `p-5` (20px) |
+
+### Design System Surface Hierarchy
+
+Use these specific tokens for surfaces (defined in `DESIGN_SYSTEM.md`):
+
+```css
+--color-neutral-300: #F7F5F1  /* Card surfaces (lightest beige) */
+--color-neutral-400: #E7E6E4  /* Page background (light warm gray) */
+--color-neutral-500: #DBDAD9  /* Nav/lowest depth (warm gray) */
+```
+
+**Application:**
+- **Cards** → `bg-neutral-300`
+- **Page backgrounds** → `bg-neutral-400`
+- **Sidebars/navigation** → `bg-neutral-500`
+
+---
+
 **This document is law. Follow it exactly.**

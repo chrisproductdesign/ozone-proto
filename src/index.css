@@ -7,19 +7,37 @@
   --color-white: #ffffff;
   --color-black: #000000;
 
+  /* Disabled States */
+  --color-disabled-surface: rgb(0 0 0 / 0.12);  /* Pure black at 12% - disabled button fill */
+  --color-disabled-text: rgb(0 0 0 / 0.38);     /* Pure black at 38% - disabled button label */
+
   /* Warm Neutral Palette (primary surfaces and backgrounds) */
   --color-neutral-50: #FEFDFC;      /* Almost white with warm tint */
   --color-neutral-100: #FCFBFA;     /* Very light warm */
   --color-neutral-200: #FAF8F6;     /* Light warm */
-  --color-neutral-300: #F7F5F1;     /* Card surface (lightest beige) */
-  --color-neutral-400: #E7E6E4;     /* Page background (light warm gray) */
-  --color-neutral-500: #DBDAD9;     /* Nav/lowest depth (warm gray) */
+  --color-neutral-300: #FAF8F5;     /* Card surface (lightest beige) - Cards on DealInput, Login */
+  --color-neutral-400: #E8E6E3;     /* Page background (medium beige) - Main backgrounds */
+  --color-neutral-500: #DFDCD8;     /* Nav/lowest depth (darkest beige) - Dashboard nav */
   --color-neutral-600: #B5B3B2;     /* Mid-tone warm gray */
+  --color-neutral-650: #9C9B99;     /* Placeholder text (halfway between 500 and 800) */
   --color-neutral-700: #8A8886;     /* Medium warm gray */
   --color-neutral-800: #5D5B59;     /* Dark warm gray */
   --color-neutral-900: #3A3836;     /* Darkest warm */
 
-  /* Purple (Brand Primary) */
+  /* Mauve (Brand Primary - Buttons) */
+  --color-mauve-50: #faf9fa;
+  --color-mauve-100: #f3f1f2;
+  --color-mauve-200: #e7e3e5;
+  --color-mauve-300: #d4cdd1;
+  --color-mauve-400: #b8adb3;
+  --color-mauve-500: #9d8d95;
+  --color-mauve-600: #776a71;
+  --color-mauve-700: #594c56;
+  --color-mauve-800: #473b43;
+  --color-mauve-900: #362c32;
+  --color-mauve-950: #1e191c;
+
+  /* Purple (Legacy) */
   --color-purple-50: #faf5ff;
   --color-purple-100: #f3e8ff;
   --color-purple-200: #e9d5ff;
@@ -98,6 +116,21 @@
   --text-7xl: 4.5rem;      /* 72px */
   --text-8xl: 6rem;        /* 96px */
   --text-9xl: 8rem;        /* 128px */
+
+  /* Typography - Line Heights (Apple SF Pro exact ratios) */
+  --leading-xs: 0.9375rem;     /* 15px - 12px text (1.25 ratio from Apple 12→15) */
+  --leading-sm: 1.0625rem;     /* 17px - 14px text (1.23 ratio from Apple 13→16) */
+  --leading-base: 1.25rem;     /* 20px - 16px text (1.33 ratio from Apple 15→20) */
+  --leading-lg: 1.375rem;      /* 22px - 18px text (1.29 ratio from Apple 17→22) */
+  --leading-xl: 1.5rem;        /* 24px - 20px text (1.29 ratio from Apple 17→22) */
+  --leading-2xl: 1.75rem;      /* 28px - 24px text (1.18 ratio from Apple 22→26) */
+  --leading-3xl: 2.25rem;      /* 36px - 30px text (1.23 ratio from Apple 26→32) */
+  --leading-4xl: 2.625rem;     /* 42px - 36px text (1.18 ratio from Apple 22→26) */
+  --leading-5xl: 3.5rem;       /* 56px - 48px text (1.18 ratio) */
+  --leading-6xl: 4.375rem;     /* 70px - 60px text (1.18 ratio) */
+  --leading-7xl: 5.25rem;      /* 84px - 72px text (1.18 ratio) */
+  --leading-8xl: 7rem;         /* 112px - 96px text (1.18 ratio) */
+  --leading-9xl: 9.375rem;     /* 150px - 128px text (1.18 ratio) */
 
   /* Typography - Semantic Dashboard Tokens */
   --text-metric-label: var(--text-xl);         /* 20px - Metric card labels */
@@ -184,14 +217,17 @@
   --radius-3xl: 1.5rem;      /* 24px */
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  /* Shadows (Elevation Ramp) - Tailwind v4 */
+  --shadow-2xs: 0 1px rgb(0 0 0 / 0.05);
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+  --shadow-none: 0 0 #0000;
 
   /* Z-Index */
   --z-0: 0;
@@ -225,11 +261,10 @@
 /* Base Styles */
 @layer base {
   :root {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     color: var(--color-text-primary);
     background-color: var(--color-white);
     line-height: 1.5;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11'; /* Inter stylistic alternates */
   }
 
   *,
@@ -302,5 +337,191 @@
 
   .fintech-label {
     @apply text-sm font-medium text-neutral-700;
+  }
+
+  /* View Transitions */
+
+  /* Assign transition names via CSS classes */
+  .view-transition-login-card {
+    view-transition-name: login-card;
+  }
+
+  .view-transition-new-deal-card {
+    view-transition-name: new-deal-card;
+  }
+
+  .view-transition-existing-deal-card {
+    view-transition-name: existing-deal-card;
+  }
+
+  /* Login card morphs into new deal card */
+  ::view-transition-old(login-card),
+  ::view-transition-new(new-deal-card) {
+    animation-duration: 600ms;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  ::view-transition-old(login-card) {
+    animation-name: morph-out;
+  }
+
+  ::view-transition-new(new-deal-card) {
+    animation-name: morph-in;
+  }
+
+  /* Existing deal card fades in from right */
+  ::view-transition-new(existing-deal-card) {
+    animation-name: fade-in-from-right;
+    animation-duration: 600ms;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes morph-out {
+    to {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+  }
+
+  @keyframes morph-in {
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+  }
+
+  @keyframes fade-in-from-right {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+  }
+
+  /* Background Explorations */
+
+  /* 1. Radial Warm Glow - Bolder */
+  .bg-radial-warm {
+    background: radial-gradient(
+      ellipse at 50% 30%,
+      #FEFDFC 0%,
+      #FAF8F5 20%,
+      #E8E6E3 50%,
+      #DFDCD8 80%,
+      #D0CCC7 100%
+    );
+  }
+
+  /* 2. Mauve Brand Glow */
+  .bg-radial-mauve {
+    background: radial-gradient(
+      ellipse at 50% 40%,
+      #FAF8F6 0%,
+      #F0EBE8 30%,
+      #E8E1DD 60%,
+      #DDD6D1 100%
+    );
+    position: relative;
+  }
+  .bg-radial-mauve::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(
+      circle at 35% 25%,
+      rgba(89, 76, 86, 0.12) 0%,
+      rgba(89, 76, 86, 0.06) 30%,
+      transparent 65%
+    );
+    pointer-events: none;
+  }
+
+  /* 3. Organic Mesh - High Contrast */
+  .bg-mesh-organic {
+    background:
+      radial-gradient(at 20% 30%, #FEFDFC 0%, transparent 40%),
+      radial-gradient(at 80% 20%, #F5F2EE 0%, transparent 45%),
+      radial-gradient(at 60% 80%, #E8E6E3 0%, transparent 50%),
+      radial-gradient(at 10% 70%, #DFDCD8 0%, transparent 35%),
+      linear-gradient(135deg, #E8E6E3 0%, #D8D4CF 100%);
+  }
+
+  /* 4. Premium Mesh with Mauve */
+  .bg-mesh-premium {
+    background:
+      radial-gradient(circle at 25% 25%, rgba(250, 248, 246, 1) 0%, transparent 35%),
+      radial-gradient(circle at 75% 25%, rgba(235, 225, 220, 0.9) 0%, transparent 40%),
+      radial-gradient(circle at 50% 75%, rgba(223, 220, 216, 0.8) 0%, transparent 45%),
+      radial-gradient(circle at 15% 85%, rgba(210, 200, 195, 0.7) 0%, transparent 35%),
+      linear-gradient(135deg, #F0EDE9 0%, #DDD6D1 100%);
+    position: relative;
+  }
+  .bg-mesh-premium::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(
+      circle at 60% 40%,
+      rgba(89, 76, 86, 0.08) 0%,
+      transparent 50%
+    );
+    pointer-events: none;
+  }
+
+  /* 5. Bold Noise Texture */
+  .bg-subtle-noise {
+    background:
+      radial-gradient(ellipse at 50% 30%, #FEFDFC 0%, #DFDCD8 100%),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+  }
+
+  /* 6. Layered Depth - Dramatic */
+  .bg-layered-depth {
+    background: linear-gradient(135deg, #FAF8F6 0%, #DDD6D1 100%);
+    position: relative;
+  }
+  .bg-layered-depth::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      radial-gradient(circle at 70% 20%, rgba(254, 253, 252, 0.9) 0%, transparent 35%),
+      radial-gradient(circle at 20% 60%, rgba(232, 230, 227, 0.8) 0%, transparent 40%),
+      radial-gradient(circle at 85% 75%, rgba(215, 210, 205, 0.7) 0%, transparent 30%);
+    pointer-events: none;
+  }
+  .bg-layered-depth::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(
+      ellipse at 50% 50%,
+      transparent 0%,
+      rgba(89, 76, 86, 0.05) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* Custom Animations for Background Check Cards */
+  @keyframes bounce-once {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  @keyframes scale-in {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .animate-bounce-once {
+    animation: bounce-once 0.3s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.3s ease-out;
   }
 }

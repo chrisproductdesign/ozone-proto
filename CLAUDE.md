@@ -2,6 +2,30 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 🧠 SESSION START PROTOCOL
+
+**IMPORTANT**: At the start of each new session, run this command:
+
+```
+/start
+```
+
+Or manually trigger:
+```
+Read the MCP memory graph to load persistent project context
+```
+
+The memory graph contains:
+- Feature decisions and rationale
+- Component relationships and patterns
+- Design iterations and history
+- Technical constraints and preferences
+- User preferences and working style
+
+This loads persistent knowledge that spans across sessions, so you don't have to re-explain previous decisions.
+
+---
+
 ## 🚨 CRITICAL: Working Rules & Collaboration Mode
 
 **YOU ARE A TECHNICAL IMPLEMENTATION PARTNER, NOT THE PRODUCT DESIGNER**
@@ -298,30 +322,24 @@ The app uses a **minimal tab-based playground** for component development and it
 - Component wrapper pattern: `ButtonBaseUIWrapper`, `InputBaseUIWrapper`
 - Base UI + Tailwind integration working
 
-🎯 **Dashboard Rebuild (v0.7) - Phase 2: Refinement**
+🎯 **Dashboard (v0.7) - Complete**
 
-**Current Status**: Structure complete, refining interactions and components
+**Status**: Core structure and interactions complete (see PROGRESS.md for current work)
 
 **Phase 1 Complete** ✅:
 - Full-page layout with sidebar navigation + top header
 - Status hero section (green bg, dynamic for yellow/red risk levels)
 - 2x2 metrics grid with unified MetricCard component
 - Composite score card (96px letter grade with green circular bg)
-- Graph placeholders (marketplace, funder portfolio - stacked vertically)
+- Deal benchmarking scatter plots (marketplace + funder portfolio with full datasets)
 - Background check section (4 cards: Data merch, Integrations, Checklist, Perplexity)
 - Responsive layout (375px → 768px → 1280px)
 
-**Phase 2 In Progress**:
-- ✅ Unified MetricCard component (`src/components/dashboard/MetricCard.tsx`)
-  - All 4 metrics use same component
-  - Functional Base UI sliders with proper ranges
-  - Recalculate buttons on MOIC and Factor Rate
-  - Min/max labels (K notation for funding amount)
-- ✅ BaseUISlider refinement (`src/components/form/BaseUISlider.tsx`)
-  - Removed `transition-all` to fix lag/trailing during drag
-  - Selective transitions: `transition-[outline,box-shadow]` only
-  - Uses `data-dragging` attribute for visual feedback
-  - Instant thumb response, smooth visual effects
+**Phase 2 Complete** ✅:
+- Unified MetricCard component with Base UI sliders
+- Interactive metric adjustments with proper ranges
+- Recalculate buttons on MOIC and Factor Rate
+- Optimized BaseUISlider performance (no drag lag)
 
 **Metric Ranges**:
 - Gross Funding: $10K-$100K (step: $1K)
@@ -329,9 +347,44 @@ The app uses a **minimal tab-based playground** for component development and it
 - Target MOIC: 1.1-1.4 (step: 0.01)
 - Factor Rate: 1.2-1.6 (step: 0.01)
 
-**Design Spec Location**: `design-specs/screens/dashboard-layout-wireframe-v0.7.jpg`
+**Design Spec**: `design-specs/screens/dashboard-layout-wireframe-v0.7.jpg`
 
-**Next**: Continue section refinement as directed
+**Current Work**: See `PROGRESS.md` for active development tracking
+
+### Dashboard Architecture & Personalization Roadmap
+
+**Vision**: Modular "applet" architecture where each section is a self-contained tool with focused functionality.
+
+**Layout Strategy**:
+- **Fixed at Top** (always): Status hero + 4 metric sliders
+- **Reorderable** (future): All other sections/cards below
+
+**Development Approach** (Phased for Speed):
+
+**✅ Phase 1: Component Development** (Current)
+- Build each section as standalone, self-contained component
+- Focus on functionality and UX refinement
+- Section-by-section iteration (continue current approach)
+- Use consistent patterns (headers, actions, spacing)
+
+**Phase 2: Modular Architecture** (Later)
+- Create `DashboardWidget` wrapper component
+- Standardize widget interface (title, icon, settings, actions)
+- Grid-based responsive layout system
+
+**Phase 3: Personalization** (Future)
+- Drag-and-drop reordering (dnd-kit library)
+- User preferences persistence
+- Show/hide widget toggles
+- Widget size variants (if needed)
+
+**Why This Works**:
+- Ship faster by building features first, architecture later
+- Get user feedback before committing to personalization patterns
+- Learn what users actually want to customize
+- Avoid premature optimization and over-engineering
+
+**Current Strategy**: Continue building sections one-by-one with consistent patterns. Refactor to widget system when ~80% of sections are functionally complete.
 
 **Playground Tabs:**
 1. **Login** (`Login.tsx`) - Login screen
@@ -369,8 +422,8 @@ src/components/{name}/
 
 **Current Components:**
 - **Base UI Wrappers**: `ButtonBaseUIWrapper`, `InputBaseUIWrapper` (Tailwind + Base UI)
-- **Dashboard**: `ScoreCard`, `MetricCard`, `ConfidenceCard` for financial data display
-- **Form Controls**: `TextInput`, `NumberInput`, `CurrencyInput`, `SelectInput`, `BaseUISlider`
+- **Dashboard**: `ScoreCard`, `MetricCard`, `ConfidenceCard`, `BaseUISlider` (dashboard metrics)
+- **Form Controls**: `TextInput`, `NumberInput`, `CurrencyInput`, `SelectInput`, `ComboboxInput`, `PercentageInput`
 - **Compound Components**: `Table`, `Sidebar`, `Tabs` (dot notation: `Table.Root`, `Table.Row`)
 - **UI Elements**: `Button`, `Badge`, `Card`
 
@@ -382,9 +435,10 @@ Configured in both `tsconfig.json` and `vite.config.ts`:
 - `@lib/` → `src/lib/`
 - `@design-system/` → `src/design-system/`
 
-### Design System
+### Design System Architecture
 
 **See `DESIGN_SYSTEM.md` for complete design token documentation.**
+**See lines 31-223 above for Design System Rules (what NOT to do).**
 
 **Pure CSS Architecture (Tailwind v4 @theme Pattern):**
 - **Single Source of Truth**: `src/index.css` (@theme directive)
@@ -524,6 +578,56 @@ npx playwright test tests/e2e/dashboard.spec.ts
 5. **Iterate**: Refinements based on your feedback
 6. **Document**: Updates component docs and patterns
 
+## Chart & Visualization Building Workflow
+
+### Using AI Tools for Chart Development
+
+When building charts and data visualizations, leverage AI agents and tools for design guidance and implementation:
+
+#### Phase 1: Design Strategy
+1. **visual-storyteller** (Agent) - Design visualization strategy
+   - Determine best chart type for the data
+   - Design color schemes and visual hierarchy
+   - Plan animations and interactions
+
+2. **ui-designer** (Agent) - Interface design
+   - Dashboard layout recommendations
+   - Component spacing and sizing
+   - Design system consistency
+
+3. **ui-design-review** (Plugin) - Design feedback
+   - Professional critique of designs
+   - Accessibility considerations
+   - Visual best practices
+
+#### Phase 2: Implementation
+1. **context7** (MCP) - Technical documentation
+   - Recharts API reference
+   - D3.js patterns
+   - Best practices and examples
+
+2. Build components directly with Recharts/D3
+   - OR use **algorithmic-art** (Skill) for animated/generative charts
+
+3. **playwright** (MCP) - Testing
+   - Take screenshots for review
+   - Verify responsive behavior
+
+#### Phase 3: Iteration
+1. **ux-design-reviewer** (Agent) - UX analysis
+   - User flow evaluation
+   - Interaction patterns
+   - Usability improvements
+
+2. Apply feedback and refine
+
+### Quick Reference for Chart Tools
+- **visual-storyteller**: Data visualization design
+- **ui-designer**: Interface/dashboard design
+- **analytics-reporter**: Data insights and metric selection
+- **context7**: Library documentation (Recharts, D3, etc.)
+- **algorithmic-art**: Animated/generative visualizations
+
 ## Technical Foundation & Best Practices
 
 ### Tailwind CSS Integration ✅ Complete
@@ -547,8 +651,8 @@ className={classNames(
 ```
 
 **Configuration:**
-- Config: `tailwind.config.js`
-- Tokens: `src/index.css` (@theme directive) + `src/design-system/tokens/` (spacing, typography)
+- Config: `tailwind.config.js` (animations only)
+- Tokens: `src/index.css` (@theme directive) - SINGLE SOURCE OF TRUTH
 
 ### Base UI Foundation Strategy
 **Why Base UI:**
@@ -608,64 +712,124 @@ GitHub: https://github.com/chrisproductdesign/ozone-proto-v0.7.git
 
 ## MCP Server Configuration (Model Context Protocol)
 
-### ⚠️ IMPORTANT: Proper Configuration Approach
+### ⚠️ IMPORTANT: Claude Code CLI Configuration
 
-**Context**: MCP servers enable Claude to access external tools and services (filesystem, databases, APIs, etc.)
+**Context**: MCP servers enable Claude Code to access external tools and services (documentation, browsers, design tools, databases, APIs, etc.)
 
-### Configuration Location
-MCP servers must be configured in the Claude Desktop application config:
-```
-/Users/chris/Library/Application Support/Claude/claude_desktop_config.json
-```
+**You are using Claude Code CLI** (terminal-based), NOT Claude Desktop (GUI app). These are separate applications with separate configurations.
 
-**DO NOT** modify any Git repositories (especially not `/Users/chris/Documents/GitHub/claude-code`) for MCP configuration. This is an official Anthropic repository and should remain unchanged.
+### Configuration Locations for Claude Code CLI
 
-### Current Available MCP Servers
-- **mui-mcp**: Material-UI documentation access (currently active)
-- **filesystem**: Access to specified directories
-- **UnityMCP**: Unity development server (installed at `~/.config/UnityMCP/`)
-- Additional servers can be installed via npm
+MCP servers can be configured at three levels (in order of precedence):
 
-### Proper Setup Process
-1. **Edit the config file** directly:
-   ```bash
-   open -e "/Users/chris/Library/Application Support/Claude/claude_desktop_config.json"
+1. **Project-scoped** (current project only):
+   ```
+   .mcp.json (in project root)
    ```
 
-2. **Add server configurations** in JSON format:
-   ```json
-   {
-     "mcpServers": {
-       "filesystem": {
-         "command": "npx",
-         "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path1", "/path2"]
-       },
-       "servername": {
-         "command": "command-to-run",
-         "args": ["arguments"],
-         "env": { "ENV_VAR": "value" }
-       }
-     }
-   }
+2. **User-scoped** (all your projects):
+   ```
+   ~/.claude.json
    ```
 
-3. **Restart Claude Desktop** for changes to take effect
+3. **Enterprise-managed** (if applicable):
+   - macOS: `/Library/Application Support/ClaudeCode/managed-mcp.json`
+   - Linux: `/etc/claude-code/managed-mcp.json`
+
+**Primary config for this setup**: `~/.claude.json` (user-level, shared across all projects)
+
+### Current Active MCP Servers
+
+**Working** ✓:
+- **mui-mcp**: Material-UI documentation access
+- **context7**: Up-to-date library documentation (React, Next.js, etc.)
+- **playwright**: Browser automation and testing
+
+**Configured but Failed** ✗:
+- **github**: GitHub API (needs authentication)
+- **figma variants**: Multiple figma MCP servers (6 failing, 1 needs auth)
+
+### Configuration File Structure
+
+**User-level** (`~/.claude.json`):
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "your-api-key"
+      }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp"]
+    }
+  }
+}
+```
+
+**Project-level** (`.mcp.json` in project root):
+```json
+{
+  "mcpServers": {
+    "project-specific-server": {
+      "command": "npx",
+      "args": ["-y", "some-mcp-package"]
+    }
+  }
+}
+```
+
+### Managing MCP Servers
+
+**Check status**:
+```bash
+claude mcp list
+```
+
+**Add server** (user-level):
+```bash
+claude mcp add servername --scope user
+```
+
+**Edit config manually**:
+```bash
+# User-level (all projects)
+open -e ~/.claude.json
+
+# Project-level (current project only)
+open -e .mcp.json
+```
+
+**Restart**: Exit and restart Claude Code CLI after config changes
+
+### Important Notes
+
+**DO NOT** confuse with Claude Desktop:
+- **Claude Desktop** (GUI app): Uses `/Users/chris/Library/Application Support/Claude/claude_desktop_config.json`
+- **Claude Code CLI** (terminal): Uses `~/.claude.json`
+- These are SEPARATE applications with SEPARATE configs
 
 ### Reference Documentation
-- **Available Servers**: Check npm for `@modelcontextprotocol/server-*` packages
-- **Archived Docs**: `design-specs/archive/` contains older documentation versions for reference
+- **Official Docs**: https://docs.claude.com/en/docs/claude-code/mcp
+- **Available Servers**: Check npm for `@modelcontextprotocol/server-*` packages and MCP registry
+- **Archived Docs**: `design-specs/archive/` contains older documentation (may be outdated)
 
 ### Common Issues & Solutions
-- **GitHub Desktop shows "branched"**: Usually just `.DS_Store` files - add to `.gitignore`
-- **MCP not working**: Check config JSON syntax and restart Claude Desktop
-- **Permission errors**: Ensure paths in filesystem server are accessible
+- **MCP not working**: Check config JSON syntax with `claude mcp list`
+- **Permission errors**: Ensure command paths and file permissions are correct
+- **Server failed**: Check if npm package exists and is compatible
+- **Needs authentication**: Add required API keys in `env` or `headers` section
 
 ### Best Practices
-1. Always configure MCP servers in the official Claude config location
-2. Never modify third-party repositories for local configuration
-3. Keep sensitive data (API tokens) in environment variables
+1. Use `~/.claude.json` for servers you want across all projects
+2. Use `.mcp.json` for project-specific servers
+3. Keep sensitive data (API tokens) in environment variables when possible
 4. Test servers individually before adding multiple
-5. Backup config before making changes
+5. Run `claude mcp list` to verify server health after changes
+6. Remove failed/unused servers to keep config clean
 
 ## ⚠️ Common Mistakes to Avoid
 

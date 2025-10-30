@@ -1,5 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import { classNames } from '@/lib/classNames';
+import { getBaseInputClasses, inputPadding } from './inputStyles';
+import { IncrementDecrementControls } from './IncrementDecrementControls';
 
 interface NumberInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
   error?: boolean;
@@ -33,52 +35,71 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       }
     };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const inputValue = e.target.value;
+
+      setValue(inputValue);
+      if (props.onChange) {
+        props.onChange(e);
+      }
+    };
+
+    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+      // Clamp value to min/max range
+      const numericValue = parseFloat(e.target.value);
+
+      if (!isNaN(numericValue)) {
+        let clampedValue = numericValue;
+
+        if (min !== undefined && numericValue < Number(min)) {
+          clampedValue = Number(min);
+        }
+        if (max !== undefined && numericValue > Number(max)) {
+          clampedValue = Number(max);
+        }
+
+        // If value was clamped, update state and call onChange
+        if (clampedValue !== numericValue) {
+          const clampedString = clampedValue.toString();
+          setValue(clampedString);
+
+          // Notify parent of clamped value
+          const changeEvent = {
+            target: { value: clampedString }
+          } as React.ChangeEvent<HTMLInputElement>;
+
+          props.onChange?.(changeEvent);
+        }
+      }
+
+      // Call original onBlur if provided
+      props.onBlur?.(e);
+    };
+
     return (
       <div className={classNames('relative', fullWidth ? 'w-full' : '')}>
         <input
           ref={ref}
           type="number"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={handleChange}
+          onBlur={handleBlur}
           min={min}
           max={max}
           step={step}
           className={classNames(
-            'px-3.5 py-2.5 rounded-lg border bg-white text-neutral-800',
-            'text-sm placeholder:text-neutral-500',
-            'transition-all duration-200',
-            'focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-50',
+            getBaseInputClasses(error, fullWidth),
             '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
-            error ? 'border-red-300 focus:border-red-400 focus:ring-red-50' : 'border-neutral-400',
-            showControls ? 'pr-10' : '',
-            fullWidth ? 'w-full' : '',
+            showControls ? inputPadding.rightControls : inputPadding.base,
             className
           )}
           {...props}
         />
         {showControls && (
-          <div className="absolute right-1 top-1 bottom-1 flex flex-col">
-            <button
-              type="button"
-              onClick={handleIncrement}
-              className="flex-1 px-2 hover:bg-neutral-50 rounded-t transition-colors"
-              aria-label="Increment"
-            >
-              <svg className="w-3 h-3 text-neutral-500" viewBox="0 0 12 12">
-                <path d="M6 4L10 8H2L6 4Z" fill="currentColor"/>
-              </svg>
-            </button>
-            <button
-              type="button"
-              onClick={handleDecrement}
-              className="flex-1 px-2 hover:bg-neutral-50 rounded-b transition-colors"
-              aria-label="Decrement"
-            >
-              <svg className="w-3 h-3 text-neutral-500" viewBox="0 0 12 12">
-                <path d="M6 8L2 4H10L6 8Z" fill="currentColor"/>
-              </svg>
-            </button>
-          </div>
+          <IncrementDecrementControls
+            onIncrement={handleIncrement}
+            onDecrement={handleDecrement}
+          />
         )}
       </div>
     );

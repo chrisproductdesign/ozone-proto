@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { classNames } from '@/lib/classNames';
 import { FormSection } from '@/components/form/FormSection';
-import { FormField } from '@/components/form/FormField';
 import { TextInput } from '@/components/form/TextInput';
 import { CurrencyInput } from '@/components/form/CurrencyInput';
 import { NumberInput } from '@/components/form/NumberInput';
 import { SelectInput } from '@/components/form/SelectInput';
+import { ComboboxInput } from '@/components/form/ComboboxInput';
+import { PercentageInput } from '@/components/form/PercentageInput';
 import { useDeal } from '@/contexts/DealContext';
 import { useToast } from '@/components/feedback/Toast';
 import { type NavigationProps } from '@playground/App';
@@ -49,7 +50,7 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
     }
 
     // Don't save if form is empty
-    if (!currentDeal.businessName && !currentDeal.fico && !currentDeal.monthlyRevenue) {
+    if (!currentDeal.firstName && !currentDeal.lastName && !currentDeal.fico && !currentDeal.monthlyRevenue) {
       return;
     }
 
@@ -73,14 +74,15 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
 
   // Check if required fields are complete
   const isFormValid = () => {
-    const requiredFields = ['businessName', 'state', 'fico', 'monthlyRevenue', 'grossFundedAmount', 'term'];
+    const requiredFields = ['firstName', 'lastName', 'state', 'fico', 'monthlyRevenue', 'grossFundedAmount', 'term'];
     return requiredFields.every(field => currentDeal[field as keyof typeof currentDeal]);
   };
 
   // Get list of missing required fields for feedback
   const getMissingFields = () => {
     const requiredFields = [
-      { field: 'businessName', label: 'Legal Name and DBA' },
+      { field: 'firstName', label: 'Owner: First name' },
+      { field: 'lastName', label: 'Last name' },
       { field: 'state', label: 'State' },
       { field: 'fico', label: 'FICO' },
       { field: 'monthlyRevenue', label: 'Average Monthly Revenue' },
@@ -93,25 +95,106 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
   };
 
   const handleContinue = () => {
-    if (navigateTo && isFormValid()) {
-      navigateTo('dashboard');
+    if (navigateTo) {
+      navigateTo('dashboard-v2');
     }
   };
 
+  // Check if we have any summary data to show metrics
+  const hasAnyMetricData = () => {
+    return Boolean(
+      formData.grossFundedAmount ||
+      formData.term ||
+      formData.paymentFrequency ||
+      formData.advanceType
+    );
+  };
+
   const stateOptions = [
-    { value: 'CO', label: 'CO' },
-    { value: 'CA', label: 'CA' },
-    { value: 'NY', label: 'NY' },
-    { value: 'TX', label: 'TX' },
-    { value: 'FL', label: 'FL' },
+    { value: 'AL', label: 'Alabama' },
+    { value: 'AK', label: 'Alaska' },
+    { value: 'AZ', label: 'Arizona' },
+    { value: 'AR', label: 'Arkansas' },
+    { value: 'CA', label: 'California' },
+    { value: 'CO', label: 'Colorado' },
+    { value: 'CT', label: 'Connecticut' },
+    { value: 'DE', label: 'Delaware' },
+    { value: 'FL', label: 'Florida' },
+    { value: 'GA', label: 'Georgia' },
+    { value: 'HI', label: 'Hawaii' },
+    { value: 'ID', label: 'Idaho' },
+    { value: 'IL', label: 'Illinois' },
+    { value: 'IN', label: 'Indiana' },
+    { value: 'IA', label: 'Iowa' },
+    { value: 'KS', label: 'Kansas' },
+    { value: 'KY', label: 'Kentucky' },
+    { value: 'LA', label: 'Louisiana' },
+    { value: 'ME', label: 'Maine' },
+    { value: 'MD', label: 'Maryland' },
+    { value: 'MA', label: 'Massachusetts' },
+    { value: 'MI', label: 'Michigan' },
+    { value: 'MN', label: 'Minnesota' },
+    { value: 'MS', label: 'Mississippi' },
+    { value: 'MO', label: 'Missouri' },
+    { value: 'MT', label: 'Montana' },
+    { value: 'NE', label: 'Nebraska' },
+    { value: 'NV', label: 'Nevada' },
+    { value: 'NH', label: 'New Hampshire' },
+    { value: 'NJ', label: 'New Jersey' },
+    { value: 'NM', label: 'New Mexico' },
+    { value: 'NY', label: 'New York' },
+    { value: 'NC', label: 'North Carolina' },
+    { value: 'ND', label: 'North Dakota' },
+    { value: 'OH', label: 'Ohio' },
+    { value: 'OK', label: 'Oklahoma' },
+    { value: 'OR', label: 'Oregon' },
+    { value: 'PA', label: 'Pennsylvania' },
+    { value: 'RI', label: 'Rhode Island' },
+    { value: 'SC', label: 'South Carolina' },
+    { value: 'SD', label: 'South Dakota' },
+    { value: 'TN', label: 'Tennessee' },
+    { value: 'TX', label: 'Texas' },
+    { value: 'UT', label: 'Utah' },
+    { value: 'VT', label: 'Vermont' },
+    { value: 'VA', label: 'Virginia' },
+    { value: 'WA', label: 'Washington' },
+    { value: 'WV', label: 'West Virginia' },
+    { value: 'WI', label: 'Wisconsin' },
+    { value: 'WY', label: 'Wyoming' },
   ];
 
   const industryOptions = [
-    { value: 'Subcontract', label: 'Subcontract' },
-    { value: 'Retail', label: 'Retail' },
-    { value: 'Restaurant', label: 'Restaurant' },
-    { value: 'Construction', label: 'Construction' },
-    { value: 'Professional Services', label: 'Professional Services' },
+    { value: 'restaurant_food_service', label: 'Restaurant & Food Service' },
+    { value: 'retail_general', label: 'Retail - General Merchandise' },
+    { value: 'retail_specialty', label: 'Retail - Specialty Stores' },
+    { value: 'construction_general', label: 'Construction - General Contractor' },
+    { value: 'construction_specialty', label: 'Construction - Specialty Trade' },
+    { value: 'professional_services', label: 'Professional Services' },
+    { value: 'medical_healthcare', label: 'Medical & Healthcare' },
+    { value: 'automotive_repair', label: 'Automotive Repair & Services' },
+    { value: 'automotive_sales', label: 'Automotive Sales & Dealerships' },
+    { value: 'transportation_logistics', label: 'Transportation & Logistics' },
+    { value: 'manufacturing', label: 'Manufacturing' },
+    { value: 'wholesale_distribution', label: 'Wholesale & Distribution' },
+    { value: 'real_estate', label: 'Real Estate' },
+    { value: 'hospitality_lodging', label: 'Hospitality & Lodging' },
+    { value: 'personal_services', label: 'Personal Services (Salons, Spas, etc.)' },
+    { value: 'home_services', label: 'Home Services & Contractors' },
+    { value: 'landscaping', label: 'Landscaping & Lawn Care' },
+    { value: 'cleaning_janitorial', label: 'Cleaning & Janitorial Services' },
+    { value: 'technology_it', label: 'Technology & IT Services' },
+    { value: 'education_training', label: 'Education & Training' },
+    { value: 'financial_services', label: 'Financial Services' },
+    { value: 'legal_services', label: 'Legal Services' },
+    { value: 'accounting', label: 'Accounting & Bookkeeping' },
+    { value: 'marketing_advertising', label: 'Marketing & Advertising' },
+    { value: 'entertainment', label: 'Entertainment & Recreation' },
+    { value: 'fitness_wellness', label: 'Fitness & Wellness' },
+    { value: 'agriculture', label: 'Agriculture & Farming' },
+    { value: 'e_commerce', label: 'E-commerce' },
+    { value: 'telecommunications', label: 'Telecommunications' },
+    { value: 'insurance', label: 'Insurance' },
+    { value: 'other', label: 'Other' },
   ];
 
   const positionOptions = [
@@ -137,127 +220,168 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
 
   return (
     <div className="min-h-full bg-neutral-400">
-      {/* Header */}
-      <header className="border-b border-neutral-300 sticky top-0 z-10 bg-neutral-400">
-        <div className="px-6 py-8">
-          <div className="max-w-[1000px] mx-auto flex items-center justify-between">
+      {/* Two-row Header: Title + Metrics */}
+      <header className="sticky top-0 z-10 bg-neutral-400">
+        {/* Row 1: Deal Title & Continue Button */}
+        <div className="border-b border-neutral-300">
+          <div className="max-w-[1000px] mx-auto px-6 py-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              <h1 className="text-lg font-medium text-neutral-800">
+              <h1 className="text-base font-normal text-neutral-800">
                 {dealName}
               </h1>
-            </div>
-            <div className="flex items-center gap-3">
               {/* Saved indicator */}
               {showSaved && (
-                <span className="text-sm text-green-600 font-medium flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  Saved
-                </span>
+                <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
               )}
+            </div>
+            <button
+              onClick={handleContinue}
+              className="px-3 py-2 text-sm font-medium rounded-full transition-colors duration-[150ms] text-white bg-neutral-900 hover:bg-neutral-800"
+              aria-label="Continue to dashboard"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
 
-              <button
-                onClick={() => showToast('Deals list coming soon', 'info')}
-                className="px-4 py-2 text-sm font-medium text-neutral-700 bg-neutral-300 border border-neutral-400 rounded-lg hover:bg-neutral-50 transition-colors"
-                aria-label="View deals"
-              >
-                Deals
-              </button>
-              <button
-                onClick={handleContinue}
-                disabled={!isFormValid()}
-                className={classNames(
-                  "px-4 py-2 text-sm font-medium rounded-lg transition-colors",
-                  isFormValid()
-                    ? "text-white bg-[#4A4543] hover:bg-[#3A3533]"
-                    : "text-neutral-500 bg-neutral-200 cursor-not-allowed"
-                )}
-                aria-label="Continue"
-              >
-                Continue
-              </button>
+        {/* Row 2: Metrics Summary (always present, subtle when empty) */}
+        <div className="border-b border-neutral-300">
+          <div className="max-w-[1000px] mx-auto px-6">
+            {/* Mobile: 2x2 grid, Desktop: Single row with dividers */}
+            <div className="grid grid-cols-2 md:flex md:items-stretch md:divide-x md:divide-neutral-300">
+              {/* Metric 1: Gross funded */}
+              <div className="px-3 py-1.5 flex flex-col gap-2 md:flex-1">
+                <dt className="text-xs font-normal text-neutral-700 opacity-40">
+                  Gross funded
+                </dt>
+                <dd className={classNames(
+                  "text-base font-semibold text-neutral-900 transition-opacity duration-[150ms] h-[24px]",
+                  formData.grossFundedAmount ? "opacity-100" : "opacity-0"
+                )}>
+                  {formData.grossFundedAmount ? `${Number(formData.grossFundedAmount).toLocaleString()}k` : '\u00A0'}
+                </dd>
+              </div>
+
+              {/* Metric 2: Term */}
+              <div className="px-3 py-1.5 flex flex-col gap-2 md:flex-1 md:px-6">
+                <dt className="text-xs font-normal text-neutral-700 opacity-40">
+                  Term
+                </dt>
+                <dd className={classNames(
+                  "text-base font-semibold text-neutral-900 transition-opacity duration-[150ms] h-[24px]",
+                  formData.term ? "opacity-100" : "opacity-0"
+                )}>
+                  {formData.term || '\u00A0'}
+                </dd>
+              </div>
+
+              {/* Metric 3: Payment frequency */}
+              <div className="px-3 py-1.5 flex flex-col gap-2 md:flex-1 md:px-6">
+                <dt className="text-xs font-normal text-neutral-700 opacity-40">
+                  Payment frequency
+                </dt>
+                <dd className={classNames(
+                  "text-base font-semibold text-neutral-900 transition-opacity duration-[150ms] h-[24px]",
+                  formData.paymentFrequency ? "opacity-100" : "opacity-0"
+                )}>
+                  {formData.paymentFrequency || '\u00A0'}
+                </dd>
+              </div>
+
+              {/* Metric 4: Advance type */}
+              <div className="px-3 py-1.5 flex flex-col gap-2 md:flex-1 md:px-6">
+                <dt className="text-xs font-normal text-neutral-700 opacity-40">
+                  Advance type
+                </dt>
+                <dd className={classNames(
+                  "text-base font-semibold text-neutral-900 transition-opacity duration-[150ms] h-[24px]",
+                  formData.advanceType ? "opacity-100" : "opacity-0"
+                )}>
+                  {formData.advanceType || '\u00A0'}
+                </dd>
+              </div>
             </div>
           </div>
-
-          {/* Missing fields feedback */}
-          {!isFormValid() && (
-            <div className="max-w-[1000px] mx-auto mt-2">
-              <p className="text-xs text-amber-600" role="alert" aria-live="polite">
-                <svg className="inline-block w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                {getMissingFields().join(', ')}
-              </p>
-            </div>
-          )}
         </div>
       </header>
 
       {/* Main Content */}
       <main className="px-6 pt-10 pb-8">
-        <div className="max-w-[1000px] mx-auto space-y-5">
+        <div className="max-w-[1000px] mx-auto space-y-2">
 
           {/* Business Information Section */}
           <FormSection title="Business information">
-            <div className="grid grid-cols-12 gap-5">
-              <div className="col-span-12 md:col-span-9">
-                <FormField label="Legal Name and DBA" required completed={!!formData.businessName}>
+            <div className="space-y-5">
+              {/* Owner name and state row */}
+              <div className="grid grid-cols-12 gap-5">
+                <div className="col-span-12 md:col-span-3">
                   <TextInput
-                    value={formData.businessName}
-                    onChange={(e) => handleInputChange('businessName', e.target.value)}
-                    placeholder="Enter business name"
+                    value={formData.firstName}
+                    onChange={(e) => handleInputChange('firstName', e.target.value)}
+                    placeholder="First name"
+                    required
+                    aria-label="Owner first name"
                   />
-                </FormField>
-              </div>
-              <div className="col-span-12 md:col-span-3">
-                <FormField label="State" required completed={!!formData.state}>
-                  <SelectInput
+                </div>
+                <div className="col-span-12 md:col-span-6">
+                  <TextInput
+                    value={formData.lastName}
+                    onChange={(e) => handleInputChange('lastName', e.target.value)}
+                    placeholder="Last name"
+                    required
+                    aria-label="Owner last name"
+                  />
+                </div>
+                <div className="col-span-12 md:col-span-3">
+                  <ComboboxInput
                     value={formData.state}
-                    onChange={(e) => handleInputChange('state', e.target.value)}
+                    onChange={(value) => handleInputChange('state', value)}
                     options={stateOptions}
+                    placeholder="State"
+                    required
+                    aria-label="State"
                   />
-                </FormField>
+                </div>
               </div>
-              <div className="col-span-12 md:col-span-3">
-                <FormField label="Industry">
-                  <SelectInput
+
+              {/* Remaining fields in 12-column grid */}
+              <div className="grid grid-cols-12 gap-5">
+                <div className="col-span-12 md:col-span-3">
+                  <ComboboxInput
                     value={formData.industry}
-                    onChange={(e) => handleInputChange('industry', e.target.value)}
+                    onChange={(value) => handleInputChange('industry', value)}
                     options={industryOptions}
+                    placeholder="Industry"
+                    aria-label="Industry"
                   />
-                </FormField>
-              </div>
-              <div className="col-span-12 md:col-span-3">
-                <FormField label="NAICS Code">
+                </div>
+                <div className="col-span-12 md:col-span-3">
                   <TextInput
                     value={formData.naicsCode}
                     onChange={(e) => handleInputChange('naicsCode', e.target.value)}
-                    placeholder="000000"
+                    placeholder="NAICS Code"
+                    aria-label="NAICS Code"
                   />
-                </FormField>
-              </div>
-              <div className="col-span-12 md:col-span-3">
-                <FormField label="Time in Business">
+                </div>
+                <div className="col-span-12 md:col-span-3">
                   <TextInput
                     value={formData.timeInBusiness}
                     onChange={(e) => handleInputChange('timeInBusiness', e.target.value)}
-                    placeholder="Years"
+                    placeholder="Time in Business (Years)"
+                    aria-label="Time in Business"
                   />
-                </FormField>
-              </div>
-              <div className="col-span-12 md:col-span-3">
-                <FormField label="FICO" required completed={!!formData.fico && parseInt(formData.fico) >= 300 && parseInt(formData.fico) <= 850}>
+                </div>
+                <div className="col-span-12 md:col-span-3">
                   <TextInput
                     type="text"
                     inputMode="numeric"
                     pattern="[0-9]*"
                     value={formData.fico}
                     onChange={(e) => handleInputChange('fico', e.target.value)}
-                    placeholder="300-850"
+                    placeholder="FICO (300-850)"
+                    required
                     aria-label="FICO credit score"
                     aria-invalid={formData.fico !== '' && (parseInt(formData.fico) < 300 || parseInt(formData.fico) > 850)}
                     aria-describedby={formData.fico && (parseInt(formData.fico) < 300 || parseInt(formData.fico) > 850) ? "fico-error" : undefined}
@@ -266,7 +390,7 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
                   {formData.fico && (parseInt(formData.fico) < 300 || parseInt(formData.fico) > 850) && (
                     <p id="fico-error" className="mt-1 text-xs text-red-600" role="alert">Score must be between 300 and 850</p>
                   )}
-                </FormField>
+                </div>
               </div>
             </div>
           </FormSection>
@@ -275,58 +399,59 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
           <FormSection title="Financials">
             <div className="grid grid-cols-12 gap-5">
               <div className="col-span-12 md:col-span-4">
-                <FormField label="Average Monthly Revenue" required completed={!!formData.monthlyRevenue}>
-                  <CurrencyInput
-                    value={formData.monthlyRevenue}
-                    onChange={(e) => handleInputChange('monthlyRevenue', e.target.value)}
-                    placeholder="0.00"
-                  />
-                </FormField>
+                <CurrencyInput
+                  value={formData.monthlyRevenue}
+                  onChange={(e) => handleInputChange('monthlyRevenue', e.target.value)}
+                  placeholder="Avg Monthly Revenue"
+                  required
+                  aria-label="Average Monthly Revenue"
+                />
               </div>
               <div className="col-span-12 md:col-span-4">
-                <FormField label="Average Monthly Expenses">
-                  <CurrencyInput
-                    value={formData.monthlyExpenses}
-                    onChange={(e) => handleInputChange('monthlyExpenses', e.target.value)}
-                    placeholder="0.00"
-                  />
-                </FormField>
+                <CurrencyInput
+                  value={formData.monthlyExpenses}
+                  onChange={(e) => handleInputChange('monthlyExpenses', e.target.value)}
+                  placeholder="Avg Monthly Expenses"
+                  aria-label="Average Monthly Expenses"
+                />
               </div>
               <div className="col-span-12 md:col-span-4">
-                <FormField label="Position">
-                  <SelectInput
-                    value={formData.position}
-                    onChange={(e) => handleInputChange('position', e.target.value)}
-                    options={positionOptions}
-                  />
-                </FormField>
+                <SelectInput
+                  value={formData.position}
+                  onChange={(e) => handleInputChange('position', e.target.value)}
+                  options={positionOptions}
+                  placeholder="position"
+                  aria-label="Position"
+                />
               </div>
             </div>
           </FormSection>
 
           {/* Pricing and Terms Row */}
-          <div className="grid grid-cols-12 gap-5">
+          <div className="grid grid-cols-12 gap-2">
             {/* Pricing and Performance */}
             <div className="col-span-12 lg:col-span-6">
               <FormSection title="Pricing and Performance">
                 <div className="space-y-5">
-                  <FormField label="Gross Funded Amount" required completed={!!formData.grossFundedAmount}>
-                    <CurrencyInput
-                      value={formData.grossFundedAmount}
-                      onChange={(e) => handleInputChange('grossFundedAmount', e.target.value)}
-                      placeholder="0.00"
-                    />
-                  </FormField>
-                  <FormField label="Term (Days)" required completed={!!formData.term}>
-                    <NumberInput
-                      value={formData.term}
-                      onChange={(e) => handleInputChange('term', e.target.value)}
-                      min="1"
-                      max="365"
-                      step="1"
-                      placeholder="Days"
-                    />
-                  </FormField>
+                  <CurrencyInput
+                    value={formData.grossFundedAmount}
+                    onChange={(e) => handleInputChange('grossFundedAmount', e.target.value)}
+                    min="10000"
+                    max="100000"
+                    placeholder="Gross Funded Amount"
+                    required
+                    aria-label="Gross Funded Amount"
+                  />
+                  <NumberInput
+                    value={formData.term}
+                    onChange={(e) => handleInputChange('term', e.target.value)}
+                    min="30"
+                    max="180"
+                    step="1"
+                    placeholder="Term (Days)"
+                    required
+                    aria-label="Term in Days"
+                  />
                 </div>
               </FormSection>
             </div>
@@ -335,76 +460,36 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
             <div className="col-span-12 lg:col-span-6">
               <FormSection title="Terms">
                 <div className="grid grid-cols-2 gap-5">
-                  <FormField label="Payment Frequency">
-                    <SelectInput
-                      value={formData.paymentFrequency}
-                      onChange={(e) => handleInputChange('paymentFrequency', e.target.value)}
-                      options={frequencyOptions}
-                    />
-                  </FormField>
-                  <FormField label="Advance Type">
-                    <SelectInput
-                      value={formData.advanceType}
-                      onChange={(e) => handleInputChange('advanceType', e.target.value)}
-                      options={advanceTypeOptions}
-                    />
-                  </FormField>
+                  <SelectInput
+                    value={formData.paymentFrequency}
+                    onChange={(e) => handleInputChange('paymentFrequency', e.target.value)}
+                    options={frequencyOptions}
+                    placeholder="payment frequency"
+                    aria-label="Payment Frequency"
+                  />
+                  <SelectInput
+                    value={formData.advanceType}
+                    onChange={(e) => handleInputChange('advanceType', e.target.value)}
+                    options={advanceTypeOptions}
+                    placeholder="Advanced terms"
+                    aria-label="Advance Type"
+                  />
+                </div>
+                {/* Full-width ISO Commission at bottom */}
+                <div className="mt-5">
+                  <PercentageInput
+                    value={formData.isoCommission}
+                    onChange={(e) => handleInputChange('isoCommission', e.target.value)}
+                    min="0"
+                    max="100"
+                    step="0.5"
+                    placeholder="ISO Commission"
+                    aria-label="ISO Commission"
+                  />
                 </div>
               </FormSection>
             </div>
           </div>
-
-          {/* Deal Summary */}
-          <FormSection title="Deal Summary">
-            <div className="bg-purple-50 border border-purple-100 rounded-xl p-6">
-              <h4 className="text-sm font-semibold text-neutral-800 mb-4">
-                Review Deal Terms
-              </h4>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div>
-                  <dt className="text-xs text-neutral-600 mb-1">Total Funded</dt>
-                  <dd className="text-lg font-semibold text-neutral-800">
-                    ${Number(formData.grossFundedAmount || 0).toLocaleString()}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-xs text-neutral-600 mb-1">Term</dt>
-                  <dd className="text-lg font-semibold text-neutral-800">
-                    {formData.term || 0} days
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-xs text-neutral-600 mb-1">Payment Schedule</dt>
-                  <dd className="text-lg font-semibold text-neutral-800">
-                    {formData.paymentFrequency}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-xs text-neutral-600 mb-1">Advance Type</dt>
-                  <dd className="text-lg font-semibold text-neutral-800">
-                    {formData.advanceType}
-                  </dd>
-                </div>
-              </div>
-
-              {/* Additional commission field */}
-              <div className="mt-6 pt-6 border-t border-purple-100">
-                <div className="grid grid-cols-12 gap-5">
-                  <div className="col-span-12 md:col-span-4">
-                    <FormField label="ISO Commission">
-                      <NumberInput
-                        value={formData.isoCommission}
-                        onChange={(e) => handleInputChange('isoCommission', e.target.value)}
-                        min="0"
-                        step="1"
-                        placeholder="Amount"
-                      />
-                    </FormField>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </FormSection>
 
         </div>
       </main>

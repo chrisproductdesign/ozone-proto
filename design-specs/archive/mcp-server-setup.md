@@ -1,12 +1,37 @@
-# MCP Server Configuration Guide
+# MCP Server Configuration Guide (ARCHIVED - OUTDATED)
 
-## Correct Configuration Location
-MCP servers should be configured in:
+**⚠️ WARNING**: This document contains OUTDATED information for Claude Desktop.
+
+**You are using Claude Code CLI**, not Claude Desktop. For current, correct information, see `/CLAUDE.md` in the project root.
+
+---
+
+## OUTDATED: Claude Desktop Configuration
+
+**This section is for Claude Desktop (GUI app), NOT Claude Code CLI:**
+
+Claude Desktop config location:
 ```
 /Users/chris/Library/Application Support/Claude/claude_desktop_config.json
 ```
 
+**For Claude Code CLI** (what you're actually using), use:
+```
+~/.claude.json (user-level)
+.mcp.json (project-level)
+```
+
 **DO NOT** modify the GitHub claude-code repository for MCP configuration.
+
+---
+
+## ⚠️ STOP - Use Current Documentation
+
+**See `/CLAUDE.md` for correct Claude Code CLI MCP setup instructions.**
+
+---
+
+# Original Archived Content Below:
 
 ## Current Configuration
 Your current MCP config only has the filesystem server:

@@ -193,13 +193,81 @@ Dashboard-specific tokens that reference primitives - self-documenting and conte
 
 ### Line Heights
 
+**Apple SF Pro Exact Ratios** - Mapped from macOS 26 type ramp:
+
+| Token | Value | Pixels | Ratio | For Font Size | Apple Source |
+|-------|-------|--------|-------|---------------|--------------|
+| `leading-xs` | `0.9375rem` | 15px | 1.25 | 12px (text-xs) | 12→15 exact |
+| `leading-sm` | `1.0625rem` | 17px | 1.23 | 14px (text-sm) | 13→16 (Body) |
+| `leading-base` | `1.25rem` | 20px | 1.33 | 16px (text-base) | 15→20 exact |
+| `leading-lg` | `1.375rem` | 22px | 1.29 | 18px (text-lg) | 17→22 exact |
+| `leading-xl` | `1.5rem` | 24px | 1.29 | 20px (text-xl) | 17→22 ratio |
+| `leading-2xl` | `1.75rem` | 28px | 1.18 | 24px (text-2xl) | 22→26 ratio |
+| `leading-3xl` | `2.25rem` | 36px | 1.23 | 30px (text-3xl) | 26→32 ratio |
+| `leading-4xl` | `2.625rem` | 42px | 1.18 | 36px (text-4xl) | 22→26 ratio |
+| `leading-5xl` | `3.5rem` | 56px | 1.18 | 48px (text-5xl) | 22→26 ratio |
+| `leading-6xl` | `4.375rem` | 70px | 1.18 | 60px (text-6xl) | 22→26 ratio |
+| `leading-7xl` | `5.25rem` | 84px | 1.18 | 72px (text-7xl) | 22→26 ratio |
+| `leading-8xl` | `7rem` | 112px | 1.18 | 96px (text-8xl) | 22→26 ratio |
+| `leading-9xl` | `9.375rem` | 150px | 1.18 | 128px (text-9xl) | 22→26 ratio |
+
+**Legacy Ratio Tokens** (still available):
+
 | Token | Value | Usage |
 |-------|-------|-------|
 | `tight` | `1.25` | Headings |
 | `normal` | `1.5` | Body text |
 | `relaxed` | `1.625` | Comfortable reading |
 
-**Tailwind Utilities**: `leading-tight`, `leading-normal`, `leading-relaxed`
+**Tailwind Utilities**: `leading-base`, `leading-xl`, `leading-tight`
+
+---
+
+## Core Elevation (Shadows)
+
+### Tailwind v4 Shadow Scale
+
+The elevation ramp uses **Tailwind v4 naming** (updated from v3):
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--shadow-2xs` | `0 1px rgb(0 0 0 / 0.05)` | Minimal shadow (new in v4) |
+| `--shadow-xs` | `0 1px 2px 0 rgb(0 0 0 / 0.05)` | Extra small (was `shadow-sm` in v3) |
+| `--shadow-sm` | `0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)` | Small (was `shadow` in v3) |
+| `--shadow` | `0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)` | Alias for `shadow-sm` |
+| `--shadow-md` | `0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)` | Medium |
+| `--shadow-lg` | `0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)` | Large |
+| `--shadow-xl` | `0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)` | Extra large |
+| `--shadow-2xl` | `0 25px 50px -12px rgb(0 0 0 / 0.25)` | 2x extra large |
+| `--shadow-inner` | `inset 0 2px 4px 0 rgb(0 0 0 / 0.05)` | Inset shadow |
+| `--shadow-none` | `0 0 #0000` | No shadow |
+
+**Tailwind Utilities**: `shadow-2xs`, `shadow-xs`, `shadow-sm`, `shadow`, `shadow-md`, `shadow-lg`, `shadow-xl`, `shadow-2xl`, `shadow-inner`, `shadow-none`
+
+**Note**: The plain `shadow` utility is identical to `shadow-sm` in Tailwind v4 (backward compatibility). There is an intentional visual gap between `shadow-sm` and `shadow-md` - the small shadows (2xs, xs, sm) are grouped close together, then a larger step to medium shadows.
+
+### Common Usage
+
+**Cards**: `shadow-sm` or `shadow-md`
+```tsx
+<div className="bg-neutral-300 shadow-sm rounded-lg p-4">
+  Card content
+</div>
+```
+
+**Modals/Elevated UI**: `shadow-xl` or `shadow-2xl`
+```tsx
+<div className="bg-white shadow-2xl rounded-2xl p-6">
+  Modal content
+</div>
+```
+
+**Buttons on hover**: Increase shadow size
+```tsx
+<button className="shadow-sm hover:shadow-md transition-shadow">
+  Click me
+</button>
+```
 
 ---
 
@@ -336,6 +404,155 @@ After (v0.7):
 ```tsx
 // Just use Tailwind utilities directly
 <div className="bg-purple-700">
+```
+
+---
+
+## Form Input Styling System
+
+### Unified Input Components
+
+All form inputs share a standardized styling system defined in `src/components/form/inputStyles.ts`. This ensures visual consistency and maintainable code across:
+
+- TextInput
+- CurrencyInput
+- NumberInput
+- SelectInput
+- ComboboxInput
+- PercentageInput
+
+### Base Input Styles
+
+```tsx
+// Reference: src/components/form/inputStyles.ts
+getBaseInputClasses(error?: boolean, fullWidth?: boolean)
+```
+
+**Applied styles:**
+- Layout: `px-3 py-2` (references `--spacing-3`, `--spacing-2`)
+- Border: `rounded-lg border` (references `--radius-lg`)
+- Background: `bg-white`
+- Text: `text-sm text-neutral-800`
+- Placeholder: `placeholder:text-neutral-650`
+- Focus: `focus:border-purple-500 focus:ring-2 focus:ring-purple-700/20`
+- Transitions: `transition-[border-color,box-shadow] duration-[150ms]`
+- Disabled: `disabled:bg-neutral-50 disabled:text-neutral-500 disabled:cursor-not-allowed`
+- Error: `border-red-300 focus:border-red-500 focus:ring-red-500/20`
+
+### Padding Variants
+
+Systematic spacing for inputs with icons, prefixes, or controls:
+
+```tsx
+inputPadding = {
+  base: 'px-3 py-2',           // Standard: 12px horizontal, 8px vertical
+  leftIcon: 'pl-7 pr-3 py-2',  // Left icon/prefix: $, €
+  rightIcon: 'pl-3 pr-7 py-2', // Right icon/suffix
+  rightControls: 'pl-3 pr-9 py-2', // Right controls: +/− buttons
+  bothSides: 'pl-7 pr-9 py-2', // Both: prefix + controls
+}
+```
+
+### Icon Positioning
+
+Consistent placement for currency symbols, percentage signs, etc.:
+
+```tsx
+iconPosition = {
+  left: 'absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 text-sm pointer-events-none',
+  right: 'absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 text-sm pointer-events-none',
+  rightWithControls: 'absolute right-11 top-1/2 -translate-y-1/2 text-neutral-500 text-sm pointer-events-none',
+}
+```
+
+### Shared Components
+
+**IncrementDecrementControls**
+- Used by: NumberInput, PercentageInput
+- Location: `src/components/form/IncrementDecrementControls.tsx`
+- Eliminates code duplication for +/− buttons
+
+### Key Design Decisions
+
+**1. Tailwind v4 Standards**
+- Focus ring: `ring-2` (4px, not `ring-4`)
+- Duration: `duration-[150ms]` (references `--duration-fast`)
+- Specific transitions: `transition-[border-color,box-shadow]` (not `transition-all`)
+
+**2. Performance Optimizations**
+- Avoid `transition-all` (animates all properties including layout)
+- Use specific property transitions for better performance
+- Reference design system duration tokens
+
+**3. State Variants**
+- Disabled: Muted colors, cursor change
+- Error: Red borders and focus rings
+- Read-only: Different background (future enhancement)
+- Invalid/Valid: HTML5 validation support (future enhancement)
+
+### Usage Examples
+
+**Basic Text Input:**
+```tsx
+import { TextInput } from '@/components/form/TextInput';
+
+<TextInput
+  value={formData.firstName}
+  onChange={(e) => handleChange('firstName', e.target.value)}
+  placeholder="First name"
+  required
+  error={!!errors.firstName}
+/>
+```
+
+**Currency Input (with prefix):**
+```tsx
+import { CurrencyInput } from '@/components/form/CurrencyInput';
+
+<CurrencyInput
+  value={formData.amount}
+  onChange={(e) => handleChange('amount', e.target.value)}
+  placeholder="Amount"
+  required
+/>
+```
+
+**Number Input (with controls):**
+```tsx
+import { NumberInput } from '@/components/form/NumberInput';
+
+<NumberInput
+  value={formData.term}
+  onChange={(e) => handleChange('term', e.target.value)}
+  min="1"
+  max="365"
+  step="1"
+  placeholder="Term (Days)"
+  showControls={true}
+/>
+```
+
+### Extending the System
+
+To create a new input variant:
+
+1. **Import base styles:**
+```tsx
+import { getBaseInputClasses, inputPadding, iconPosition } from './inputStyles';
+```
+
+2. **Apply base classes:**
+```tsx
+className={classNames(
+  getBaseInputClasses(error, fullWidth),
+  inputPadding.base, // or appropriate variant
+  className
+)}
+```
+
+3. **Add custom behavior:**
+```tsx
+// Component-specific logic (formatting, validation, etc.)
 ```
 
 ---

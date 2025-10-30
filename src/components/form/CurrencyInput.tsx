@@ -1,11 +1,14 @@
 import React, { forwardRef, useState, useCallback } from 'react';
 import { classNames } from '@/lib/classNames';
+import { getBaseInputClasses, inputPadding, iconPosition } from './inputStyles';
 
 interface CurrencyInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'value' | 'onChange'> {
   error?: boolean;
   fullWidth?: boolean;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  min?: string | number;
+  max?: string | number;
 }
 
 // Format a number string with thousand separators
@@ -26,7 +29,7 @@ const unformatCurrency = (value: string): string => {
 };
 
 export const CurrencyInput = forwardRef<HTMLInputElement, CurrencyInputProps>(
-  ({ error = false, fullWidth = true, className, value = '', onChange, onFocus, onBlur, ...props }, ref) => {
+  ({ error = false, fullWidth = true, className, value = '', onChange, onFocus, onBlur, min, max, ...props }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const [displayValue, setDisplayValue] = useState(formatCurrency(value));
 
@@ -38,12 +41,49 @@ export const CurrencyInput = forwardRef<HTMLInputElement, CurrencyInputProps>(
 
     const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(false);
+
+      // Clamp value to min/max range
+      const unformattedValue = unformatCurrency(e.target.value);
+      const numericValue = parseFloat(unformattedValue);
+
+      if (!isNaN(numericValue)) {
+        let clampedValue = numericValue;
+
+        if (min !== undefined && numericValue < Number(min)) {
+          clampedValue = Number(min);
+        }
+        if (max !== undefined && numericValue > Number(max)) {
+          clampedValue = Number(max);
+        }
+
+        // If value was clamped, update state and call onChange
+        if (clampedValue !== numericValue) {
+          const clampedString = clampedValue.toString();
+          setDisplayValue(formatCurrency(clampedString));
+
+          // Notify parent of clamped value
+          const syntheticEvent = {
+            ...e,
+            target: {
+              ...e.target,
+              value: clampedString
+            }
+          } as React.ChangeEvent<HTMLInputElement>;
+
+          onChange?.(syntheticEvent);
+          onBlur?.(e);
+          return;
+        }
+      }
+
       setDisplayValue(formatCurrency(e.target.value));
       onBlur?.(e);
-    }, [onBlur]);
+    }, [onBlur, min, max, onChange]);
 
     const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
       const rawValue = e.target.value;
+      const unformattedValue = unformatCurrency(rawValue);
+
       setDisplayValue(rawValue);
 
       // Pass the unformatted value to parent
@@ -51,7 +91,7 @@ export const CurrencyInput = forwardRef<HTMLInputElement, CurrencyInputProps>(
         ...e,
         target: {
           ...e.target,
-          value: unformatCurrency(rawValue)
+          value: unformattedValue
         }
       } as React.ChangeEvent<HTMLInputElement>;
 
@@ -67,7 +107,7 @@ export const CurrencyInput = forwardRef<HTMLInputElement, CurrencyInputProps>(
 
     return (
       <div className={classNames('relative', fullWidth ? 'w-full' : '')}>
-        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500 text-sm pointer-events-none">
+        <span className={iconPosition.left}>
           $
         </span>
         <input
@@ -78,12 +118,8 @@ export const CurrencyInput = forwardRef<HTMLInputElement, CurrencyInputProps>(
           onFocus={handleFocus}
           onBlur={handleBlur}
           className={classNames(
-            'pl-8 pr-3.5 py-2.5 rounded-lg border bg-white text-neutral-800',
-            'text-sm placeholder:text-neutral-500',
-            'transition-all duration-200',
-            'focus:outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-50',
-            error ? 'border-red-300 focus:border-red-400 focus:ring-red-50' : 'border-neutral-400',
-            fullWidth ? 'w-full' : '',
+            getBaseInputClasses(error, fullWidth),
+            inputPadding.leftIcon,
             className
           )}
           {...props}

@@ -2,7 +2,8 @@ import React, { createContext, useContext, useState, useCallback, ReactNode } fr
 
 // Deal data interface matching the form structure
 export interface DealData {
-  businessName: string;
+  firstName: string;
+  lastName: string;
   state: string;
   industry: string;
   naicsCode: string;
@@ -16,24 +17,29 @@ export interface DealData {
   paymentFrequency: string;
   advanceType: string;
   isoCommission: string;
+  moic: string;
+  factorRate: string;
 }
 
 // Default/empty deal data for new deals
 export const defaultDealData: DealData = {
-  businessName: '',
-  state: 'CO',
+  firstName: '',
+  lastName: '',
+  state: '',
   industry: '',
   naicsCode: '',
   timeInBusiness: '',
   fico: '',
   monthlyRevenue: '',
   monthlyExpenses: '',
-  position: '1st',
+  position: '',
   grossFundedAmount: '',
   term: '',
-  paymentFrequency: 'Daily',
-  advanceType: 'New',
-  isoCommission: ''
+  paymentFrequency: '',
+  advanceType: '',
+  isoCommission: '',
+  moic: '',
+  factorRate: ''
 };
 
 // Context interface
@@ -82,8 +88,22 @@ export const DealProvider: React.FC<DealProviderProps> = ({ children }) => {
     return true;
   }, [currentDeal]);
 
-  // Derive deal name from business name or show default
-  const dealName = currentDeal.businessName || 'New Deal';
+  // Derive deal name from owner name or generate generic name
+  const dealName = React.useMemo(() => {
+    if (currentDeal.firstName && currentDeal.lastName) {
+      return `${currentDeal.firstName} ${currentDeal.lastName}`;
+    }
+    if (currentDeal.firstName || currentDeal.lastName) {
+      return currentDeal.firstName || currentDeal.lastName;
+    }
+
+    // Generate generic deal name: "Deal #472-10-27"
+    const dealNumber = Math.floor(Math.random() * 900) + 100; // 100-999
+    const now = new Date();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `Deal #${dealNumber}-${month}-${day}`;
+  }, [currentDeal.firstName, currentDeal.lastName]);
 
   const contextValue: DealContextType = {
     currentDeal,

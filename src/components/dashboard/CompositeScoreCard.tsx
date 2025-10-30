@@ -52,7 +52,7 @@ export const CompositeScoreCard: React.FC<CompositeScoreCardProps> = ({
   const colors = gradeColors[grade];
 
   return (
-    <div className={`relative bg-gradient-to-r ${colors.gradient} rounded-lg overflow-clip flex flex-col justify-center items-start w-full max-w-[1000px] ${className}`}>
+    <div className={`relative bg-gradient-to-r ${colors.gradient} rounded shadow-md overflow-clip flex flex-col justify-center items-start w-full max-w-[1000px] ${className}`}>
       {/* Subtle texture artifacts */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-tl from-white/3 via-transparent to-transparent pointer-events-none" />

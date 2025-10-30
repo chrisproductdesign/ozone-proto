@@ -1,16 +1,11 @@
 import { type ReactNode } from 'react';
 import { type NavigationProps } from '../App';
 
-import { Typography } from './Typography';
-import { Colors } from './Colors';
-import { Forms } from './Forms';
-import { Layout } from './Layout';
-import { Data } from './Data';
-import { Feedback } from './Feedback';
-import { Navigation } from './Navigation';
 import { Login } from './Login';
-import { DashboardV2 } from './DashboardV2';
+import { DealSelect } from './DealSelect';
 import { DealInput } from './DealInput';
+import { DashboardV2 } from './DashboardV2';
+import { Foundation } from './Foundation';
 
 export type PlaygroundPage = {
   id: string;
@@ -25,6 +20,11 @@ export const playgroundPages: PlaygroundPage[] = [
     render: (navProps) => <Login navigateTo={navProps.navigateTo} currentPage={navProps.currentPage} />,
   },
   {
+    id: 'deal-select',
+    title: 'Deal Select',
+    render: (navProps) => <DealSelect navigateTo={navProps.navigateTo} currentPage={navProps.currentPage} />,
+  },
+  {
     id: 'dealinput',
     title: 'Deal Input',
     render: (navProps) => <DealInput navigateTo={navProps.navigateTo} currentPage={navProps.currentPage} />,
@@ -32,11 +32,11 @@ export const playgroundPages: PlaygroundPage[] = [
   {
     id: 'dashboard-v2',
     title: 'Dashboard',
-    render: () => <DashboardV2 />,
+    render: (navProps) => <DashboardV2 navigateTo={navProps.navigateTo} currentPage={navProps.currentPage} />,
   },
   {
-    id: 'component',
-    title: 'Component',
-    render: () => <Forms />,
+    id: 'foundation',
+    title: 'Foundation',
+    render: () => <Foundation />,
   },
 ];
