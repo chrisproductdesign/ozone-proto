@@ -75,7 +75,7 @@ export const StatusCard: React.FC<StatusCardProps> = ({
 
   return (
     <div
-      className={classNames('relative overflow-hidden rounded px-6 pt-8 pb-3 shadow-md', className)}
+      className={classNames('relative overflow-hidden rounded px-6 pt-8 pb-3', className)}
       style={{
         background: colors.bgGradient,
       }}

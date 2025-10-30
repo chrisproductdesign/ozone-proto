@@ -5,6 +5,7 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
 } from 'recharts';
 
@@ -52,9 +53,9 @@ export const DealRangeChart: React.FC<DealRangeChartProps> = ({ scenario = 'best
   const data = generateScenarioData(scenario);
 
   return (
-    <div>
+    <div className="w-full h-full">
       {/* Chart */}
-      <ResponsiveContainer width="100%" height={220}>
+      <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           data={data}
           margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
@@ -93,6 +94,27 @@ export const DealRangeChart: React.FC<DealRangeChartProps> = ({ scenario = 'best
             ticks={[0, 40, 80, 120, 160]}
             tickMargin={8}
             width={35}
+          />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+              padding: '10px 14px',
+            }}
+            labelStyle={{
+              color: '#594C56',
+              fontWeight: 600,
+              fontSize: 13,
+              marginBottom: 6,
+            }}
+            itemStyle={{
+              fontSize: 12,
+              color: '#89768a',
+            }}
+            formatter={(value: number) => [`${value}`, 'Predicted Value']}
+            labelFormatter={(label: number) => `Day ${label + 1}`}
           />
           {/* Confidence band (upper bound) */}
           <Area

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Home, ArrowLeft, Save, Share2, Download, RefreshCw, DollarSign, Clock, BadgeCheck } from 'lucide-react';
+import { Home, ArrowLeft, Save, Share2, Download, RefreshCw, DollarSign, Clock, BadgeCheck, Lightbulb, TrendingUp, Target, ShieldCheck, ExternalLink, ChevronDown } from 'lucide-react';
 import { MetricCard } from '@/components/dashboard/MetricCard';
 import { StatusCard } from '@/components/dashboard/StatusCard';
 import { CompositeScoreCard } from '@/components/dashboard/CompositeScoreCard';
@@ -9,11 +9,10 @@ import {
   DealRangeChart,
   PaymentCurveChart,
   ScatterPlotChart,
-  LossExposureChart,
   PortfolioRiskCard,
   type XAxisMetric,
 } from '@/components/charts';
-import { InsightIconBadge, InsightPanel, getHighestPriorityType, type Insight } from '@/components/insights';
+import { InsightPanel, type Insight } from '@/components/insights';
 import { useDeal } from '@/contexts/DealContext';
 import { type NavigationProps } from '@playground/App';
 
@@ -43,16 +42,24 @@ export function DashboardV2({ navigateTo }: DashboardV2Props) {
   // Scenario state for Deal Performance charts
   const [performanceScenario, setPerformanceScenario] = useState<'best' | 'conservative' | 'moderate'>('best');
 
+  // Chart type state for Deal Performance section
+  const [selectedChart, setSelectedChart] = useState<'dealRange' | 'paymentTimeline'>('dealRange');
+  const [isChartDropdownOpen, setIsChartDropdownOpen] = useState(false);
+
   // X-axis metric state for marketplace benchmarking
   const [xAxisMetric, setXAxisMetric] = useState<XAxisMetric>('fundingAmount');
+
+  // Scorecard control values state
+  const [controlValues, setControlValues] = useState(['10', '0', '2%', '500']);
 
   // Insight panel open/close state
   const [marketplaceInsightsOpen, setMarketplaceInsightsOpen] = useState(false);
   const [funderInsightsOpen, setFunderInsightsOpen] = useState(false);
 
-  // Refs for insight icon positioning
+  // Refs for insight icon positioning and dropdown
   const marketplaceIconRef = useRef<HTMLButtonElement>(null);
   const funderIconRef = useRef<HTMLButtonElement>(null);
+  const chartDropdownRef = useRef<HTMLDivElement>(null);
 
   // Insights state for both charts with tab-contextual mock data
   const [marketplaceInsights, setMarketplaceInsights] = useState<Insight[]>([
@@ -167,6 +174,27 @@ export function DashboardV2({ navigateTo }: DashboardV2Props) {
     }
   }, [grossFunding, term, moic, factorRate, currentDeal, updateDeal]);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isChartDropdownOpen &&
+        chartDropdownRef.current &&
+        !chartDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsChartDropdownOpen(false);
+      }
+    };
+
+    if (isChartDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isChartDropdownOpen]);
+
   return (
     <div className="min-h-screen bg-neutral-400 flex">
       {/* Left Sidebar */}
@@ -234,7 +262,6 @@ export function DashboardV2({ navigateTo }: DashboardV2Props) {
 
             {/* 1. Status Hero Section */}
             <section className="mb-3">
-              <p className="text-xs text-neutral-800 mb-3">AI Predicted deal snapshot</p>
               <StatusCard
                 status="stable"
                 title="Stable pay"
@@ -244,7 +271,7 @@ export function DashboardV2({ navigateTo }: DashboardV2Props) {
             </section>
 
             {/* 2. Deal Metrics Grid (2x2) */}
-            <section className="mb-12">
+            <section className="mb-9">
               <div className="rounded overflow-hidden bg-neutral-400 shadow-md">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-[2px]">
                   {/* Gross Funding Amount */}
@@ -317,239 +344,346 @@ export function DashboardV2({ navigateTo }: DashboardV2Props) {
 
             {/* 2.5. Deal Performance Charts - Deal Range & Payment Curve */}
             <section className="mb-12">
-              {/* Header with label and shared scenario tabs */}
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-xs text-neutral-800">Deal performance</p>
+              {/* Outer container with semi-transparent white background */}
+              <div className="bg-white/40 rounded-lg p-6 flex flex-col gap-4">
+                {/* Header row: Performance title + segmented control */}
+                <div className="flex items-center justify-between w-full">
+                  {/* Left: Performance title */}
+                  <div className="flex gap-1 items-center">
+                    <div className="rounded-lg p-2">
+                      <TrendingUp className="w-6 h-6 text-black/70" />
+                    </div>
+                    <p className="text-[20px] font-medium leading-[2] text-black/70">
+                      Performance
+                    </p>
+                  </div>
 
-                {/* Shared scenario tabs for both charts */}
-                <div className="flex items-center gap-6">
-                  <button
-                    onClick={() => setPerformanceScenario('best')}
-                    className={`text-sm font-medium transition-colors pb-1 ${
-                      performanceScenario === 'best'
-                        ? 'text-blue-600 border-b-2 border-blue-600'
-                        : 'text-neutral-900 hover:text-neutral-700'
-                    }`}
-                  >
-                    Best
-                  </button>
-                  <button
-                    onClick={() => setPerformanceScenario('conservative')}
-                    className={`text-sm font-medium transition-colors pb-1 ${
-                      performanceScenario === 'conservative'
-                        ? 'text-blue-600 border-b-2 border-blue-600'
-                        : 'text-neutral-900 hover:text-neutral-700'
-                    }`}
-                  >
-                    Conservative
-                  </button>
-                  <button
-                    onClick={() => setPerformanceScenario('moderate')}
-                    className={`text-sm font-medium transition-colors pb-1 ${
-                      performanceScenario === 'moderate'
-                        ? 'text-blue-600 border-b-2 border-blue-600'
-                        : 'text-neutral-900 hover:text-neutral-700'
-                    }`}
-                  >
-                    Moderate
-                  </button>
+                  {/* Right: Segmented control */}
+                  <div className="flex items-center h-6 rounded bg-gradient-to-r from-[rgba(0,0,51,0.058824)] to-[rgba(0,0,51,0.058824)] bg-[rgba(255,255,255,0.9)]">
+                    <button
+                      onClick={() => setPerformanceScenario('best')}
+                      className={`h-full px-3 text-xs tracking-[0.04px] leading-4 transition-all rounded ${
+                        performanceScenario === 'best'
+                          ? 'bg-white border border-black/9 font-medium text-black/87'
+                          : 'bg-transparent font-normal text-black/87'
+                      }`}
+                    >
+                      Best
+                    </button>
+                    <button
+                      onClick={() => setPerformanceScenario('conservative')}
+                      className={`h-full px-3 text-xs tracking-[0.04px] leading-4 transition-all rounded ${
+                        performanceScenario === 'conservative'
+                          ? 'bg-white border border-black/9 font-medium text-black/87'
+                          : 'bg-transparent font-normal text-black/87'
+                      }`}
+                    >
+                      Conservative
+                    </button>
+                    <button
+                      onClick={() => setPerformanceScenario('moderate')}
+                      className={`h-full px-3 text-xs tracking-[0.04px] leading-4 transition-all rounded relative ${
+                        performanceScenario === 'moderate'
+                          ? 'bg-white border border-black/9 font-medium text-black/87'
+                          : 'bg-transparent font-normal text-black/87'
+                      }`}
+                    >
+                      Moderate
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Deal Range Chart */}
-                <div className="bg-white rounded-lg p-5 shadow-sm">
-                  <h3 className="text-sm font-medium text-neutral-700 mb-3">Deal Range</h3>
-                  <DealRangeChart scenario={performanceScenario} />
-                </div>
+                {/* Inner chart card */}
+                <div className="bg-[#faf8f5] rounded-lg px-6 py-8 flex flex-col h-[300px]">
+                  {/* Chart type dropdown */}
+                  <div ref={chartDropdownRef} className="relative w-fit mb-12">
+                    <button
+                      onClick={() => setIsChartDropdownOpen(!isChartDropdownOpen)}
+                      className="flex items-center gap-[2px] px-0 py-0 text-sm font-semibold text-[#594c56] uppercase tracking-[0.28px] hover:bg-black/5 rounded transition-colors"
+                    >
+                      {selectedChart === 'dealRange' ? 'DEAL RANGE' : 'PAYMENT TIMELINE'}
+                      <ChevronDown className="w-6 h-6" />
+                    </button>
 
-                {/* Payment Curve Chart */}
-                <div className="bg-white rounded-lg p-5 shadow-sm">
-                  <h3 className="text-sm font-medium text-neutral-700 mb-3">Payment</h3>
-                  <PaymentCurveChart scenario={performanceScenario} />
+                    {/* Dropdown menu */}
+                    {isChartDropdownOpen && (
+                      <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-lg border border-black/10 py-1 z-50 min-w-[180px]">
+                        <button
+                          onClick={() => {
+                            setSelectedChart('dealRange');
+                            setIsChartDropdownOpen(false);
+                          }}
+                          className={`w-full text-left px-4 py-2 text-sm hover:bg-black/5 transition-colors ${
+                            selectedChart === 'dealRange' ? 'bg-black/5 font-medium' : ''
+                          }`}
+                        >
+                          Deal Range
+                        </button>
+                        <button
+                          onClick={() => {
+                            setSelectedChart('paymentTimeline');
+                            setIsChartDropdownOpen(false);
+                          }}
+                          className={`w-full text-left px-4 py-2 text-sm hover:bg-black/5 transition-colors ${
+                            selectedChart === 'paymentTimeline' ? 'bg-black/5 font-medium' : ''
+                          }`}
+                        >
+                          Payment Timeline
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Chart container */}
+                  <div className="flex-1 min-h-0">
+                    {selectedChart === 'dealRange' ? (
+                      <DealRangeChart scenario={performanceScenario} />
+                    ) : (
+                      <PaymentCurveChart scenario={performanceScenario} />
+                    )}
+                  </div>
                 </div>
               </div>
             </section>
 
             {/* 3. Composite Score Card */}
             <section className="mb-12">
-              <p className="text-xs text-neutral-800 mb-3">Custom scorecard</p>
               <CompositeScoreCard
                 grade="A"
                 description="Strong revenue predictability"
+                controls={[
+                  {
+                    label: 'TIB',
+                    value: controlValues[0],
+                    progress: 89,
+                    color: '#12a176',
+                    onChange: (val) => setControlValues(prev => [val, prev[1], prev[2], prev[3]])
+                  },
+                  {
+                    label: 'Seasonality',
+                    value: controlValues[1],
+                    progress: 66,
+                    color: '#59a112',
+                    onChange: (val) => setControlValues(prev => [prev[0], val, prev[2], prev[3]])
+                  },
+                  {
+                    label: 'Macro unemployment rate',
+                    value: controlValues[2],
+                    progress: 39,
+                    color: '#ce8e17',
+                    onChange: (val) => setControlValues(prev => [prev[0], prev[1], val, prev[3]])
+                  },
+                  {
+                    label: 'Credit score',
+                    value: controlValues[3],
+                    progress: 22,
+                    color: '#c33822',
+                    onChange: (val) => setControlValues(prev => [prev[0], prev[1], prev[2], val])
+                  },
+                ]}
                 onSettingsClick={() => console.log('Settings clicked')}
+                onAddClick={() => console.log('Add clicked')}
               />
             </section>
 
             {/* 4. Deal Benchmarking - 2 Graphs (stacked vertically) */}
             <section className="mb-12">
-              {/* Header with label and x-axis toggle */}
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-xs text-neutral-800">Deal benchmarking</p>
+              {/* Outer container with semi-transparent white background */}
+              <div className="bg-white/40 rounded-lg p-6 flex flex-col gap-3">
+                {/* Header row: Benchmarking title + segmented control */}
+                <div className="flex items-center justify-between w-full">
+                  {/* Left: Benchmarking title */}
+                  <div className="flex gap-1 items-center">
+                    <div className="rounded-lg p-2">
+                      <Target className="w-6 h-6 text-black/70" />
+                    </div>
+                    <p className="text-[20px] font-medium leading-[2] text-black/70">
+                      Benchmarking
+                    </p>
+                  </div>
 
-                {/* X-axis metric toggle */}
-                <div className="flex items-center gap-5">
-                  <button
-                    onClick={() => setXAxisMetric('fundingAmount')}
-                    className={`text-xs font-medium transition-colors pb-1 px-3 rounded-t ${
-                      xAxisMetric === 'fundingAmount'
-                        ? 'text-purple-700 border-b-2 border-purple-700'
-                        : 'text-neutral-900 hover:text-neutral-700 hover:bg-purple-700/15'
-                    }`}
-                  >
-                    Funding Amount
-                  </button>
-                  <button
-                    onClick={() => setXAxisMetric('tib')}
-                    className={`text-xs font-medium transition-colors pb-1 px-3 rounded-t ${
-                      xAxisMetric === 'tib'
-                        ? 'text-purple-700 border-b-2 border-purple-700'
-                        : 'text-neutral-900 hover:text-neutral-700 hover:bg-purple-700/15'
-                    }`}
-                  >
-                    TIB
-                  </button>
-                  <button
-                    onClick={() => setXAxisMetric('industry')}
-                    className={`text-xs font-medium transition-colors pb-1 px-3 rounded-t ${
-                      xAxisMetric === 'industry'
-                        ? 'text-purple-700 border-b-2 border-purple-700'
-                        : 'text-neutral-900 hover:text-neutral-700 hover:bg-purple-700/15'
-                    }`}
-                  >
-                    Industry
-                  </button>
-                  <button
-                    onClick={() => setXAxisMetric('region')}
-                    className={`text-xs font-medium transition-colors pb-1 px-3 rounded-t ${
-                      xAxisMetric === 'region'
-                        ? 'text-purple-700 border-b-2 border-purple-700'
-                        : 'text-neutral-900 hover:text-neutral-700 hover:bg-purple-700/15'
-                    }`}
-                  >
-                    Region
-                  </button>
+                  {/* Right: X-axis metric segmented control */}
+                  <div className="flex items-center h-6 rounded bg-gradient-to-r from-[rgba(0,0,51,0.058824)] to-[rgba(0,0,51,0.058824)] bg-[rgba(255,255,255,0.9)]">
+                    <button
+                      onClick={() => setXAxisMetric('fundingAmount')}
+                      className={`h-full px-3 text-xs tracking-[0.04px] leading-4 transition-all rounded ${
+                        xAxisMetric === 'fundingAmount'
+                          ? 'bg-white border border-black/9 font-medium text-black/87'
+                          : 'bg-transparent font-normal text-black/87'
+                      }`}
+                    >
+                      Funding
+                    </button>
+                    <button
+                      onClick={() => setXAxisMetric('tib')}
+                      className={`h-full px-3 text-xs tracking-[0.04px] leading-4 transition-all rounded ${
+                        xAxisMetric === 'tib'
+                          ? 'bg-white border border-black/9 font-medium text-black/87'
+                          : 'bg-transparent font-normal text-black/87'
+                      }`}
+                    >
+                      TIB
+                    </button>
+                    <button
+                      onClick={() => setXAxisMetric('industry')}
+                      className={`h-full px-3 text-xs tracking-[0.04px] leading-4 transition-all rounded ${
+                        xAxisMetric === 'industry'
+                          ? 'bg-white border border-black/9 font-medium text-black/87'
+                          : 'bg-transparent font-normal text-black/87'
+                      }`}
+                    >
+                      Industry
+                    </button>
+                    <button
+                      onClick={() => setXAxisMetric('region')}
+                      className={`h-full px-3 text-xs tracking-[0.04px] leading-4 transition-all rounded ${
+                        xAxisMetric === 'region'
+                          ? 'bg-white border border-black/9 font-medium text-black/87'
+                          : 'bg-transparent font-normal text-black/87'
+                      }`}
+                    >
+                      Region
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                {/* Marketplace Graph */}
-                <div className="bg-neutral-300 rounded shadow-md p-6 border border-black/10 relative">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <div className="text-xs text-neutral-800">MARKETPLACE</div>
+                {/* Marketplace Chart Card */}
+                <div className="bg-[#faf8f5] rounded-lg px-6 py-8 flex flex-col h-[395px] shadow-md relative">
+                  <div className="flex items-start justify-between mb-3 relative">
+                    <p className="text-sm font-semibold text-[#594c56] tracking-[0.28px] uppercase">
+                      marketplace
+                    </p>
 
-                      {/* Insight Icon Badge */}
-                      {activeMarketplaceInsights.length > 0 && (
-                        <InsightIconBadge
-                          ref={marketplaceIconRef}
-                          count={activeMarketplaceInsights.length}
-                          highestPriority={getHighestPriorityType(activeMarketplaceInsights)}
-                          isOpen={marketplaceInsightsOpen}
+                    <div className="relative">
+                      {/* Insight Panel */}
+                      <InsightPanel
+                        insights={activeMarketplaceInsights}
+                        isOpen={marketplaceInsightsOpen}
+                        onClose={() => setMarketplaceInsightsOpen(false)}
+                        anchorRef={marketplaceIconRef}
+                      />
+
+                      {/* Icon button with red notification badge */}
+                      <div ref={marketplaceIconRef} className="relative">
+                        <ButtonBaseUIWrapper
+                          variant="ghost"
+                          size="icon-lg"
+                          aria-label="Marketplace insights"
                           onClick={() => setMarketplaceInsightsOpen(!marketplaceInsightsOpen)}
-                        />
-                      )}
+                        >
+                          <Lightbulb className="w-6 h-6" />
+                        </ButtonBaseUIWrapper>
+                        {/* Red notification badge */}
+                        {activeMarketplaceInsights.length > 0 && (
+                          <div className="absolute top-[5px] left-[24px] w-2 h-2 bg-[#ff0303] rounded-full" />
+                        )}
+                      </div>
                     </div>
-
-                    <ButtonBaseUIWrapper
-                      variant="ghost"
-                      size="icon"
-                      aria-label="Recalculate marketplace"
-                    >
-                      <RefreshCw className="w-4 h-4" />
-                    </ButtonBaseUIWrapper>
                   </div>
 
-                  {/* Insight Panel */}
-                  <InsightPanel
-                    insights={activeMarketplaceInsights}
-                    isOpen={marketplaceInsightsOpen}
-                    onClose={() => setMarketplaceInsightsOpen(false)}
-                    anchorRef={marketplaceIconRef}
-                  />
-
-                  <ScatterPlotChart
-                    variant="marketplace"
-                    xAxisMetric={xAxisMetric}
-                    currentDealData={{
-                      fundingAmount: grossFunding,
-                      moic: moic,
-                    }}
-                  />
+                  {/* Chart container */}
+                  <div className="flex-1 min-h-0">
+                    <ScatterPlotChart
+                      variant="marketplace"
+                      xAxisMetric={xAxisMetric}
+                      currentDealData={{
+                        fundingAmount: grossFunding,
+                        moic: moic,
+                      }}
+                    />
+                  </div>
                 </div>
 
-                {/* Funder Portfolio Graph */}
-                <div className="bg-neutral-300 rounded shadow-md p-6 border border-black/10 mt-3 relative">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <div className="text-xs text-neutral-800">FUNDER PORTFOLIO</div>
+                {/* Your Portfolio Chart Card */}
+                <div className="bg-[#faf8f5] rounded-lg px-6 py-8 flex flex-col h-[395px] shadow-md relative">
+                  <div className="flex items-start justify-between mb-3 relative">
+                    <p className="text-sm font-semibold text-[#594c56] tracking-[0.28px] uppercase">
+                      your portfolio
+                    </p>
 
-                      {/* Insight Icon Badge */}
-                      {activeFunderInsights.length > 0 && (
-                        <InsightIconBadge
-                          ref={funderIconRef}
-                          count={activeFunderInsights.length}
-                          highestPriority={getHighestPriorityType(activeFunderInsights)}
-                          isOpen={funderInsightsOpen}
+                    <div className="relative">
+                      {/* Insight Panel */}
+                      <InsightPanel
+                        insights={activeFunderInsights}
+                        isOpen={funderInsightsOpen}
+                        onClose={() => setFunderInsightsOpen(false)}
+                        anchorRef={funderIconRef}
+                      />
+
+                      {/* Icon button with red notification badge */}
+                      <div ref={funderIconRef} className="relative">
+                        <ButtonBaseUIWrapper
+                          variant="ghost"
+                          size="icon-lg"
+                          aria-label="Portfolio insights"
                           onClick={() => setFunderInsightsOpen(!funderInsightsOpen)}
-                        />
-                      )}
+                        >
+                          <Lightbulb className="w-6 h-6" />
+                        </ButtonBaseUIWrapper>
+                        {/* Red notification badge */}
+                        {activeFunderInsights.length > 0 && (
+                          <div className="absolute top-[5px] left-[24px] w-2 h-2 bg-[#ff0303] rounded-full" />
+                        )}
+                      </div>
                     </div>
-
-                    <ButtonBaseUIWrapper
-                      variant="ghost"
-                      size="icon"
-                      aria-label="Recalculate funder portfolio"
-                    >
-                      <RefreshCw className="w-4 h-4" />
-                    </ButtonBaseUIWrapper>
                   </div>
 
-                  {/* Insight Panel */}
-                  <InsightPanel
-                    insights={activeFunderInsights}
-                    isOpen={funderInsightsOpen}
-                    onClose={() => setFunderInsightsOpen(false)}
-                    anchorRef={funderIconRef}
-                  />
-
-                  <ScatterPlotChart
-                    variant="funder"
-                    xAxisMetric={xAxisMetric}
-                    currentDealData={{
-                      fundingAmount: grossFunding,
-                      moic: moic,
-                    }}
-                  />
+                  {/* Chart container */}
+                  <div className="flex-1 min-h-0">
+                    <ScatterPlotChart
+                      variant="funder"
+                      xAxisMetric={xAxisMetric}
+                      currentDealData={{
+                        fundingAmount: grossFunding,
+                        moic: moic,
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </section>
 
             {/* 5. Background Check - 3 Cards */}
             <section className="mb-12">
-              <p className="text-xs text-neutral-800 mb-3">Background check</p>
-              <div className="rounded overflow-hidden bg-neutral-400 shadow-md">
-                <div className="grid grid-cols-2 gap-[2px]">
-                  <BackgroundCheckCard variant="checklist" noBorder noRounded />
-                  <BackgroundCheckCard variant="data-merch" noBorder noRounded />
-                  <BackgroundCheckCard variant="perplexity" noBorder noRounded className="col-span-2" />
+              {/* Outer container with semi-transparent white background */}
+              <div className="bg-white/40 rounded-lg p-6 flex flex-col gap-4">
+                {/* Header row: title + export button */}
+                <div className="flex items-center justify-between w-full">
+                  {/* Left: Background check title with icon */}
+                  <div className="flex gap-1 items-center">
+                    <div className="rounded-lg p-2">
+                      <ShieldCheck className="w-6 h-6 text-black/70" />
+                    </div>
+                    <p className="text-[20px] font-medium leading-[2] text-black/70 tracking-[0.15px]">
+                      Background check
+                    </p>
+                  </div>
+
+                  {/* Right: Export button */}
+                  <ButtonBaseUIWrapper
+                    variant="ghost"
+                    size="icon-lg"
+                    aria-label="Export background check"
+                    className="p-[5px]"
+                  >
+                    <ExternalLink className="w-6 h-6 text-black/70" />
+                  </ButtonBaseUIWrapper>
+                </div>
+
+                {/* Cards container */}
+                <div className="rounded overflow-hidden bg-neutral-400 shadow-md">
+                  <div className="grid grid-cols-2 gap-[2px]">
+                    <BackgroundCheckCard variant="checklist" noBorder noRounded />
+                    <BackgroundCheckCard variant="data-merch" noBorder noRounded />
+                    <BackgroundCheckCard variant="perplexity" noBorder noRounded className="col-span-2" />
+                  </div>
                 </div>
               </div>
             </section>
 
             {/* 6. Portfolio Risk - Unified Card with Toggle */}
             <section className="mb-12">
-              <p className="text-xs text-neutral-800 mb-3">Portfolio risk</p>
               <PortfolioRiskCard />
-            </section>
-
-            {/* 7. Loss Exposure Analysis */}
-            <section className="mb-12">
-              <p className="text-xs text-neutral-800 mb-3">Risk stress scenarios</p>
-              <div className="bg-white rounded-lg p-5 shadow-sm">
-                <h3 className="text-sm font-medium text-neutral-700 mb-3">Loss Exposure Analysis</h3>
-                <LossExposureChart exposureLimit={300} showThresholdLine={true} />
-              </div>
             </section>
 
           </div>

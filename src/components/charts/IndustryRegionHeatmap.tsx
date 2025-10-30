@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 // Industry and region definitions
 const INDUSTRIES = ['Healthcare', 'Technology', 'Retail', 'Manufacturing', 'Finance'];
-const REGIONS = ['West', 'East', 'South', 'Midwest', 'Intl'];
+const REGIONS = ['West', 'East', 'South', 'North', 'Intl'];
 
-// Risk levels and corresponding colors
-type RiskLevel = 'low' | 'medium' | 'high' | 'critical';
+// Risk levels and corresponding colors (blue palette from Figma design)
+type RiskLevel = 'low' | 'medium' | 'high';
 
 const RISK_COLORS: Record<RiskLevel, string> = {
-  low: '#e9d5ff',      // Light purple
-  medium: '#a78bfa',   // Medium purple
-  high: '#fbbf24',     // Amber
-  critical: '#ef4444', // Red
+  low: '#d1e0ff',      // Light blue
+  medium: '#528bff',   // Medium blue
+  high: '#00359e',     // Dark blue
 };
 
 // Generate mock heatmap data
@@ -32,9 +31,8 @@ const generateHeatmapData = () => {
 
       // Determine risk level based on exposure
       let risk: RiskLevel;
-      if (exposure > 600000) risk = 'critical';
-      else if (exposure > 400000) risk = 'high';
-      else if (exposure > 200000) risk = 'medium';
+      if (exposure > 500000) risk = 'high';
+      else if (exposure > 250000) risk = 'medium';
       else risk = 'low';
 
       data.push({
@@ -55,7 +53,7 @@ export const IndustryRegionHeatmap: React.FC = () => {
   const [tooltipData, setTooltipData] = useState<any>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
 
-  const data = generateHeatmapData();
+  const data = useMemo(() => generateHeatmapData(), []);
 
   // Get cell data for a specific industry/region
   const getCellData = (industry: string, region: string) => {
@@ -69,14 +67,23 @@ export const IndustryRegionHeatmap: React.FC = () => {
     event: React.MouseEvent<HTMLDivElement>
   ) => {
     const cellData = getCellData(industry, region);
-    const rect = event.currentTarget.getBoundingClientRect();
 
     setHoveredCell(`${industry}-${region}`);
     setTooltipData(cellData);
     setTooltipPos({
-      x: rect.left + rect.width / 2,
-      y: rect.top - 10,
+      x: event.clientX,
+      y: event.clientY,
     });
+  };
+
+  // Handle mouse move to update tooltip position
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (hoveredCell) {
+      setTooltipPos({
+        x: event.clientX,
+        y: event.clientY,
+      });
+    }
   };
 
   const handleCellLeave = () => {
@@ -118,75 +125,36 @@ export const IndustryRegionHeatmap: React.FC = () => {
                   <div
                     key={cellKey}
                     onMouseEnter={(e) => handleCellHover(industry, region, e)}
+                    onMouseMove={handleMouseMove}
                     onMouseLeave={handleCellLeave}
                     style={{
                       backgroundColor: cellData ? RISK_COLORS[cellData.risk] : '#f5f5f5',
                       transform: isHovered ? 'scale(1.05)' : 'scale(1)',
                       zIndex: isHovered ? 10 : 1,
                     }}
-                    className="relative h-[46px] rounded cursor-pointer transition-all duration-150 flex items-center justify-center border border-white"
-                  >
-                    {/* Optional: Show exposure value in cell */}
-                    {cellData && (
-                      <span className="text-[10px] font-medium text-neutral-700">
-                        {Math.round(cellData.exposure / 1000)}k
-                      </span>
-                    )}
-                  </div>
+                    className="relative h-[48px] rounded cursor-pointer transition-all duration-150 flex items-center justify-center border border-white"
+                  />
                 );
               })}
             </React.Fragment>
           ))}
         </div>
 
-        {/* Tooltip */}
+        {/* Oval Tooltip - follows cursor */}
         {tooltipData && (
           <div
             style={{
               position: 'fixed',
-              left: tooltipPos.x,
-              top: tooltipPos.y,
-              transform: 'translate(-50%, -100%)',
+              left: tooltipPos.x + 12,
+              top: tooltipPos.y + 12,
               zIndex: 1000,
               pointerEvents: 'none',
             }}
+            className="animate-in fade-in duration-100"
           >
-            <div
-              style={{
-                backgroundColor: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                padding: '12px',
-                minWidth: '140px',
-              }}
-            >
-              <p
-                style={{
-                  color: '#594C56',
-                  fontWeight: 600,
-                  fontSize: 12,
-                  marginBottom: 6,
-                }}
-              >
-                {tooltipData.industry} - {tooltipData.region}
-              </p>
-              <p style={{ fontSize: 11, color: '#89768a', margin: '2px 0' }}>
-                Exposure: ${(tooltipData.exposure / 1000).toFixed(0)}k
-              </p>
-              <p style={{ fontSize: 11, color: '#89768a', margin: '2px 0' }}>
-                Deals: {tooltipData.dealCount}
-              </p>
-              <p
-                style={{
-                  fontSize: 11,
-                  fontWeight: 600,
-                  marginTop: 4,
-                  color: RISK_COLORS[tooltipData.risk as RiskLevel],
-                  textTransform: 'capitalize',
-                }}
-              >
-                {tooltipData.risk} Risk
+            <div className="bg-white/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-black/5">
+              <p className="text-xs font-semibold text-neutral-900 whitespace-nowrap">
+                ${(tooltipData.exposure / 1000).toFixed(0)}k
               </p>
             </div>
           </div>

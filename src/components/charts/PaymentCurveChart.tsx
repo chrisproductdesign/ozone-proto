@@ -67,9 +67,9 @@ export const PaymentCurveChart: React.FC<PaymentCurveChartProps> = ({ scenario =
   };
 
   return (
-    <div>
+    <div className="w-full h-full">
       {/* Chart */}
-      <ResponsiveContainer width="100%" height={220}>
+      <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={data}
           margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
@@ -136,32 +136,32 @@ export const PaymentCurveChart: React.FC<PaymentCurveChartProps> = ({ scenario =
           />
           {/* Expected payments line */}
           <Line
-            type="monotone"
+            type="linear"
             dataKey="expected"
             name="Expected"
             stroke="url(#expectedLine)"
-            strokeWidth={2.5}
+            strokeWidth={2}
             dot={false}
             animationDuration={1200}
           />
           {/* Early payoff line */}
           <Line
-            type="monotone"
+            type="linear"
             dataKey="earlyPayoff"
             name="Early Payoff"
             stroke="url(#earlyPayoffLine)"
-            strokeWidth={2.5}
+            strokeWidth={2}
             dot={false}
             animationDuration={1200}
             animationBegin={100}
           />
           {/* Default risk line */}
           <Line
-            type="monotone"
+            type="linear"
             dataKey="defaultRisk"
             name="Default Risk"
             stroke="url(#defaultRiskLine)"
-            strokeWidth={2.5}
+            strokeWidth={2}
             dot={false}
             animationDuration={1200}
             animationBegin={200}

@@ -100,7 +100,7 @@ export const BackgroundCheckCard: React.FC<BackgroundCheckCardProps> = ({
 
   const borderClass = noBorder ? '' : 'border border-black/10';
   const roundedClass = noRounded ? '' : 'rounded';
-  const shadowClass = noBorder ? '' : 'shadow-md';
+  const shadowClass = '';
 
   const handleCopy = async (text: string, label: string) => {
     try {
@@ -138,7 +138,7 @@ export const BackgroundCheckCard: React.FC<BackgroundCheckCardProps> = ({
     return (
       <div
         ref={cardRef}
-        className={`bg-neutral-300 ${roundedClass} ${shadowClass} overflow-hidden transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg ${
+        className={`bg-neutral-300 ${roundedClass} ${shadowClass} overflow-hidden transition-all duration-200 ease-out ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
         } ${className}`}
       >
@@ -203,7 +203,7 @@ export const BackgroundCheckCard: React.FC<BackgroundCheckCardProps> = ({
     return (
       <div
         ref={cardRef}
-        className={`bg-neutral-300 ${roundedClass} ${shadowClass} overflow-hidden transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg ${
+        className={`bg-neutral-300 ${roundedClass} ${shadowClass} overflow-hidden transition-all duration-200 ease-out ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
         } ${className}`}
       >
@@ -222,9 +222,7 @@ export const BackgroundCheckCard: React.FC<BackgroundCheckCardProps> = ({
                   Business Intelligence
                 </p>
               </div>
-              <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded">
-                Verified
-              </span>
+              <Sparkles className="w-4 h-4 text-black/59" />
             </div>
 
             {/* Data sections */}
@@ -309,7 +307,7 @@ export const BackgroundCheckCard: React.FC<BackgroundCheckCardProps> = ({
   return (
     <div
       ref={cardRef}
-      className={`bg-neutral-300 ${borderClass} ${roundedClass} ${shadowClass} overflow-hidden transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg ${
+      className={`bg-neutral-300 ${borderClass} ${roundedClass} ${shadowClass} overflow-hidden transition-all duration-200 ease-out ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
       } ${className}`}
     >
@@ -336,26 +334,18 @@ export const BackgroundCheckCard: React.FC<BackgroundCheckCardProps> = ({
               Perplexity Search
             </h3>
           </div>
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-purple-600" />
-            <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs font-medium rounded">
-              AI Verified
-            </span>
-          </div>
+          <Sparkles className="w-4 h-4 text-black/59" />
         </div>
 
         {/* Results Section */}
         <div className="space-y-3">
-          {/* Result Item 1 - with copyable business name */}
+          {/* Result Item 1 */}
           <div className="p-3 bg-neutral-300/50 rounded-lg border border-black/5">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex items-start gap-2.5 flex-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-600 shrink-0 mt-1.5" />
-                <p className="text-sm font-medium text-neutral-900 leading-normal">
-                  Emberline Bistro operates as a farm-to-table restaurant in Portland's Pearl District.
-                </p>
-              </div>
-              <CopyButton text="Emberline Bistro" label="business-name" />
+            <div className="flex items-start gap-2.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-600 shrink-0 mt-1.5" />
+              <p className="text-sm font-medium text-purple-700 leading-normal cursor-pointer transition-all hover:text-purple-900 hover:underline">
+                Emberline Bistro operates as a farm-to-table restaurant in Portland's Pearl District.
+              </p>
             </div>
           </div>
 
@@ -363,7 +353,7 @@ export const BackgroundCheckCard: React.FC<BackgroundCheckCardProps> = ({
           <div className="p-3 bg-neutral-300/50 rounded-lg border border-black/5">
             <div className="flex items-start gap-2.5">
               <span className="w-1.5 h-1.5 rounded-full bg-purple-600 shrink-0 mt-1.5" />
-              <p className="text-sm font-medium text-neutral-900 leading-normal">
+              <p className="text-sm font-medium text-purple-700 leading-normal cursor-pointer transition-all hover:text-purple-900 hover:underline">
                 Reviews indicate consistent 4.2-star ratings across Google and Yelp with 340+ reviews.
               </p>
             </div>
@@ -373,22 +363,19 @@ export const BackgroundCheckCard: React.FC<BackgroundCheckCardProps> = ({
           <div className="p-3 bg-neutral-300/50 rounded-lg border border-black/5">
             <div className="flex items-start gap-2.5">
               <span className="w-1.5 h-1.5 rounded-full bg-purple-600 shrink-0 mt-1.5" />
-              <p className="text-sm font-medium text-neutral-900 leading-normal">
+              <p className="text-sm font-medium text-purple-700 leading-normal cursor-pointer transition-all hover:text-purple-900 hover:underline">
                 Secretary of State records show Delaware incorporation in March 2019.
               </p>
             </div>
           </div>
 
-          {/* Result Item 4 - with copyable owner name */}
+          {/* Result Item 4 */}
           <div className="p-3 bg-neutral-300/50 rounded-lg border border-black/5">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex items-start gap-2.5 flex-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-600 shrink-0 mt-1.5" />
-                <p className="text-sm font-medium text-neutral-900 leading-normal">
-                  Principal owner Sarah Chen (62% stake) has clean background with no bankruptcy history.
-                </p>
-              </div>
-              <CopyButton text="Sarah Chen" label="owner-name" />
+            <div className="flex items-start gap-2.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-600 shrink-0 mt-1.5" />
+              <p className="text-sm font-medium text-purple-700 leading-normal cursor-pointer transition-all hover:text-purple-900 hover:underline">
+                Principal owner Sarah Chen (62% stake) has clean background with no bankruptcy history.
+              </p>
             </div>
           </div>
         </div>

@@ -16,7 +16,7 @@ export const ConfidenceCard: React.FC<ConfidenceCardProps> = ({
 }) => {
   return (
     <div className={classNames(
-      'rounded-2xl p-5 shadow-sm',
+      'rounded-2xl p-5',
       'flex flex-col justify-between',
       'bg-green-100',
       className

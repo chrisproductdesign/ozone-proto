@@ -68,14 +68,13 @@ export function InsightPanel({ insights, isOpen, onClose, anchorRef }: InsightPa
     <div
       ref={panelRef}
       className={`
-        absolute top-[calc(100%+8px)] right-0 z-50
-        w-80 max-h-[120px]
+        absolute top-0 right-[calc(100%+8px)] z-50
+        w-80
         bg-white/90 backdrop-blur-md
         border border-neutral-200
         rounded-lg shadow-lg
-        overflow-y-auto
-        origin-top-right
-        animate-in fade-in slide-in-from-top-2 duration-150
+        origin-right
+        animate-in fade-in slide-in-from-right-2 duration-150
       `}
       role="dialog"
       aria-label="Insights panel"

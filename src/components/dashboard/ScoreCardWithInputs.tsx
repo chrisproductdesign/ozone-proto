@@ -79,7 +79,7 @@ export const ScoreCardWithInputs: React.FC<ScoreCardWithInputsProps> = ({
 
   return (
     <div className={classNames(
-      'bg-neutral-300 rounded-2xl p-5 shadow-sm',
+      'bg-neutral-300 rounded-2xl p-5',
       'flex flex-col',
       className
     )}>
