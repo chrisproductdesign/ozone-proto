@@ -52,6 +52,7 @@ export function DealCard({
       onClick={onClick}
       className={classNames(
         transitionClass,
+        'group', // Enable group-hover utilities
         // Base styles - Fintech Professional aesthetic
         'relative w-full overflow-hidden',
         'rounded-3xl bg-white',
@@ -86,15 +87,57 @@ export function DealCard({
         }}
       />
 
-      {/* Content - Title only, centered */}
-      <div className="relative flex items-center justify-center px-12 py-20 md:py-24 min-h-[320px] md:min-h-[380px]">
+      {/* Content - Enhanced with description and visual hierarchy */}
+      <div className="relative flex flex-col items-center justify-center px-8 py-16 md:py-20 min-h-[320px] md:min-h-[380px]">
+        {/* Icon/Visual Element */}
+        <div className={classNames(
+          'mb-6 w-16 h-16 rounded-2xl flex items-center justify-center',
+          'border-2 transition-all duration-300',
+          variant === 'new' ? 'border-mauve-700/20 bg-mauve-700/5' : 'border-neutral-800/20 bg-neutral-800/5',
+          'group-hover:scale-110'
+        )}>
+          {variant === 'new' ? (
+            <svg className="w-8 h-8 text-mauve-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+          ) : (
+            <svg className="w-8 h-8 text-neutral-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          )}
+        </div>
+
+        {/* Title */}
         <h2 className={classNames(
           'text-3xl md:text-4xl font-medium tracking-tight',
-          'text-neutral-900',
+          'text-neutral-900 mb-3',
           'transition-colors duration-300',
         )}>
           {config.title}
         </h2>
+
+        {/* Description */}
+        <p className={classNames(
+          'text-base md:text-lg text-neutral-600',
+          'text-center max-w-[280px]',
+          'leading-relaxed'
+        )}>
+          {variant === 'new'
+            ? 'Start a new funding application and get instant quotes'
+            : 'View and manage your active funding deals'}
+        </p>
+
+        {/* Action indicator */}
+        <div className={classNames(
+          'mt-6 flex items-center gap-2',
+          'text-sm font-medium transition-all duration-300',
+          variant === 'new' ? 'text-mauve-700' : 'text-neutral-800',
+        )}>
+          <span>Continue</span>
+          <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
       </div>
     </button>
   );
