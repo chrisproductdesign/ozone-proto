@@ -1,0 +1,51 @@
+
+> ozone-proto@0.7.0 build
+> tsc --noEmit && vite build
+
+playground/pages/DashboardV2.tsx(563,25): error TS2322: Type 'RefObject<HTMLButtonElement | null>' is not assignable to type 'RefObject<HTMLElement>'.
+  Type 'HTMLButtonElement | null' is not assignable to type 'HTMLElement'.
+    Type 'null' is not assignable to type 'HTMLElement'.
+playground/pages/DashboardV2.tsx(567,28): error TS2322: Type 'RefObject<HTMLButtonElement | null>' is not assignable to type 'Ref<HTMLDivElement> | undefined'.
+  Type 'RefObject<HTMLButtonElement | null>' is not assignable to type 'RefObject<HTMLDivElement | null>'.
+    Type 'HTMLButtonElement | null' is not assignable to type 'HTMLDivElement | null'.
+      Property 'align' is missing in type 'HTMLButtonElement' but required in type 'HTMLDivElement'.
+playground/pages/DashboardV2.tsx(610,25): error TS2322: Type 'RefObject<HTMLButtonElement | null>' is not assignable to type 'RefObject<HTMLElement>'.
+  Type 'HTMLButtonElement | null' is not assignable to type 'HTMLElement'.
+    Type 'null' is not assignable to type 'HTMLElement'.
+playground/pages/DashboardV2.tsx(614,28): error TS2322: Type 'RefObject<HTMLButtonElement | null>' is not assignable to type 'Ref<HTMLDivElement> | undefined'.
+  Type 'RefObject<HTMLButtonElement | null>' is not assignable to type 'RefObject<HTMLDivElement | null>'.
+    Type 'HTMLButtonElement | null' is not assignable to type 'HTMLDivElement | null'.
+      Property 'align' is missing in type 'HTMLButtonElement' but required in type 'HTMLDivElement'.
+src/components/charts/ScatterPlotChart.tsx(300,57): error TS2345: Argument of type 'any' is not assignable to parameter of type 'never'.
+src/components/charts/ScatterPlotChart.tsx(357,13): error TS2322: Type '{ type: "number"; dataKey: string; name: string; domain: [number, number] | undefined; tick: { fill: string; fontSize: number; }; tickLine: false; axisLine: false; tickMargin: number; tickFormatter: ((value: number) => string) | ((v: string) => string); animationDuration: number; animationEasing: string; }' is not assignable to type 'IntrinsicAttributes & Omit<PresentationAttributesAdaptChildEvent<any, SVGElement>, "ref" | "scale"> & XAxisProps'.
+  Property 'animationDuration' does not exist on type 'IntrinsicAttributes & Omit<PresentationAttributesAdaptChildEvent<any, SVGElement>, "ref" | "scale"> & XAxisProps'.
+src/components/charts/ScatterPlotChart.tsx(371,13): error TS2322: Type '{ type: "number"; dataKey: string; name: string; domain: [number, number]; tick: { fill: string; fontSize: number; }; tickLine: false; axisLine: false; tickMargin: number; width: number; tickFormatter: (value: any) => any; animationDuration: number; animationEasing: string; }' is not assignable to type 'IntrinsicAttributes & Omit<PresentationAttributesAdaptChildEvent<any, SVGElement>, "ref" | "scale"> & YAxisProps'.
+  Property 'animationDuration' does not exist on type 'IntrinsicAttributes & Omit<PresentationAttributesAdaptChildEvent<any, SVGElement>, "ref" | "scale"> & YAxisProps'.
+src/components/charts/ScatterPlotChart.tsx(398,61): error TS2339: Property 'z' does not exist on type '{ x: number; y: number; z: number; industry: string; tib: number; region: string; fundingAmount: number; moic: number; dealSize: number; isCurrentDeal?: boolean | undefined; } | { category: string; avgMoic: number; count: number; hasCurrentDeal: boolean; }'.
+  Property 'z' does not exist on type '{ category: string; avgMoic: number; count: number; hasCurrentDeal: boolean; }'.
+src/components/charts/ScatterPlotChart.tsx(398,68): error TS2339: Property 'dealSize' does not exist on type '{ x: number; y: number; z: number; industry: string; tib: number; region: string; fundingAmount: number; moic: number; dealSize: number; isCurrentDeal?: boolean | undefined; } | { category: string; avgMoic: number; count: number; hasCurrentDeal: boolean; }'.
+  Property 'dealSize' does not exist on type '{ category: string; avgMoic: number; count: number; hasCurrentDeal: boolean; }'.
+src/components/charts/ScatterPlotChart.tsx(399,61): error TS2339: Property 'z' does not exist on type '{ x: number; y: number; z: number; industry: string; tib: number; region: string; fundingAmount: number; moic: number; dealSize: number; isCurrentDeal?: boolean | undefined; } | { category: string; avgMoic: number; count: number; hasCurrentDeal: boolean; }'.
+  Property 'z' does not exist on type '{ category: string; avgMoic: number; count: number; hasCurrentDeal: boolean; }'.
+src/components/charts/ScatterPlotChart.tsx(399,68): error TS2339: Property 'dealSize' does not exist on type '{ x: number; y: number; z: number; industry: string; tib: number; region: string; fundingAmount: number; moic: number; dealSize: number; isCurrentDeal?: boolean | undefined; } | { category: string; avgMoic: number; count: number; hasCurrentDeal: boolean; }'.
+  Property 'dealSize' does not exist on type '{ category: string; avgMoic: number; count: number; hasCurrentDeal: boolean; }'.
+src/components/charts/ScatterPlotChart.tsx(481,11): error TS2322: Type '{ dataKey: string; tick: { fill: string; fontSize: number; }; tickLine: false; axisLine: false; tickMargin: number; animationDuration: number; animationEasing: string; }' is not assignable to type 'IntrinsicAttributes & Omit<PresentationAttributesAdaptChildEvent<any, SVGElement>, "ref" | "scale"> & XAxisProps'.
+  Property 'animationDuration' does not exist on type 'IntrinsicAttributes & Omit<PresentationAttributesAdaptChildEvent<any, SVGElement>, "ref" | "scale"> & XAxisProps'.
+src/components/charts/ScatterPlotChart.tsx(493,11): error TS2322: Type '{ name: string; domain: [number, number]; tick: { fill: string; fontSize: number; }; tickLine: false; axisLine: false; tickMargin: number; width: number; tickFormatter: (value: any) => any; animationDuration: number; animationEasing: string; }' is not assignable to type 'IntrinsicAttributes & Omit<PresentationAttributesAdaptChildEvent<any, SVGElement>, "ref" | "scale"> & YAxisProps'.
+  Property 'animationDuration' does not exist on type 'IntrinsicAttributes & Omit<PresentationAttributesAdaptChildEvent<any, SVGElement>, "ref" | "scale"> & YAxisProps'.
+src/components/charts/ScatterPlotChart.tsx(511,27): error TS2339: Property 'hasCurrentDeal' does not exist on type '{ x: number; y: number; z: number; industry: string; tib: number; region: string; fundingAmount: number; moic: number; dealSize: number; isCurrentDeal?: boolean | undefined; } | { category: string; avgMoic: number; count: number; hasCurrentDeal: boolean; }'.
+  Property 'hasCurrentDeal' does not exist on type '{ x: number; y: number; z: number; industry: string; tib: number; region: string; fundingAmount: number; moic: number; dealSize: number; isCurrentDeal?: boolean | undefined; }'.
+src/components/charts/ScatterPlotChart.tsx(512,30): error TS2339: Property 'hasCurrentDeal' does not exist on type '{ x: number; y: number; z: number; industry: string; tib: number; region: string; fundingAmount: number; moic: number; dealSize: number; isCurrentDeal?: boolean | undefined; } | { category: string; avgMoic: number; count: number; hasCurrentDeal: boolean; }'.
+  Property 'hasCurrentDeal' does not exist on type '{ x: number; y: number; z: number; industry: string; tib: number; region: string; fundingAmount: number; moic: number; dealSize: number; isCurrentDeal?: boolean | undefined; }'.
+src/components/insights/index.ts(2,48): error TS2307: Cannot find module './InsightList' or its corresponding type declarations.
+src/components/insights/index.ts(9,50): error TS2304: Cannot find name 'Insight'.
+src/components/insights/index.ts(9,62): error TS2304: Cannot find name 'InsightType'.
+src/components/insights/index.ts(13,31): error TS2304: Cannot find name 'InsightType'.
+src/components/insights/index.ts(20,20): error TS2304: Cannot find name 'InsightType'.
+src/components/insights/InsightIconBadge.tsx(3,34): error TS2307: Cannot find module './InsightList' or its corresponding type declarations.
+src/components/insights/InsightPanel.tsx(4,30): error TS2307: Cannot find module './InsightList' or its corresponding type declarations.
+src/components/insights/InsightPanel.tsx(36,19): error TS2345: Argument of type 'RefObject<HTMLDivElement | null>' is not assignable to parameter of type 'RefObject<HTMLElement>'.
+  Type 'HTMLDivElement | null' is not assignable to type 'HTMLElement'.
+    Type 'null' is not assignable to type 'HTMLElement'.
+src/components/insights/InsightPanel.tsx(84,24): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ positive: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>; warning: ForwardRefExoticComponent<...>; negative: ForwardRefExoticComponent<...>; neutral: ForwardRefExoticComponent<...>; }'.
+src/components/insights/InsightPanel.tsx(85,29): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ positive: string; warning: string; negative: string; neutral: string; }'.

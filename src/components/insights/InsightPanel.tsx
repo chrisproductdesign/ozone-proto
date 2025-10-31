@@ -7,7 +7,7 @@ export interface InsightPanelProps {
   insights: Insight[];
   isOpen: boolean;
   onClose: () => void;
-  anchorRef: React.RefObject<HTMLElement>;
+  anchorRef: React.RefObject<HTMLElement | null>;
 }
 
 /**
@@ -33,7 +33,7 @@ export function InsightPanel({ insights, isOpen, onClose, anchorRef }: InsightPa
   const panelRef = useRef<HTMLDivElement>(null);
 
   // Close panel when clicking outside
-  useClickOutside(panelRef, onClose, isOpen);
+  useClickOutside(panelRef as React.RefObject<HTMLElement>, onClose, isOpen);
 
   // Close panel on ESC key
   useEffect(() => {

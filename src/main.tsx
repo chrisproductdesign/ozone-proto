@@ -8,7 +8,7 @@ import './index.css';
 createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <DealProvider>
-      <DashboardV2 navigateTo={() => {}} />
+      <DashboardV2 navigateTo={() => {}} currentPage="dashboard" />
     </DealProvider>
   </React.StrictMode>,
 );

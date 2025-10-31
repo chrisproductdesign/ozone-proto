@@ -1,5 +1,6 @@
 // Export types from InsightList (keep interface definitions)
 export { type Insight, type InsightType } from './InsightList';
+import type { Insight, InsightType } from './InsightList';
 
 // Export new components
 export { InsightIconBadge, type InsightIconBadgeProps } from './InsightIconBadge';

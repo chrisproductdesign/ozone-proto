@@ -57,8 +57,8 @@ export function DashboardV2({ navigateTo }: DashboardV2Props) {
   const [funderInsightsOpen, setFunderInsightsOpen] = useState(false);
 
   // Refs for insight icon positioning and dropdown
-  const marketplaceIconRef = useRef<HTMLButtonElement>(null);
-  const funderIconRef = useRef<HTMLButtonElement>(null);
+  const marketplaceIconRef = useRef<HTMLDivElement>(null);
+  const funderIconRef = useRef<HTMLDivElement>(null);
   const chartDropdownRef = useRef<HTMLDivElement>(null);
 
   // Insights state for both charts with tab-contextual mock data

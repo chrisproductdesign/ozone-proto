@@ -297,7 +297,7 @@ export const ScatterPlotChart: React.FC<ScatterPlotChartProps> = ({
             </p>
           )}
           <p style={{ fontSize: 12, color: '#89768a', margin: '2px 0' }}>
-            {xAxisConfig.label}: {xAxisConfig.formatter(point.x)}
+            {xAxisConfig.label}: {(xAxisConfig.formatter as (v: any) => string)(point.x)}
           </p>
           <p style={{ fontSize: 12, color: '#89768a', margin: '2px 0' }}>
             MOIC: {point.y.toFixed(2)}
@@ -353,9 +353,7 @@ export const ScatterPlotChart: React.FC<ScatterPlotChartProps> = ({
             tickLine={false}
             axisLine={false}
             tickMargin={8}
-            tickFormatter={xAxisConfig.formatter}
-            animationDuration={300}
-            animationEasing="ease-out"
+            tickFormatter={xAxisConfig.formatter as any}
           />
           <YAxis
             type="number"
@@ -368,8 +366,6 @@ export const ScatterPlotChart: React.FC<ScatterPlotChartProps> = ({
             tickMargin={8}
             width={40}
             tickFormatter={(value) => value.toFixed(1)}
-            animationDuration={300}
-            animationEasing="ease-out"
           />
           <ZAxis
             type="number"
@@ -395,8 +391,8 @@ export const ScatterPlotChart: React.FC<ScatterPlotChartProps> = ({
               // ZAxis range represents area, need to convert to radius: r = sqrt(area / PI)
               const minArea = 70;
               const maxArea = 200;
-              const minZ = Math.min(...chartData.map(d => d.z || d.dealSize));
-              const maxZ = Math.max(...chartData.map(d => d.z || d.dealSize));
+              const minZ = Math.min(...chartData.map((d: any) => d.z || d.dealSize || 100));
+              const maxZ = Math.max(...chartData.map((d: any) => d.z || d.dealSize || 100));
               const zValue = payload.z || payload.dealSize || 100;
 
               // Linear interpolation of z value to area range
@@ -478,8 +474,6 @@ export const ScatterPlotChart: React.FC<ScatterPlotChartProps> = ({
           tickLine={false}
           axisLine={false}
           tickMargin={8}
-          animationDuration={300}
-          animationEasing="ease-out"
         />
         <YAxis
           name="Avg MOIC"
@@ -490,8 +484,6 @@ export const ScatterPlotChart: React.FC<ScatterPlotChartProps> = ({
           tickMargin={8}
           width={40}
           tickFormatter={(value) => value.toFixed(1)}
-          animationDuration={300}
-          animationEasing="ease-out"
         />
         <Tooltip
           content={<CustomTooltip />}
@@ -505,7 +497,7 @@ export const ScatterPlotChart: React.FC<ScatterPlotChartProps> = ({
           animationDuration={300}
           animationEasing="ease-out"
         >
-          {chartData.map((entry, index) => (
+          {chartData.map((entry: any, index) => (
             <Cell
               key={`cell-${index}`}
               fill={entry.hasCurrentDeal ? '#2563eb' : (variant === 'marketplace' ? '#8b7fd4' : '#14b8a6')}
