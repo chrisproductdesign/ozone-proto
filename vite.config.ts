@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import path from 'node:path';
 
 export default defineConfig({
-  base: '/ozone-proto-v0.7/',
+  base: '/ozone-proto/',
   plugins: [
     tailwindcss(),
     react(),
