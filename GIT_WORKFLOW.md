@@ -5,12 +5,55 @@ Our Git workflow balances rapid iteration with stable progress, optimized for a 
 
 ## 📋 Branch Strategy
 
-### Main Branch
-- **`main`**: Production-ready code, always deployable
-- Direct commits allowed during early prototyping phase
-- All commits should be functional and tested
+### Core Branches
 
-### Feature Branches (When to Use)
+#### `main` - Production Branch
+- **Purpose**: Production-ready code for live deployment
+- **Contains**: Standalone Dashboard (no playground navigation)
+- **Entry point**: `src/main.tsx` renders `DashboardV2` directly
+- **Deployment**: GitHub Pages serves from this branch
+- **Rules**:
+  - Only deploy with `npm run deploy` after verification
+  - No direct development work - use `dev` branch instead
+  - Always verify build passes before deploying
+
+#### `dev` - Development Branch
+- **Purpose**: Active development and feature work
+- **Contains**: Full playground with all 5 tabs (Login, Deal Select, Deal Input, Dashboard, Foundation)
+- **Entry point**: `src/main.tsx` renders `App` component with full playground
+- **Daily workflow**: This is your primary working branch
+- **Rules**:
+  - Commit frequently as you develop
+  - Push at end of each session
+  - Test locally before committing
+
+### GitHub Pages Deployment
+
+**How it works:**
+- GitHub Pages serves from the `gh-pages` branch (auto-managed by `gh-pages` npm package)
+- Changes to `main` or `dev` do NOT affect the live site automatically
+- Live site ONLY updates when you run `npm run deploy` from `main` branch
+
+**Live site URL**: https://chrisproductdesign.github.io/ozone-proto/
+
+**Deployment process:**
+```bash
+# 1. Switch to main (if needed)
+git checkout main
+
+# 2. Verify build passes
+npm run build
+
+# 3. Deploy to GitHub Pages
+npm run deploy
+```
+
+**Safety:**
+- Working on `dev` branch will NEVER affect the live site
+- Only `npm run deploy` (from `main`) updates production
+- `gh-pages` branch is auto-managed - don't touch it manually
+
+### Feature Branches (Optional)
 Create feature branches for:
 - **Major features** spanning multiple sessions
 - **Experimental changes** that might break existing functionality
@@ -22,7 +65,7 @@ Branch naming convention:
 feature/[component-or-screen]-[brief-description]
 feature/dashboard-metrics
 feature/funding-application-flow
-feature/tailwind-v5-migration
+feature/new-chart-type
 ```
 
 ## 🔄 Commit Strategy
@@ -184,21 +227,30 @@ design-specs/
 ## 📝 Session Workflow Checklist
 
 ### Start of Session
+- [ ] Ensure you're on `dev` branch: `git branch` (should show `* dev`)
 - [ ] Pull latest changes: `git pull`
-- [ ] Check branch: `git branch`
 - [ ] Review pending work in CLAUDE.md
 
 ### During Development
+- [ ] Stay on `dev` branch for all development work
 - [ ] Commit after each completed component
 - [ ] Write descriptive commit messages
 - [ ] Test before committing
 - [ ] Keep commits atomic (one concept per commit)
 
 ### End of Session
-- [ ] Commit all changes
-- [ ] Push to GitHub
+- [ ] Commit all changes on `dev`
+- [ ] Push to GitHub: `git push origin dev`
 - [ ] Update todo list if needed
 - [ ] Document any pending work
+
+### When Ready to Deploy to Production
+- [ ] Ensure `dev` branch is pushed and working
+- [ ] Switch to `main`: `git checkout main`
+- [ ] Merge changes from `dev`: `git merge dev`
+- [ ] Verify build: `npm run build`
+- [ ] Deploy: `npm run deploy`
+- [ ] Switch back to `dev`: `git checkout dev`
 
 ## 🔄 Continuous Integration
 
