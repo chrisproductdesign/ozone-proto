@@ -209,6 +209,7 @@ export function DashboardV2({ navigateTo }: DashboardV2Props) {
           variant="ghost"
           size="icon-lg"
           aria-label="Home"
+          disabled
         >
           <Home className="w-5 h-5" />
         </ButtonBaseUIWrapper>
@@ -224,7 +225,7 @@ export function DashboardV2({ navigateTo }: DashboardV2Props) {
               variant="ghost"
               size="icon-lg"
               aria-label="Back to Deal Input"
-              onClick={() => navigateTo('dealinput')}
+              disabled
             >
               <ArrowLeft className="w-5 h-5" />
             </ButtonBaseUIWrapper>
