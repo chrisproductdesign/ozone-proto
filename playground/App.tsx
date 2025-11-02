@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
-import { DealProvider } from '@/contexts/DealContext';
+
 import { ToastProvider } from '@/components/feedback/Toast';
+import { DealProvider } from '@/contexts/DealContext';
 
 import { playgroundPages } from './pages';
 

@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { LoginCard } from '@/components/login/LoginCard';
 import { transitionTo } from '@/lib/viewTransitions';
 import { type NavigationProps } from '@playground/App';
 
-interface LoginScreenProps extends NavigationProps {}
+type LoginScreenProps = NavigationProps;
 
 export const LoginScreen: React.FC<LoginScreenProps> = ({ navigateTo }) => {
   const handleLogin = (email: string, password: string) => {

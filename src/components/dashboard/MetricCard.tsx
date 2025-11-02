@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
 import { RefreshCw } from 'lucide-react';
-import { BaseUISlider } from '@/components/form/BaseUISlider';
+import React, { useState, useEffect } from 'react';
+
 import { ButtonBaseUIWrapper } from '@/components/button/ButtonBaseUIWrapper';
+import { BaseUISlider } from '@/components/form/BaseUISlider';
 
 export interface MetricCardProps {
   icon?: React.ReactNode;

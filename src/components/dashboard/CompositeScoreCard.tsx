@@ -1,5 +1,6 @@
-import React from 'react';
 import { Settings, Plus } from 'lucide-react';
+import React from 'react';
+
 import { ButtonBaseUIWrapper } from '@/components/button/ButtonBaseUIWrapper';
 
 export interface ScoreControl {

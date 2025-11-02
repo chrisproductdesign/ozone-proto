@@ -1,5 +1,7 @@
 import React, { forwardRef, useState, useCallback } from 'react';
+
 import { classNames } from '@/lib/classNames';
+
 import { getBaseInputClasses, inputPadding, iconPosition } from './inputStyles';
 
 interface CurrencyInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'value' | 'onChange'> {

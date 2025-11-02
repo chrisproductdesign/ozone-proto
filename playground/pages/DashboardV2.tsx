@@ -1,9 +1,6 @@
+import { Home, ArrowLeft, Save, Share2, Download, DollarSign, Clock, BadgeCheck, Lightbulb, TrendingUp, Target, ShieldCheck, ExternalLink, ChevronDown } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
-import { Home, ArrowLeft, Save, Share2, Download, RefreshCw, DollarSign, Clock, BadgeCheck, Lightbulb, TrendingUp, Target, ShieldCheck, ExternalLink, ChevronDown } from 'lucide-react';
-import { MetricCard } from '@/components/dashboard/MetricCard';
-import { StatusCard } from '@/components/dashboard/StatusCard';
-import { CompositeScoreCard } from '@/components/dashboard/CompositeScoreCard';
-import { BackgroundCheckCard } from '@/components/dashboard/BackgroundCheckCard';
+
 import { ButtonBaseUIWrapper } from '@/components/button/ButtonBaseUIWrapper';
 import {
   DealRangeChart,
@@ -12,17 +9,21 @@ import {
   PortfolioRiskCard,
   type XAxisMetric,
 } from '@/components/charts';
+import { BackgroundCheckCard } from '@/components/dashboard/BackgroundCheckCard';
+import { CompositeScoreCard } from '@/components/dashboard/CompositeScoreCard';
+import { MetricCard } from '@/components/dashboard/MetricCard';
+import { StatusCard } from '@/components/dashboard/StatusCard';
 import { InsightPanel, type Insight } from '@/components/insights';
 import { useDeal } from '@/contexts/DealContext';
 import { type NavigationProps } from '@playground/App';
 
-interface DashboardV2Props extends NavigationProps {}
+type DashboardV2Props = NavigationProps;
 
 /**
  * Dashboard v0.7 - New dashboard layout
  * Responsive layout with sidebar navigation and content sections
  */
-export function DashboardV2({ navigateTo }: DashboardV2Props) {
+export function DashboardV2({ navigateTo: _navigateTo }: DashboardV2Props) {
   const { currentDeal, updateDeal, dealName } = useDeal();
 
   // Initialize metrics from context or use defaults
@@ -150,6 +151,10 @@ export function DashboardV2({ navigateTo }: DashboardV2Props) {
   const handleDismissFunderInsight = (id: string) => {
     setFunderInsights((prev) => prev.filter((insight) => insight.id !== id));
   };
+
+  // Placeholder for future use
+  void handleDismissMarketplaceInsight;
+  void handleDismissFunderInsight;
 
   // Sync local state back to context when values change
   useEffect(() => {

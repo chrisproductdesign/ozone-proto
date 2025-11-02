@@ -1,3 +1,4 @@
+import { AlertTriangle } from 'lucide-react';
 import React, { useMemo } from 'react';
 import {
   ComposedChart,
@@ -8,7 +9,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import { AlertTriangle } from 'lucide-react';
 
 interface StressScenarioData {
   scenario: string;

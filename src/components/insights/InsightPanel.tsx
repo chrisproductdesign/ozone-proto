@@ -1,6 +1,8 @@
-import React, { useRef, useEffect } from 'react';
 import { Lightbulb, CheckCircle, AlertTriangle, XCircle } from 'lucide-react';
+import React, { useRef, useEffect } from 'react';
+
 import { useClickOutside } from '@/hooks/useClickOutside';
+
 import type { Insight } from './InsightList';
 
 export interface InsightPanelProps {

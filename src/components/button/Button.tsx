@@ -1,7 +1,7 @@
 'use client';
 
 import { forwardRef } from 'react';
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+
 
 import { classNames } from '../../lib/classNames';
 
@@ -10,6 +10,8 @@ import {
   type ButtonSize,
   type ButtonVariant,
 } from './variants';
+
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import './Button.css';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { DealCard } from '@/components/deal/DealCard';
 import { type NavigationProps } from '@playground/App';
 
-interface DealSelectScreenProps extends NavigationProps {}
+type DealSelectScreenProps = NavigationProps;
 
 export const DealSelectScreen: React.FC<DealSelectScreenProps> = ({ navigateTo }) => {
   const handleNewDeal = () => {

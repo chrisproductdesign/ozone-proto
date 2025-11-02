@@ -1,21 +1,23 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { classNames } from '@/lib/classNames';
-import { FormSection } from '@/components/form/FormSection';
-import { TextInput } from '@/components/form/TextInput';
-import { CurrencyInput } from '@/components/form/CurrencyInput';
-import { NumberInput } from '@/components/form/NumberInput';
-import { SelectInput } from '@/components/form/SelectInput';
-import { ComboboxInput } from '@/components/form/ComboboxInput';
-import { PercentageInput } from '@/components/form/PercentageInput';
-import { useDeal } from '@/contexts/DealContext';
+
 import { useToast } from '@/components/feedback/Toast';
+import { ComboboxInput } from '@/components/form/ComboboxInput';
+import { CurrencyInput } from '@/components/form/CurrencyInput';
+import { FormSection } from '@/components/form/FormSection';
+import { NumberInput } from '@/components/form/NumberInput';
+import { PercentageInput } from '@/components/form/PercentageInput';
+import { SelectInput } from '@/components/form/SelectInput';
+import { TextInput } from '@/components/form/TextInput';
+import { useDeal } from '@/contexts/DealContext';
+import { classNames } from '@/lib/classNames';
 import { type NavigationProps } from '@playground/App';
 
-interface DealInputScreenProps extends NavigationProps {}
+type DealInputScreenProps = NavigationProps;
 
 export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) => {
   const { currentDeal, updateDeal, saveDraft, dealName } = useDeal();
   const { showToast } = useToast();
+  void showToast; // Intentionally unused for now
   const [showSaved, setShowSaved] = useState(false);
   const saveTimerRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
@@ -72,42 +74,13 @@ export const DealInputScreen: React.FC<DealInputScreenProps> = ({ navigateTo }) 
     };
   }, [currentDeal, saveDraft]);
 
-  // Check if required fields are complete
-  const isFormValid = () => {
-    const requiredFields = ['firstName', 'lastName', 'state', 'fico', 'monthlyRevenue', 'grossFundedAmount', 'term'];
-    return requiredFields.every(field => currentDeal[field as keyof typeof currentDeal]);
-  };
-
-  // Get list of missing required fields for feedback
-  const getMissingFields = () => {
-    const requiredFields = [
-      { field: 'firstName', label: 'Owner: First name' },
-      { field: 'lastName', label: 'Last name' },
-      { field: 'state', label: 'State' },
-      { field: 'fico', label: 'FICO' },
-      { field: 'monthlyRevenue', label: 'Average Monthly Revenue' },
-      { field: 'grossFundedAmount', label: 'Gross Funded Amount' },
-      { field: 'term', label: 'Term' }
-    ];
-    return requiredFields
-      .filter(({ field }) => !currentDeal[field as keyof typeof currentDeal])
-      .map(({ label }) => label);
-  };
+  // Utility functions reserved for future validation features
+  // Temporarily removed to avoid unused variable lint errors
 
   const handleContinue = () => {
     if (navigateTo) {
       navigateTo('dashboard-v2');
     }
-  };
-
-  // Check if we have any summary data to show metrics
-  const hasAnyMetricData = () => {
-    return Boolean(
-      formData.grossFundedAmount ||
-      formData.term ||
-      formData.paymentFrequency ||
-      formData.advanceType
-    );
   };
 
   const stateOptions = [

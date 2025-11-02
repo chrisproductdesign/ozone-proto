@@ -1,7 +1,9 @@
 import React, { forwardRef, useState } from 'react';
+
 import { classNames } from '@/lib/classNames';
-import { getBaseInputClasses, inputPadding } from './inputStyles';
+
 import { IncrementDecrementControls } from './IncrementDecrementControls';
+import { getBaseInputClasses, inputPadding } from './inputStyles';
 
 interface NumberInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
   error?: boolean;

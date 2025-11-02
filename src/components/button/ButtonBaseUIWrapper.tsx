@@ -15,8 +15,10 @@
 'use client';
 
 import { forwardRef } from 'react';
-import type { ReactNode, ButtonHTMLAttributes } from 'react';
+
 import { classNames } from '../../lib/classNames';
+
+import type { ReactNode, ButtonHTMLAttributes } from 'react';
 
 // Fintech-specific button variants
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'success';

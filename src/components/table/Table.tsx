@@ -1,9 +1,11 @@
 'use client';
 
 import { forwardRef } from 'react';
-import type { HTMLAttributes, ReactNode, TdHTMLAttributes, ThHTMLAttributes } from 'react';
 
 import { classNames } from '../../lib/classNames';
+
+import type { HTMLAttributes, ReactNode, TdHTMLAttributes, ThHTMLAttributes } from 'react';
+
 
 import './Table.css';
 

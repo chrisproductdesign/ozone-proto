@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { TokenTest } from './TokenTest';
+
 import { Forms } from './Forms';
+import { TokenTest } from './TokenTest';
 
 type FoundationTab = 'tokens' | 'components';
 

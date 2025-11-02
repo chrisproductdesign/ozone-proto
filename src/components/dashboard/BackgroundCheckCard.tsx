@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
 import { CheckCircle2, Copy, Check, Building2, Search, Sparkles } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export type BackgroundCheckCardVariant = 'checklist' | 'data-merch' | 'perplexity';
 

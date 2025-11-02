@@ -7,10 +7,13 @@
 
 'use client';
 
-import { forwardRef, useState } from 'react';
 import { Input as BaseInput } from '@base-ui-components/react/input';
-import type { ReactNode, InputHTMLAttributes } from 'react';
+import { forwardRef, useState } from 'react';
+
 import { classNames } from '../../lib/classNames';
+
+import type { ReactNode, InputHTMLAttributes } from 'react';
+
 
 export type InputSize = 'sm' | 'md' | 'lg';
 export type InputVariant = 'default' | 'filled' | 'error' | 'success';

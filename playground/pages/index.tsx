@@ -1,11 +1,12 @@
 import { type ReactNode } from 'react';
+
 import { type NavigationProps } from '../App';
 
-import { Login } from './Login';
-import { DealSelect } from './DealSelect';
-import { DealInput } from './DealInput';
 import { DashboardV2 } from './DashboardV2';
+import { DealInput } from './DealInput';
+import { DealSelect } from './DealSelect';
 import { Foundation } from './Foundation';
+import { Login } from './Login';
 
 export type PlaygroundPage = {
   id: string;

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { classNames } from '@/lib/classNames';
 
 export type DealCardVariant = 'new' | 'existing';

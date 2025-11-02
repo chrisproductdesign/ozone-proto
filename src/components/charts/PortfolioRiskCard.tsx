@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
 import { BarChart3, ChevronDown } from 'lucide-react';
-import { IndustryRegionHeatmap } from './IndustryRegionHeatmap';
+import React, { useState } from 'react';
+
 import { DealSizeDonutChart } from './DealSizeDonutChart';
+import { IndustryRegionHeatmap } from './IndustryRegionHeatmap';
 import { LossExposureChart } from './LossExposureChart';
 
 type MetricType = 'industry' | 'funding-amount' | 'tib' | 'region';

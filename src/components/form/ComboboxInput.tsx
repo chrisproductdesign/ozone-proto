@@ -1,6 +1,8 @@
-import React, { forwardRef, useState } from 'react';
 import { Combobox } from '@base-ui-components/react/combobox';
+import React, { forwardRef, useState } from 'react';
+
 import { classNames } from '@/lib/classNames';
+
 import { getBaseInputClasses, inputPadding } from './inputStyles';
 
 interface ComboboxInputProps {

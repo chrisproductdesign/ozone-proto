@@ -1,7 +1,9 @@
 import React, { forwardRef, useState } from 'react';
+
 import { classNames } from '@/lib/classNames';
-import { getBaseInputClasses, inputPadding, iconPosition } from './inputStyles';
+
 import { IncrementDecrementControls } from './IncrementDecrementControls';
+import { getBaseInputClasses, inputPadding, iconPosition } from './inputStyles';
 
 interface PercentageInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
   error?: boolean;

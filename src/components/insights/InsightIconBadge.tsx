@@ -1,5 +1,6 @@
-import React, { forwardRef } from 'react';
 import { Lightbulb } from 'lucide-react';
+import React, { forwardRef } from 'react';
+
 import type { InsightType } from './InsightList';
 
 export interface InsightIconBadgeProps {

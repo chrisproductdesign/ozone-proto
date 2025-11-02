@@ -1,10 +1,6 @@
-// @ts-nocheck
+// @ts-nocheck - Old dashboard, not currently in use
 import React, { useState } from 'react';
-import { classNames } from '@/lib/classNames';
-import { ScoreCard } from '@/components/dashboard/ScoreCard';
-import { ScoreCardWithInputs } from '@/components/dashboard/ScoreCardWithInputs';
-import { ConfidenceCard } from '@/components/dashboard/ConfidenceCard';
-import { MetricCard } from '@/components/dashboard/MetricCard';
+
 import {
   OfferHistoryChart,
   ForecastChart,
@@ -12,11 +8,16 @@ import {
   IndustryRegionHeatmap,
   DealSizeDonutChart,
 } from '@/components/charts';
-import { useDeal } from '@/contexts/DealContext';
+import { ConfidenceCard } from '@/components/dashboard/ConfidenceCard';
+import { MetricCard } from '@/components/dashboard/MetricCard';
+import { ScoreCard } from '@/components/dashboard/ScoreCard';
+import { ScoreCardWithInputs } from '@/components/dashboard/ScoreCardWithInputs';
 import { useToast } from '@/components/feedback/Toast';
+import { useDeal } from '@/contexts/DealContext';
+import { classNames } from '@/lib/classNames';
 import { type NavigationProps } from '@playground/App';
 
-interface DashboardScreenProps extends NavigationProps {}
+type DashboardScreenProps = NavigationProps;
 
 export const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigateTo }) => {
   const [activeTab, setActiveTab] = useState<'pricing' | 'performance'>('performance');

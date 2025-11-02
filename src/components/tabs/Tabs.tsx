@@ -1,9 +1,11 @@
 'use client';
 
 import { createContext, useContext, useState } from 'react';
-import type { HTMLAttributes, ReactNode } from 'react';
 
 import { classNames } from '../../lib/classNames';
+
+import type { HTMLAttributes, ReactNode } from 'react';
+
 
 import './Tabs.css';
 

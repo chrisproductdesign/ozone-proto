@@ -68,6 +68,7 @@ export const DealSizeDonutChart: React.FC<DealSizeDonutChartProps> = ({
   const total = data.reduce((sum, item) => sum + item.value, 0);
 
   // Custom tooltip
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, react-hooks/rules-of-hooks
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       const item = payload[0].payload;
@@ -112,11 +113,13 @@ export const DealSizeDonutChart: React.FC<DealSizeDonutChartProps> = ({
   };
 
   // Custom legend for vertical layout
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const renderLegend = (props: any) => {
     const { payload } = props;
 
     return (
       <div className="flex flex-wrap gap-3 justify-center mt-4">
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         {payload.map((entry: any, index: number) => (
           <div key={`legend-${index}`} className="flex items-center gap-2">
             <div

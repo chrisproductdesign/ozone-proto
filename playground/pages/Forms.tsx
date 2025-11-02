@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+
 import { ButtonBaseUIWrapper } from '@/components/button/ButtonBaseUIWrapper';
-import { InputBaseUIWrapper } from '@/components/input/InputBaseUIWrapper';
-import { StatusCard } from '@/components/dashboard/StatusCard';
-import { CompositeScoreCard } from '@/components/dashboard/CompositeScoreCard';
 import { BackgroundCheckCard } from '@/components/dashboard/BackgroundCheckCard';
+import { CompositeScoreCard } from '@/components/dashboard/CompositeScoreCard';
+import { StatusCard } from '@/components/dashboard/StatusCard';
+import { InputBaseUIWrapper } from '@/components/input/InputBaseUIWrapper';
 
 export const Forms = () => {
   const [email, setEmail] = useState('');
