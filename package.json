@@ -36,6 +36,9 @@
   "private": true,
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-beta.4",
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@tailwindcss/vite": "^4.1.15",
     "autoprefixer": "^10.4.21",
     "lucide-react": "^0.546.0",

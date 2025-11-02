@@ -1,7 +1,11 @@
+import { DndContext, DragEndEvent, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
+import { SortableContext, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Home, ArrowLeft, Save, Share2, Download, DollarSign, Clock, BadgeCheck, Lightbulb, TrendingUp, Target, ShieldCheck, ExternalLink, ChevronDown } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
 
 import { ButtonBaseUIWrapper } from '@/components/button/ButtonBaseUIWrapper';
+import { SortableSection } from '@/components/dashboard/SortableSection';
+import { DEFAULT_SECTION_ORDER, SECTION_STORAGE_KEY, type DashboardSectionId } from '@/components/dashboard/sections/types';
 import {
   DealRangeChart,
   PaymentCurveChart,
@@ -25,6 +29,27 @@ type DashboardV2Props = NavigationProps;
  */
 export function DashboardV2({ navigateTo: _navigateTo }: DashboardV2Props) {
   const { currentDeal, updateDeal, dealName } = useDeal();
+
+  // Drag-and-drop sensors (optimized for intentional drags)
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 8, // 8px movement required to activate drag
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 200,
+        tolerance: 5,
+      },
+    })
+  );
+
+  // Section order state with localStorage persistence
+  const [sectionOrder, setSectionOrder] = useState<DashboardSectionId[]>(() => {
+    const saved = localStorage.getItem(SECTION_STORAGE_KEY);
+    return saved ? JSON.parse(saved) : DEFAULT_SECTION_ORDER;
+  });
 
   // Initialize metrics from context or use defaults
   const [grossFunding, setGrossFunding] = useState(() =>
@@ -200,6 +225,24 @@ export function DashboardV2({ navigateTo: _navigateTo }: DashboardV2Props) {
     };
   }, [isChartDropdownOpen]);
 
+  // Drag end handler for section reordering
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      setSectionOrder((items) => {
+        const oldIndex = items.indexOf(active.id as DashboardSectionId);
+        const newIndex = items.indexOf(over.id as DashboardSectionId);
+        const newOrder = arrayMove(items, oldIndex, newIndex);
+
+        // Persist to localStorage
+        localStorage.setItem(SECTION_STORAGE_KEY, JSON.stringify(newOrder));
+
+        return newOrder;
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-neutral-400 flex">
       {/* Left Sidebar */}
@@ -348,8 +391,20 @@ export function DashboardV2({ navigateTo: _navigateTo }: DashboardV2Props) {
               </div>
             </section>
 
-            {/* 2.5. Deal Performance Charts - Deal Range & Payment Curve */}
-            <section className="mb-12">
+            {/* Drag-and-Drop Reorderable Sections */}
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext
+                items={sectionOrder}
+                strategy={verticalListSortingStrategy}
+              >
+                {sectionOrder.map((sectionId) => (
+                  <SortableSection key={sectionId} id={sectionId}>
+                    {sectionId === 'performance' && (
+                      <section className="mb-12">
               {/* Outer container with semi-transparent white background */}
               <div className="bg-white/40 rounded-lg p-6 flex flex-col gap-4">
                 {/* Header row: Performance title + segmented control */}
@@ -450,10 +505,11 @@ export function DashboardV2({ navigateTo: _navigateTo }: DashboardV2Props) {
                   </div>
                 </div>
               </div>
-            </section>
+                      </section>
+                    )}
 
-            {/* 3. Composite Score Card */}
-            <section className="mb-12">
+                    {sectionId === 'composite-score' && (
+                      <section className="mb-12">
               <CompositeScoreCard
                 grade="A"
                 description="Strong revenue predictability"
@@ -490,10 +546,11 @@ export function DashboardV2({ navigateTo: _navigateTo }: DashboardV2Props) {
                 onSettingsClick={() => console.log('Settings clicked')}
                 onAddClick={() => console.log('Add clicked')}
               />
-            </section>
+                      </section>
+                    )}
 
-            {/* 4. Deal Benchmarking - 2 Graphs (stacked vertically) */}
-            <section className="mb-12">
+                    {sectionId === 'benchmarking' && (
+                      <section className="mb-12">
               {/* Outer container with semi-transparent white background */}
               <div className="bg-white/40 rounded-lg p-6 flex flex-col gap-3">
                 {/* Header row: Benchmarking title + segmented control */}
@@ -647,10 +704,11 @@ export function DashboardV2({ navigateTo: _navigateTo }: DashboardV2Props) {
                   </div>
                 </div>
               </div>
-            </section>
+                      </section>
+                    )}
 
-            {/* 5. Background Check - 3 Cards */}
-            <section className="mb-12">
+                    {sectionId === 'background-check' && (
+                      <section className="mb-12">
               {/* Outer container with semi-transparent white background */}
               <div className="bg-white/40 rounded-lg p-6 flex flex-col gap-4">
                 {/* Header row: title + export button */}
@@ -685,12 +743,18 @@ export function DashboardV2({ navigateTo: _navigateTo }: DashboardV2Props) {
                   </div>
                 </div>
               </div>
-            </section>
+                      </section>
+                    )}
 
-            {/* 6. Portfolio Risk - Unified Card with Toggle */}
-            <section className="mb-12">
-              <PortfolioRiskCard />
-            </section>
+                    {sectionId === 'portfolio-risk' && (
+                      <section className="mb-12">
+                        <PortfolioRiskCard />
+                      </section>
+                    )}
+                  </SortableSection>
+                ))}
+              </SortableContext>
+            </DndContext>
 
           </div>
         </main>
