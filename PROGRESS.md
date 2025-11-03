@@ -106,7 +106,7 @@ hash -r
 1. **`~/.claude/`** - Claude Code CLI data (history, settings, MCP config at `~/.claude.json`)
 2. **`~/Library/Application Support/Claude/`** - Claude Desktop app data (separate application)
 3. **These are separate apps** with separate configurations - working as intended
-4. **Project directory**: `/Users/chris/Claude/ogion-proto` (capital C is canonical path)
+4. **Project directory**: `/Users/chris/Claude/ozone-proto` (capital C is canonical path)
    - Note: macOS is case-insensitive, so `/Users/chris/claude/` and `/Users/chris/Claude/` are the same
    - Git uses canonical form with capital C
 
@@ -118,7 +118,7 @@ hash -r
 
 **Current State:**
 - ✅ Claude Code CLI: 2.0.28 (latest)
-- ✅ Project: `/Users/chris/Claude/ogion-proto`
+- ✅ Project: `/Users/chris/Claude/ozone-proto`
 - ✅ Git: Clean working tree with 23 modified files, 14 untracked (normal dev state)
 - ✅ MCP: context7, playwright, mui-mcp active and working
 - ✅ Project-level MCP config: `.mcp.json` with 7 Figma server variants (for future use)
