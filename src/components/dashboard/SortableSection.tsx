@@ -44,7 +44,7 @@ export const SortableSection: React.FC<SortableSectionProps> = ({
         <div
           {...attributes}
           {...listeners}
-          className="absolute top-6 right-6 z-10 cursor-grab active:cursor-grabbing opacity-40 hover:opacity-100 transition-opacity"
+          className="absolute top-6 left-1/2 -translate-x-1/2 z-10 cursor-grab active:cursor-grabbing opacity-40 hover:opacity-100 transition-opacity"
           aria-label={`Drag to reorder ${id} section`}
         >
           <GripVertical className="w-5 h-5 text-neutral-600" />
