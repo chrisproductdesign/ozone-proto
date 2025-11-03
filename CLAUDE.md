@@ -2,6 +2,58 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 🔄 IMMEDIATE ACTION ITEMS (Post Directory Rename)
+
+**Context**: Local directory renamed from `ogion-proto` → `ozone-proto` to match GitHub repo name and prevent IDE confusion.
+
+### When You Return to This Project:
+
+1. **Verify Location** ✅
+   ```bash
+   pwd
+   # Should show: /Users/chris/Claude/ozone-proto (not ogion-proto)
+   ```
+
+2. **Update Documentation References** (2 files affected)
+   ```bash
+   # Update PROGRESS.md - Replace 2 instances:
+   # Old: /Users/chris/Claude/ogion-proto
+   # New: /Users/chris/Claude/ozone-proto
+   ```
+
+3. **Verify Git Still Works** ✅
+   ```bash
+   git status
+   git remote -v  # Should still show: ozone-proto.git
+   ```
+
+4. **Test Dev Environment** ✅
+   ```bash
+   npm run dev    # Should start normally
+   npm run build  # Should build successfully
+   ```
+
+5. **Commit Documentation Update**
+   ```bash
+   git add PROGRESS.md CLAUDE.md
+   git commit -m "docs: Update directory path references ogion→ozone"
+   git push origin dev
+   ```
+
+### What Changed:
+- ✅ Directory: `/Users/chris/Claude/ogion-proto` → `/Users/chris/Claude/ozone-proto`
+- ✅ Everything else: **UNCHANGED** (git, npm, configs all work from new location)
+
+### What's Already Correct:
+- ✅ GitHub repo: Already named `ozone-proto`
+- ✅ package.json: Already uses `"ozone-proto"`
+- ✅ Vite config: Already uses `/ozone-proto/` base path
+- ✅ All project paths: Relative (don't care about parent directory)
+
+**Delete this section after completing the update.**
+
+---
+
 ## 🧠 SESSION START PROTOCOL
 
 **IMPORTANT**: At the start of each new session, run this command:
