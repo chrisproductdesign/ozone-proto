@@ -130,7 +130,7 @@ feat: Implement LoginCard with interactive states
 ```
 1. Receive design specs
    ↓
-2. Create component on main branch
+2. Create component on dev branch
    ↓
 3. Test with Playwright → Commit
    ↓
@@ -145,15 +145,52 @@ feat: Implement LoginCard with interactive states
 
 ### Major Feature Flow
 ```
-1. Create feature branch
+1. Create feature branch from dev
    ↓
 2. Implement feature across multiple commits
    ↓
 3. Test thoroughly
    ↓
-4. Merge to main via PR or direct merge
+4. Merge to dev via PR or direct merge
    ↓
 5. Delete feature branch
+```
+
+## 🛠️ Development Workflow
+
+### Component Iteration Process
+
+1. **Use Empty Tab Pages** - Each playground tab is a blank canvas for component development
+2. **Test Variants** - Create all states and sizes
+3. **Apply Design Tokens** - Use system tokens for consistency
+4. **Integrate into Flow** - Add to main screens once approved
+5. **Refine UX** - Test in context and iterate
+
+### Adding New Components
+
+1. **Check Base UI Documentation** (`docs/llms.txt` or `docs/catalog/components/`)
+2. **Create Component Structure** in `src/components/{name}/`
+3. **Use Design Tokens** from `src/index.css` @theme (via Tailwind utilities)
+4. **Test in Component Lab** before integration
+5. **Document Usage** in component file
+
+### Base UI Resources
+
+- **Component Catalog**: `docs/catalog/components/` - JSON schemas for all Base UI components
+- **Documentation**: `docs/llms.txt` - Base UI component documentation for reference
+- **Base UI Docs**: https://base-ui.com for latest updates
+
+### Running Single Tests
+
+```bash
+# Run specific test file
+npm test src/components/button/Button.test.tsx
+
+# Run tests matching pattern
+npm test -- --grep "Button"
+
+# Run E2E test
+npx playwright test tests/e2e/dashboard.spec.ts
 ```
 
 ## 📊 Version Control for Design Assets

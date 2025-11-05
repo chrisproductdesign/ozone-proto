@@ -22,9 +22,9 @@ src/index.css (@theme)  →  Tailwind Utilities  →  Components
 
 ### File Locations
 
-- **Single Source of Truth**: `src/index.css` (`@theme` block) - All primitive tokens
-- **TypeScript Interface**: `src/design-system/tokens/*.ts` - Typed references to CSS variables (for developer experience)
-- **Config**: `tailwind.config.js` - Minimal v4 configuration
+- **Single Source of Truth**: `src/index.css` (`@theme` block) - All design tokens
+- **Config**: `tailwind.config.js` - Minimal v4 configuration (animations only)
+- **Components**: Use Tailwind utilities directly (e.g., `className="text-xl bg-purple-700"`)
 
 ---
 
@@ -108,22 +108,20 @@ Used for surfaces, text, and borders. **No cool grays.**
 
 **Tailwind Utilities**: `p-4`, `mx-6`, `gap-5`
 
-### Component Presets
+### Common Component Spacing Patterns
 
-**Defined in**: `src/design-system/tokens/spacing.ts`
-
-```typescript
+```tsx
 // Input/Button padding
-input.md: { x: '14px', y: '10px' }  // px-4 py-2.5
+className="px-4 py-2.5"  // 14px x 10px
 
 // Card padding
-card.md: '16px'  // p-4
-card.lg: '24px'  // p-6
+className="p-4"   // 16px (medium)
+className="p-6"   // 24px (large)
 
 // Stacks (vertical spacing)
-stack.sm: '8px'   // gap-2
-stack.md: '16px'  // gap-4
-stack.lg: '24px'  // gap-6
+className="gap-2"  // 8px (small)
+className="gap-4"  // 16px (medium)
+className="gap-6"  // 24px (large)
 ```
 
 ---
@@ -291,20 +289,17 @@ The elevation ramp uses **Tailwind v4 naming** (updated from v3):
 
 ### Adding a New Spacing Value
 
-**Option A**: Add to `@theme` (for new base values)
+Add to `@theme` in `src/index.css`:
 ```css
 @theme {
   --spacing-9: 2.25rem;  /* 36px */
 }
 ```
 
-**Option B**: Add to `spacing.ts` (for component presets)
-```typescript
-export const componentSpacing = {
-  sidebar: {
-    padding: spacing[6],  // 24px
-  }
-}
+Then use via Tailwind utilities:
+```tsx
+className="p-9"  // padding: 2.25rem (36px)
+className="gap-9"  // gap: 2.25rem
 ```
 
 ### Adding a New Font Size
@@ -323,12 +318,13 @@ export const componentSpacing = {
 }
 ```
 
-Then update TypeScript interface for autocomplete:
-```typescript
-// src/design-system/tokens/typography.ts
-export const fontSize = {
-  '6xl': 'var(--text-6xl)',  // References CSS, doesn't duplicate
-} as const;
+Then use in components:
+```tsx
+// Using primitive token
+className="text-6xl"
+
+// Using semantic token with arbitrary value
+className="text-[length:var(--text-dashboard-hero)]"
 ```
 
 ---

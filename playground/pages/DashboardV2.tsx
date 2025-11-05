@@ -76,7 +76,42 @@ export function DashboardV2({ navigateTo: _navigateTo }: DashboardV2Props) {
   const [xAxisMetric, setXAxisMetric] = useState<XAxisMetric>('fundingAmount');
 
   // Scorecard control values state
-  const [controlValues, setControlValues] = useState(['10', '0', '2%', '500']);
+  const [controlValues, setControlValues] = useState({
+    tib: '5',
+    seasonality: 'moderate',
+    ue: '3.5',
+    creditScore: '680',
+    wh: '',
+  });
+
+  // Track which variables are currently shown
+  const [shownVariables, setShownVariables] = useState<('tib' | 'seasonality' | 'ue' | 'creditScore' | 'wh')[]>([
+    'tib',
+    'seasonality',
+    'ue',
+    'creditScore',
+  ]);
+
+  // Calculate available variables (not currently shown)
+  const availableVariables = (['tib', 'seasonality', 'ue', 'creditScore', 'wh'] as const).filter(
+    (v) => !shownVariables.includes(v)
+  );
+
+  // Handle adding a new variable
+  const handleAddVariable = (variableId: 'tib' | 'seasonality' | 'ue' | 'creditScore' | 'wh') => {
+    setShownVariables((prev) => [...prev, variableId]);
+    // Set a default value if empty
+    if (!controlValues[variableId]) {
+      const defaults: Record<string, string> = {
+        tib: '5',
+        seasonality: 'moderate',
+        ue: '3.5',
+        creditScore: '680',
+        wh: '10',
+      };
+      setControlValues((prev) => ({ ...prev, [variableId]: defaults[variableId] }));
+    }
+  };
 
   // Insight panel open/close state
   const [marketplaceInsightsOpen, setMarketplaceInsightsOpen] = useState(false);
@@ -513,38 +548,24 @@ export function DashboardV2({ navigateTo: _navigateTo }: DashboardV2Props) {
               <CompositeScoreCard
                 grade="A"
                 description="Strong revenue predictability"
-                controls={[
-                  {
-                    label: 'TIB',
-                    value: controlValues[0],
-                    progress: 89,
-                    color: '#12a176',
-                    onChange: (val) => setControlValues(prev => [val, prev[1], prev[2], prev[3]])
-                  },
-                  {
-                    label: 'Seasonality',
-                    value: controlValues[1],
-                    progress: 66,
-                    color: '#59a112',
-                    onChange: (val) => setControlValues(prev => [prev[0], val, prev[2], prev[3]])
-                  },
-                  {
-                    label: 'Macro unemployment rate',
-                    value: controlValues[2],
-                    progress: 39,
-                    color: '#ce8e17',
-                    onChange: (val) => setControlValues(prev => [prev[0], prev[1], val, prev[3]])
-                  },
-                  {
-                    label: 'Credit score',
-                    value: controlValues[3],
-                    progress: 22,
-                    color: '#c33822',
-                    onChange: (val) => setControlValues(prev => [prev[0], prev[1], prev[2], val])
-                  },
-                ]}
+                controls={shownVariables.map((variableId) => {
+                  const labelMap = {
+                    tib: 'Time in Business',
+                    seasonality: 'Seasonality',
+                    ue: 'Macro Unemployment',
+                    creditScore: 'Credit Score',
+                    wh: 'Warehouse Lending',
+                  };
+                  return {
+                    variableId,
+                    label: labelMap[variableId],
+                    value: controlValues[variableId],
+                    onChange: (val: string) => setControlValues(prev => ({ ...prev, [variableId]: val }))
+                  };
+                })}
                 onSettingsClick={() => console.log('Settings clicked')}
-                onAddClick={() => console.log('Add clicked')}
+                onAddVariable={handleAddVariable}
+                availableVariables={availableVariables}
               />
                       </section>
                     )}
