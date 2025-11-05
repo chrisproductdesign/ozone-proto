@@ -10,7 +10,7 @@ import React, { useState, useRef } from 'react';
 import { Popover } from '@base-ui-components/react/popover';
 import { Settings, X, LayoutTemplate, ChevronDown } from 'lucide-react';
 
-import { ScoringTabContent } from './ScoringTabContent';
+import { ScoringMinimalTabContent } from './ScoringMinimalTabContent';
 import {
   balancedConfig,
   conservativeConfig,
@@ -213,7 +213,7 @@ export const ScoringConfigPopover: React.FC<ScoringConfigPopoverProps> = ({
 
             {/* Tab Content Area */}
             <div className="max-h-[480px] overflow-y-auto">
-              <ScoringTabContent
+              <ScoringMinimalTabContent
                 variable={editConfig[activeTab]}
                 onTierChange={(tiers) => handleTierChange(activeTab, tiers)}
                 onCategoryChange={(categories) =>
