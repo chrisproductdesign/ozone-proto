@@ -4,6 +4,295 @@ Session-by-session development tracking for Fintech Prototype v0.7.
 
 ---
 
+## Session: 2025-11-05 (Continued)
+
+### Focus: Minimal Scoring Configuration with Range Inputs
+
+#### 🔄 Context: Pivot from Horizontal Slider Approach
+
+**Problem Discovered:**
+- Horizontal slider with draggable dots had two critical issues:
+  1. Dots could cross over each other despite constraints
+  2. Gradient color synchronization with dot positions was complex
+- User decision: "this isnt going to work but save this branch before we try something new"
+
+**Previous Work Preserved:**
+- Committed all horizontal slider work to `feature/spectrum-slider-ui` branch
+- Pushed to GitHub for potential future reference
+- Created new branch: `feature/minimal-scoring-inputs`
+
+---
+
+#### 🎨 Design Direction: Clean Minimal Inputs
+
+**User Request**: "we need inputs in a clean and minimal way. no slider. no cognitive overload. you need to start over."
+
+**Design References Provided:**
+1. **n8n-popover.png**: Two-input range pattern `[input] to [input]`
+2. **1Password Web 90.png**: Clean white popover with excellent spacing and visual hierarchy
+
+**Design Principles:**
+- No sliders or visual complexity
+- Simple range inputs that are clear and unambiguous
+- Clean white backgrounds with good spacing
+- Minimal cognitive load
+- Focus on clarity over visual pizzazz
+
+---
+
+#### ✅ Implementation: Minimal Range Input System
+
+**1. Created ScoringRangeInput Component**
+
+**File**: `src/components/dashboard/ScoringRangeInput.tsx` (98 lines)
+
+**Pattern**: "Tier N [min] to [max] unit points"
+
+**Features:**
+- Clean row layout with label, two inputs, unit, and points
+- Last tier shows "+" instead of max value (open-ended range)
+- Center-aligned inputs with border styling
+- Number input with stepper removal (textfield appearance)
+- Input width: 20 (w-20) for compact display
+- Unit display between inputs (e.g., "years", "%")
+- Points displayed on right with proper pluralization
+
+**Visual Design:**
+```typescript
+<div className="flex items-center gap-3 py-2">
+  <div className="text-sm font-medium text-neutral-700 w-16">
+    Tier {index + 1}
+  </div>
+
+  <input type="number" value={tier.min} className="w-20 px-2 py-1 text-sm text-center border border-neutral-400 rounded bg-white" />
+
+  {isLastTier ? (
+    <div className="text-sm text-neutral-600 w-8 text-center">+</div>
+  ) : (
+    <>
+      <div className="text-sm text-neutral-600 w-8 text-center">to</div>
+      <input type="number" value={tier.max} className="w-20 px-2 py-1 text-sm text-center" />
+    </>
+  )}
+
+  {unit && <div className="text-sm text-neutral-600 w-12">{unit}</div>}
+
+  <div className="text-sm text-neutral-600 ml-auto">
+    {tier.points} {tier.points === 1 ? 'pt' : 'pts'}
+  </div>
+</div>
+```
+
+---
+
+**2. Created ScoringMinimalTabContent Component**
+
+**File**: `src/components/dashboard/ScoringMinimalTabContent.tsx` (124 lines)
+
+**Purpose**: Wrapper component for clean tab content layout
+
+**Features:**
+- Variable name header with optional "(Inverse)" badge
+- "Reset to Default" button per variable
+- Numeric variables: Renders ScoringRangeInput rows with tier continuity logic
+- Categorical variables: Simple label + points input rows
+
+**Tier Continuity Logic:**
+```typescript
+const handleTierUpdate = (index: number, updatedTier: ScoringTier) => {
+  const newTiers = [...variable.tiers];
+  newTiers[index] = updatedTier;
+
+  // Update adjacent tiers to maintain continuity
+  // When tier N's max changes, tier N+1's min should match
+  if (index < newTiers.length - 1 && updatedTier.max !== undefined) {
+    newTiers[index + 1].min = updatedTier.max;
+  }
+
+  // When tier N's min changes, tier N-1's max should match
+  if (index > 0 && updatedTier.min !== undefined) {
+    newTiers[index - 1].max = updatedTier.min;
+  }
+
+  onTierChange(newTiers);
+};
+```
+
+**Categorical Variable UI:**
+- Simple rows: category label, points input, "pts" suffix
+- Input width: 16 (w-16) for compact display
+- Points range: 0-5 with validation
+
+---
+
+**3. Updated ScoringConfigPopover Integration**
+
+**File**: `src/components/dashboard/ScoringConfigPopover.tsx` (Modified)
+
+**Changes:**
+- Replaced `ScoringTabContent` import with `ScoringMinimalTabContent`
+- Updated component usage to use new minimal design
+- All tab navigation, presets, and save/cancel logic preserved
+- Popover dimensions unchanged (540px width, 680px max height)
+
+**Integration:**
+```typescript
+<ScoringMinimalTabContent
+  variable={editConfig[activeTab]}
+  onTierChange={(tiers) => handleTierChange(activeTab, tiers)}
+  onCategoryChange={(categories) => handleCategoryChange(activeTab, categories)}
+  onReset={() => handleResetVariable(activeTab)}
+/>
+```
+
+---
+
+#### 📋 Testing Results
+
+**Numeric Variable Testing (TIB Tab):**
+- ✅ 6 tiers displayed in clean rows
+- ✅ Tier 1: [empty] to [0.99] years - 0 pts
+- ✅ Tier 2: [1] to [1.99] years - 1 pt
+- ✅ Tier 3: [2] to [3.99] years - 2 pts
+- ✅ Tier 4: [4] to [6.99] years - 3 pts
+- ✅ Tier 5: [7] to [9.99] years - 4 pts
+- ✅ Tier 6: [10] + years - 5 pts (no max input, shows "+")
+
+**Categorical Variable Testing (Seasonality Tab):**
+- ✅ 6 categories displayed in clean rows
+- ✅ very high: 0 pts
+- ✅ high: 1 pt
+- ✅ moderate: 2 pts
+- ✅ low: 3 pts
+- ✅ very low: 4 pts
+- ✅ none: 5 pts
+
+**All Tabs Verified:**
+- ✅ TIB (numeric with years unit)
+- ✅ Seasonality (categorical)
+- ✅ WH (numeric with percentage unit)
+- ✅ Credit (numeric, no unit)
+- ✅ UE (numeric with percentage unit)
+
+**Interaction Testing:**
+- ✅ Tab switching works smoothly
+- ✅ Preset dropdown functional
+- ✅ Reset to Default button per variable
+- ✅ Cancel/Save All buttons at bottom
+- ✅ TypeScript compilation passes with no errors
+
+---
+
+#### 📁 Files Summary
+
+**New Files Created (2):**
+- `src/components/dashboard/ScoringRangeInput.tsx` - Minimal range input component (98 lines)
+- `src/components/dashboard/ScoringMinimalTabContent.tsx` - Clean tab content wrapper (124 lines)
+
+**Modified Files (1):**
+- `src/components/dashboard/ScoringConfigPopover.tsx` - Updated to use minimal tab content
+
+**Design References Added:**
+- `design-specs/components/settings/n8n-popover.png` - Range input pattern reference
+- `design-specs/components/settings/1Password Web 90.png` - Clean popover design reference
+
+**Test Screenshot Captured:**
+- `.playwright-mcp/scoring-popover-seasonality-minimal.png` - Seasonality tab showing categorical variables
+
+---
+
+#### 🔀 Git Branch Workflow
+
+**Branches Created:**
+1. **feature/spectrum-slider-ui**: Preserved horizontal slider approach (pushed to GitHub)
+   - Gradient bar with colored dots
+   - Draggable interaction with constraints
+   - Dynamic gradient color interpolation
+   - Saved for potential future reference
+
+2. **feature/minimal-scoring-inputs**: Current minimal approach (pushed to GitHub)
+   - Clean range inputs
+   - No sliders or complex interactions
+   - Simple, clear, minimal cognitive load
+   - **CURRENT ACTIVE BRANCH**
+
+**Commits:**
+- `feature/spectrum-slider-ui`: "feat: Add dot crossing prevention and dynamic gradient colors"
+- `feature/minimal-scoring-inputs`: "feat: Implement minimal scoring configuration with range inputs"
+
+---
+
+#### 🔑 Key Learnings
+
+1. **When Complex Approaches Don't Work**
+   - Sometimes simple is better than clever
+   - Visual complexity doesn't always improve UX
+   - Direct input can be clearer than interactive widgets
+   - Pivoting early prevents wasted effort on wrong approaches
+
+2. **Design Reference Value**
+   - Real-world examples (1Password, n8n) provide concrete direction
+   - "Clean and minimal" is subjective - references clarify intent
+   - Good design can be borrowed and adapted, not copied
+   - References prevent over-engineering
+
+3. **Tier Continuity Logic**
+   - Adjacent tier boundaries must connect (no gaps or overlaps)
+   - When tier N's max changes, tier N+1's min must update
+   - When tier N's min changes, tier N-1's max must update
+   - Automatic propagation prevents user errors
+
+4. **Last Tier Pattern**
+   - Open-ended range: "10 + years" instead of "10 to [max] years"
+   - Shows "+" instead of second input
+   - More intuitive than arbitrary large max value
+   - Reduces input complexity
+
+5. **Categorical vs Numeric Variables**
+   - Different UI patterns for different data types
+   - Categorical: simple label + points input
+   - Numeric: min-max range pattern with units
+   - Component switches rendering based on variable type
+
+6. **Input Width Consistency**
+   - Numeric inputs: w-20 (80px) for range values
+   - Category points inputs: w-16 (64px) for single digit values
+   - Consistent width creates visual rhythm
+   - Just wide enough to hold expected values
+
+7. **Git Branch Preservation**
+   - Save experimental work before pivoting
+   - Push to remote for team visibility
+   - Clean branch naming shows progression
+   - Future reference if approach reconsidered
+
+---
+
+#### 🎯 Current State
+
+**Minimal Scoring Configuration - ✅ COMPLETE:**
+- ✅ ScoringRangeInput component with clean row layout
+- ✅ ScoringMinimalTabContent wrapper with tier continuity
+- ✅ Integration into ScoringConfigPopover
+- ✅ All 5 tabs working (TIB, Seasonality, WH, Credit, UE)
+- ✅ Both numeric and categorical variables supported
+- ✅ TypeScript compilation passing
+- ✅ Browser testing complete
+- ✅ Committed and pushed to GitHub (feature/minimal-scoring-inputs)
+
+**Dashboard (v0.7):**
+- ✅ Composite Score section with scoring configuration popover
+- ✅ Minimal range input design (clean, no cognitive overload)
+- ✅ All design elements simple and clear
+- ✅ No unauthorized visual complexity
+
+**Next Steps:**
+1. Await user feedback on minimal range input design
+2. If approved, merge to main branch
+3. Continue with other dashboard refinements
+
+---
+
 ## Session: 2025-11-05
 
 ### Focus: Playwright MCP Headless Mode Configuration - Fix Browser Launch Issues
