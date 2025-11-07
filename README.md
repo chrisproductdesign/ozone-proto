@@ -24,8 +24,8 @@ Web application prototype built with React, TypeScript, and a custom design syst
 
 ```bash
 # Clone the repository
-git clone https://github.com/chrisproductdesign/ozone-proto-v0.7.git
-cd ozone-proto-v0.7
+git clone https://github.com/chrisproductdesign/ozone-proto.git
+cd ozone-proto
 
 # Install dependencies
 npm install
@@ -49,7 +49,7 @@ npm run preview
 ## 📁 Project Structure
 
 ```
-ozone-proto-v0.7/
+ozone-proto/
 ├── src/
 │   ├── components/          # Reusable UI components
 │   │   ├── button/          # ButtonBaseUIWrapper
@@ -65,7 +65,7 @@ ozone-proto-v0.7/
 │   └── pages/               # Login, Dashboard, Forms, etc.
 ├── design-specs/            # Design mockups and specifications
 ├── docs/                    # Base UI documentation
-├── DESIGN_TOKENS.md         # Token system documentation
+├── DESIGN_SYSTEM.md         # Design system and token documentation
 ├── CLAUDE.md                # Development guide
 ├── package.json
 └── vite.config.ts
@@ -78,7 +78,7 @@ The project uses a comprehensive design token system built on:
 - **Tailwind CSS v4** - Utility-first styling with custom tokens
 - **Design Tokens** - Centralized colors, spacing, typography, and more
 
-**See `DESIGN_TOKENS.md` for complete token documentation.**
+**See `DESIGN_SYSTEM.md` for complete token documentation.**
 
 ### Component Features
 All components support:

@@ -108,7 +108,7 @@ Apply → Review → Approve → Fund → Repay → Apply Again
 - Quick actions from anywhere
 - Keyboard navigation support
 
-**For design system details, see `DESIGN_TOKENS.md`**
+**For design system details, see `DESIGN_SYSTEM.md`**
 
 ## Next Implementation Steps
 

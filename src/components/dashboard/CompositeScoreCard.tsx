@@ -1,13 +1,16 @@
-import { Settings, Plus } from 'lucide-react';
-import React from 'react';
+import { Settings, Plus, ChevronDown } from 'lucide-react';
+import React, { useState } from 'react';
 
 import { ButtonBaseUIWrapper } from '@/components/button/ButtonBaseUIWrapper';
+import { ScoringConfigPopover } from './ScoringConfigPopover';
+import { balancedConfig } from '@/constants/scoringDefaults';
+import type { ScoringConfig } from '@/types/scoring';
+import { VARIABLE_CONFIGS, getSeasonalityOptions, type VariableType } from '@/utils/scoringCalculations';
 
 export interface ScoreControl {
+  variableId: VariableType;
   label: string;
   value: string;
-  progress: number;
-  color: string;
   onChange?: (value: string) => void;
 }
 
@@ -16,8 +19,11 @@ export interface CompositeScoreCardProps {
   description: string;
   controls?: ScoreControl[];
   onSettingsClick?: () => void;
-  onAddClick?: () => void;
+  onAddVariable?: (variableId: VariableType) => void;
+  availableVariables?: VariableType[];
   className?: string;
+  scoringConfig?: ScoringConfig;
+  onScoringConfigChange?: (config: ScoringConfig) => void;
 }
 
 // Grade color variants
@@ -59,10 +65,25 @@ export const CompositeScoreCard: React.FC<CompositeScoreCardProps> = ({
   description,
   controls,
   onSettingsClick,
-  onAddClick,
+  onAddVariable,
+  availableVariables = [],
   className = '',
+  scoringConfig = balancedConfig,
+  onScoringConfigChange,
 }) => {
   const colors = gradeColors[grade];
+  const [currentScoringConfig, setCurrentScoringConfig] = useState<ScoringConfig>(scoringConfig);
+  const [addDropdownOpen, setAddDropdownOpen] = useState(false);
+
+  const handleScoringConfigSave = (config: ScoringConfig) => {
+    setCurrentScoringConfig(config);
+    onScoringConfigChange?.(config);
+  };
+
+  const handleAddVariable = (variableId: VariableType) => {
+    onAddVariable?.(variableId);
+    setAddDropdownOpen(false);
+  };
 
   return (
     <div className={`w-full max-w-[1000px] ${className}`}>
@@ -88,17 +109,12 @@ export const CompositeScoreCard: React.FC<CompositeScoreCardProps> = ({
           </div>
         </div>
 
-        {/* Icon button */}
+        {/* Icon button - Scoring Config Popover */}
         <div className="flex flex-col items-center justify-center p-[5px] rounded-[100px] shrink-0">
-          <ButtonBaseUIWrapper
-            variant="ghost"
-            size="icon-lg"
-            onClick={onSettingsClick}
-            aria-label="Settings"
-            className="p-0"
-          >
-            <Settings className="w-[35px] h-[35px] text-neutral-900" />
-          </ButtonBaseUIWrapper>
+          <ScoringConfigPopover
+            config={currentScoringConfig}
+            onSave={handleScoringConfigSave}
+          />
         </div>
       </div>
 
@@ -121,42 +137,139 @@ export const CompositeScoreCard: React.FC<CompositeScoreCardProps> = ({
       {controls && controls.length > 0 && (
         <div className="bg-neutral-300 rounded-b px-6 pt-[42px] pb-4 w-full">
           <div className="flex flex-col gap-8">
-            {controls.map((control, index) => (
-              <div key={index} className="flex flex-col gap-1 w-full">
-                {/* Top row: Label + Input */}
-                <div className="flex items-end justify-between w-full">
-                  <p className="text-sm font-semibold text-black/87">{control.label}</p>
-                  <input
-                    type="text"
-                    className="bg-black/6 rounded px-1.5 py-0.5 text-sm font-medium text-black/60 border-none outline-none text-center w-[70px]"
-                    value={control.value}
-                    onChange={(e) => control.onChange?.(e.target.value)}
-                  />
+            {controls.map((control, index) => {
+              const config = VARIABLE_CONFIGS[control.variableId];
+              const isDropdown = config.inputType === 'dropdown';
+
+              // Calculate tier for progress bar
+              let tierResult = { progress: 0, color: '#ef4444' };
+              if (control.value) {
+                try {
+                  const numValue = isDropdown ? control.value : parseFloat(control.value);
+                  if (!isNaN(numValue as number) || isDropdown) {
+                    tierResult = config.calculateTier(numValue);
+                  }
+                } catch (e) {
+                  // Invalid value, use defaults
+                }
+              }
+
+              // Handle blur event to clamp value to min/max
+              const handleBlur = () => {
+                if (isDropdown) return;
+
+                const numValue = parseFloat(control.value);
+
+                // If invalid or empty, set to min
+                if (!control.value || isNaN(numValue)) {
+                  const defaultValue = config.min !== undefined ? config.min.toString() : '0';
+                  control.onChange?.(defaultValue);
+                  return;
+                }
+
+                // Clamp to min/max bounds
+                const min = config.min !== undefined ? config.min : -Infinity;
+                const max = config.max !== undefined ? config.max : Infinity;
+                const clamped = Math.min(max, Math.max(min, numValue));
+
+                // Update if value was clamped
+                if (clamped !== numValue) {
+                  control.onChange?.(clamped.toString());
+                }
+              };
+
+              return (
+                <div key={index} className="flex flex-col gap-1 w-full">
+                  {/* Top row: Label + Input */}
+                  <div className="flex items-end justify-between w-full">
+                    <p className="text-sm font-semibold text-black/87">{control.label}</p>
+
+                    {isDropdown ? (
+                      <div className="relative">
+                        <select
+                          className="bg-black/6 rounded px-1.5 py-0.5 text-sm font-medium text-black/60 border-none outline-none text-center w-[100px] appearance-none pr-6 cursor-pointer"
+                          value={control.value}
+                          onChange={(e) => control.onChange?.(e.target.value)}
+                        >
+                          <option value="">Select...</option>
+                          {getSeasonalityOptions().map((option) => (
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
+                          ))}
+                        </select>
+                        <ChevronDown className="absolute right-1 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-black/60 pointer-events-none" />
+                      </div>
+                    ) : (
+                      <div className="relative w-[75px]">
+                        <input
+                          type="number"
+                          className="bg-black/6 rounded px-1.5 py-0.5 text-sm font-medium text-black/60 border-none outline-none text-center w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          style={{ MozAppearance: 'textfield' }}
+                          value={control.value}
+                          onChange={(e) => control.onChange?.(e.target.value)}
+                          onBlur={handleBlur}
+                          min={config.min}
+                          max={config.max}
+                          step={config.step}
+                        />
+                        {config.unit && (
+                          <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-sm font-medium text-black/60 pointer-events-none">
+                            {config.unit}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  {/* Progress bar */}
+                  <div className="h-1 w-full bg-black/10 rounded-sm overflow-hidden">
+                    <div
+                      className="h-full transition-all duration-300"
+                      style={{
+                        width: `${tierResult.progress}%`,
+                        backgroundColor: tierResult.color
+                      }}
+                    />
+                  </div>
                 </div>
-                {/* Progress bar */}
-                <div className="h-1 w-full bg-black/10 rounded-sm overflow-hidden">
-                  <div
-                    className="h-full transition-all duration-300"
-                    style={{
-                      width: `${Math.min(100, Math.max(0, control.progress))}%`,
-                      backgroundColor: control.color
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Add button */}
-          {onAddClick && (
-            <div className="flex justify-center mt-4">
+          {onAddVariable && availableVariables.length > 0 && (
+            <div className="flex justify-center mt-4 relative">
               <button
-                onClick={onAddClick}
+                onClick={() => setAddDropdownOpen(!addDropdownOpen)}
                 className="border border-black/25 rounded-[40px] px-4 py-0.5 flex items-center justify-center transition-colors hover:bg-black/5"
-                aria-label="Add control"
+                aria-label="Add variable"
               >
                 <Plus className="w-[18px] h-[18px] text-black/87" />
               </button>
+
+              {/* Dropdown menu */}
+              {addDropdownOpen && (
+                <>
+                  <div
+                    className="fixed inset-0 z-10"
+                    onClick={() => setAddDropdownOpen(false)}
+                  />
+                  <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-neutral-300 border border-neutral-400 rounded-lg shadow-lg z-20 min-w-[200px] py-1">
+                    {availableVariables.map((variableId) => {
+                      const config = VARIABLE_CONFIGS[variableId];
+                      return (
+                        <button
+                          key={variableId}
+                          onClick={() => handleAddVariable(variableId)}
+                          className="w-full px-4 py-2 text-left text-sm text-black/87 hover:bg-black/5 transition-colors"
+                        >
+                          {config.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>

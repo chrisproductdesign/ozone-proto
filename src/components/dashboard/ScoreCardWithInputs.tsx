@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
+import { ScoringConfigPopover } from './ScoringConfigPopover';
+import { balancedConfig } from '@/constants/scoringDefaults';
 import { classNames } from '@/lib/classNames';
+import type { ScoringConfig } from '@/types/scoring';
 
 interface RiskInput {
   id: string;
@@ -17,6 +20,8 @@ interface ScoreCardWithInputsProps {
   status?: 'high' | 'medium' | 'low';
   initialInputs?: RiskInput[];
   className?: string;
+  scoringConfig?: ScoringConfig;
+  onScoringConfigChange?: (config: ScoringConfig) => void;
 }
 
 const getRiskLevel = (value: number): { label: string; color: string; percentage: number } => {
@@ -52,9 +57,17 @@ export const ScoreCardWithInputs: React.FC<ScoreCardWithInputsProps> = ({
     { id: '6', label: 'Sales Cycle', value: '45', unit: '' },
     { id: '7', label: 'Pipeline Coverage', value: '75', unit: '%' }
   ],
-  className
+  className,
+  scoringConfig = balancedConfig,
+  onScoringConfigChange
 }) => {
   const [inputs, setInputs] = useState(initialInputs);
+  const [currentScoringConfig, setCurrentScoringConfig] = useState<ScoringConfig>(scoringConfig);
+
+  const handleScoringConfigSave = (config: ScoringConfig) => {
+    setCurrentScoringConfig(config);
+    onScoringConfigChange?.(config);
+  };
 
   const handleInputChange = (id: string, newValue: string) => {
     // Only allow numbers
@@ -87,9 +100,15 @@ export const ScoreCardWithInputs: React.FC<ScoreCardWithInputsProps> = ({
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h3 className="text-xs font-medium text-neutral-600 tracking-wide uppercase mb-2">
-            {title}
-          </h3>
+          <div className="flex items-center gap-2 mb-2">
+            <h3 className="text-xs font-medium text-neutral-600 tracking-wide uppercase">
+              {title}
+            </h3>
+            <ScoringConfigPopover
+              config={currentScoringConfig}
+              onSave={handleScoringConfigSave}
+            />
+          </div>
           <div className="text-7xl font-bold mb-2 text-neutral-900">
             {score.toFixed(2)}
           </div>
