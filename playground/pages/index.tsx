@@ -4,7 +4,6 @@ import { type NavigationProps } from '../App';
 
 import { DashboardV2 } from './DashboardV2';
 import { DealInput } from './DealInput';
-import { DealSelect } from './DealSelect';
 import { Foundation } from './Foundation';
 import { Login } from './Login';
 
@@ -19,11 +18,6 @@ export const playgroundPages: PlaygroundPage[] = [
     id: 'login',
     title: 'Login',
     render: (navProps) => <Login navigateTo={navProps.navigateTo} currentPage={navProps.currentPage} />,
-  },
-  {
-    id: 'deal-select',
-    title: 'Deal Select',
-    render: (navProps) => <DealSelect navigateTo={navProps.navigateTo} currentPage={navProps.currentPage} />,
   },
   {
     id: 'dealinput',
