@@ -8,7 +8,6 @@ type LoginScreenProps = NavigationProps;
 
 export const LoginScreen: React.FC<LoginScreenProps> = ({ navigateTo }) => {
   const handleLogin = (email: string, password: string) => {
-    console.log('Login attempt:', { email, password });
     // Simple validation - in a real app this would call an API
     if (email && password) {
       // Navigate to Deal Select screen with view transition

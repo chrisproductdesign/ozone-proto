@@ -2,9 +2,11 @@ import React from 'react';
 
 import { classNames } from '@/lib/classNames';
 
-// Figma texture and icon assets
-const TEXTURE_IMAGE = 'https://www.figma.com/api/mcp/asset/3aed26fa-c22f-442e-ad95-d10da80f7979';
-const SPARKLES_ICON = 'https://www.figma.com/api/mcp/asset/21f03096-1c97-49aa-855d-52d9859d43ef';
+// SECURITY FIX: Use local assets instead of external Figma API
+// TODO: Download these assets from Figma and place them in /public/assets/
+// For now, using base64 data URIs or local paths
+const TEXTURE_IMAGE = '/ozone-proto/assets/status-card-texture.png'; // Replace with actual texture image
+const SPARKLES_ICON = '/ozone-proto/assets/sparkles-icon.svg'; // Replace with actual sparkles icon
 
 export type StatusLevel = 'stable' | 'moderate' | 'critical';
 
