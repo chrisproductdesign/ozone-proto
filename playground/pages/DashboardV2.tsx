@@ -48,7 +48,16 @@ export function DashboardV2({ navigateTo: _navigateTo }: DashboardV2Props) {
   // Section order state with localStorage persistence
   const [sectionOrder, setSectionOrder] = useState<DashboardSectionId[]>(() => {
     const saved = localStorage.getItem(SECTION_STORAGE_KEY);
-    return saved ? JSON.parse(saved) : DEFAULT_SECTION_ORDER;
+    if (!saved) return DEFAULT_SECTION_ORDER;
+
+    try {
+      const parsed = JSON.parse(saved);
+      // Validate that it's an array before using it
+      return Array.isArray(parsed) ? parsed : DEFAULT_SECTION_ORDER;
+    } catch {
+      // If JSON parsing fails, return default order
+      return DEFAULT_SECTION_ORDER;
+    }
   });
 
   // Initialize metrics from context or use defaults
